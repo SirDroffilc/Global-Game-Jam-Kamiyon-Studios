@@ -30,6 +30,7 @@ func _input(event: InputEvent) -> void:
 
 func toggle_element_state() -> void:	
 	is_light = !is_light
+	print("is_light: ", is_light)
 	update_physics_layers()
 	if state_machine.current_state:
 		play_animation(state_machine.current_state.animation_name)
@@ -37,13 +38,20 @@ func toggle_element_state() -> void:
 func update_physics_layers() -> void:
 	collision_layer = 0
 	collision_mask = 0
+	
 	if is_light:
+		# 1. Light Player (Layer 2)
 		set_collision_layer_value(2, true) 
-		set_collision_mask_value(3, true)
-		set_collision_mask_value(5, true)
+		# 2. Match: Stands ONLY on Light Objects (Layer 4)
+		set_collision_mask_value(4, true) 
+		# 3. Always collide with Neutral Objects (Layer 5)
+		set_collision_mask_value(5, true) 
 	else:
-		set_collision_layer_value(1, true)
-		set_collision_mask_value(4, true)
+		# 1. Dark Player (Layer 1)
+		set_collision_layer_value(1, true) 
+		# 2. Match: Stands ONLY on Dark Objects (Layer 3)
+		set_collision_mask_value(3, true) 
+		# 3. Always collide with Neutral Objects (Layer 5)
 		set_collision_mask_value(5, true)
 
 func play_animation(anim_base_name: String) -> void:

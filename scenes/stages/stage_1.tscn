@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://dhywv6gbqn1wq" path="res://scripts/levels/tile_map_layer.gd" id="2_k45mu"]
 [ext_resource type="PackedScene" uid="uid://cc0fmgwllh68a" path="res://scenes/enemies/enemy_1.tscn" id="4_k45mu"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8q8ih"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k45mu"]
 texture = ExtResource("1_cuow7")
 1:0/0 = 0
 1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -265,13 +265,13 @@ texture = ExtResource("1_cuow7")
 
 [sub_resource type="TileSet" id="TileSet_0culs"]
 physics_layer_0/collision_layer = 4
-physics_layer_0/collision_mask = 2
 physics_layer_1/collision_layer = 8
+physics_layer_1/collision_mask = 2
 physics_layer_2/collision_layer = 16
 physics_layer_2/collision_mask = 3
 custom_data_layer_0/name = "element_type"
 custom_data_layer_0/type = 4
-sources/0 = SubResource("TileSetAtlasSource_8q8ih")
+sources/0 = SubResource("TileSetAtlasSource_k45mu")
 
 [node name="Stage1" type="Node2D" unique_id=1551565052]
 
@@ -287,9 +287,10 @@ position = Vector2(-410, -29)
 
 [node name="Player" parent="." unique_id=782149273 instance=ExtResource("2_8q8ih")]
 z_index = 10
-position = Vector2(-569, -23)
+position = Vector2(-329, -43)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1530708046]
-zoom = Vector2(2, 2)
+position = Vector2(0, -41)
+zoom = Vector2(2.3, 2.3)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
