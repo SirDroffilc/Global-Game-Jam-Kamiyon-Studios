@@ -7,8 +7,9 @@
 [ext_resource type="Script" uid="uid://ds0ef6ofha7uv" path="res://scripts/players/idle_state.gd" id="5_qohf6"]
 [ext_resource type="Script" uid="uid://5gjtqmxlqwfy" path="res://scripts/players/run_state.gd" id="6_it8sy"]
 [ext_resource type="Script" uid="uid://cj3ap6gvghpnj" path="res://scripts/players/jump_state.gd" id="7_vxtj5"]
-[ext_resource type="Script" uid="uid://b17kdu1m6ngr7" path="res://scenes/players/double_jump_state.gd" id="8_phaeh"]
-[ext_resource type="Script" uid="uid://dlraub0o0jqin" path="res://scenes/players/attack_state.gd" id="9_yl2j2"]
+[ext_resource type="Script" uid="uid://b17kdu1m6ngr7" path="res://scripts/double_jump_state.gd" id="8_phaeh"]
+[ext_resource type="Script" uid="uid://dlraub0o0jqin" path="res://scripts/attack_state.gd" id="9_yl2j2"]
+[ext_resource type="Script" uid="uid://n80882fu15ah" path="res://scripts/shoot_state.gd" id="10_es4m5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_phaeh"]
 atlas = ExtResource("2_lirf0")
@@ -32,30 +33,6 @@ region = Rect2(400, 320, 80, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_18rgo"]
 atlas = ExtResource("2_lirf0")
-region = Rect2(320, 320, 80, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wb5ey"]
-atlas = ExtResource("3_qohf6")
-region = Rect2(720, 320, 80, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vjh8g"]
-atlas = ExtResource("3_qohf6")
-region = Rect2(640, 320, 80, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f1232"]
-atlas = ExtResource("3_qohf6")
-region = Rect2(560, 320, 80, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_v7vuu"]
-atlas = ExtResource("3_qohf6")
-region = Rect2(480, 320, 80, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bdc4e"]
-atlas = ExtResource("3_qohf6")
-region = Rect2(400, 320, 80, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qb7t6"]
-atlas = ExtResource("3_qohf6")
 region = Rect2(320, 320, 80, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_it8sy"]
@@ -194,6 +171,30 @@ region = Rect2(240, 128, 80, 64)
 atlas = ExtResource("3_qohf6")
 region = Rect2(160, 128, 80, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_wb5ey"]
+atlas = ExtResource("3_qohf6")
+region = Rect2(720, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjh8g"]
+atlas = ExtResource("3_qohf6")
+region = Rect2(640, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1232"]
+atlas = ExtResource("3_qohf6")
+region = Rect2(560, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7vuu"]
+atlas = ExtResource("3_qohf6")
+region = Rect2(480, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdc4e"]
+atlas = ExtResource("3_qohf6")
+region = Rect2(400, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qb7t6"]
+atlas = ExtResource("3_qohf6")
+region = Rect2(320, 320, 80, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_m713k"]
 animations = [{
 "frames": [{
@@ -218,29 +219,6 @@ animations = [{
 "loop": false,
 "name": &"attack_dark",
 "speed": 15.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wb5ey")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vjh8g")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_f1232")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_v7vuu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bdc4e")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qb7t6")
-}],
-"loop": false,
-"name": &"attack_light",
-"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -373,14 +351,36 @@ animations = [{
 "loop": true,
 "name": &"run_light",
 "speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wb5ey")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjh8g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1232")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7vuu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdc4e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qb7t6")
+}],
+"loop": false,
+"name": &"shoot_light",
+"speed": 10.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wb5ey"]
 size = Vector2(23, 49)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3s26m"]
-radius = 5.0
-height = 46.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yl2j2"]
+size = Vector2(14, 43)
 
 [sub_resource type="Animation" id="Animation_yl2j2"]
 length = 0.001
@@ -461,51 +461,10 @@ tracks/2/keys = {
 "values": [true, false, true]
 }
 
-[sub_resource type="Animation" id="Animation_es4m5"]
-resource_name = "attack_light"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite/MeleeWeaponHitbox/CollisionShape2D:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [true, false, true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite:animation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"attack_light"]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fsrjl"]
 _data = {
 &"RESET": SubResource("Animation_yl2j2"),
-&"attack_dark": SubResource("Animation_fsrjl"),
-&"attack_light": SubResource("Animation_es4m5")
+&"attack_dark": SubResource("Animation_fsrjl")
 }
 
 [node name="Player" type="CharacterBody2D" unique_id=395045780]
@@ -529,38 +488,44 @@ disabled = true
 debug_color = Color(0.94861215, 0.14732769, 0.44364715, 0.41960785)
 
 [node name="CollisionShape" type="CollisionShape2D" parent="." unique_id=1288298047]
-position = Vector2(0, -23)
-shape = SubResource("CapsuleShape2D_3s26m")
+position = Vector2(0, -21.5)
+shape = SubResource("RectangleShape2D_yl2j2")
 
 [node name="StateMachine" type="Node" parent="." unique_id=1167466857 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("4_lirf0")
 initial_state = NodePath("IdleState")
 
-[node name="IdleState" type="Node" parent="StateMachine" unique_id=919569677 node_paths=PackedStringArray("run_state", "jump_state", "attack_state")]
+[node name="IdleState" type="Node" parent="StateMachine" unique_id=919569677 node_paths=PackedStringArray("run_state", "jump_state", "attack_state", "shoot_state")]
 script = ExtResource("5_qohf6")
 run_state = NodePath("../RunState")
 jump_state = NodePath("../JumpState")
 attack_state = NodePath("../AttackState")
+shoot_state = NodePath("../ShootState")
 animation_name = "idle"
 
-[node name="RunState" type="Node" parent="StateMachine" unique_id=793848561 node_paths=PackedStringArray("idle_state", "jump_state", "attack_state")]
+[node name="RunState" type="Node" parent="StateMachine" unique_id=793848561 node_paths=PackedStringArray("idle_state", "jump_state", "attack_state", "shoot_state")]
 script = ExtResource("6_it8sy")
 idle_state = NodePath("../IdleState")
 jump_state = NodePath("../JumpState")
 attack_state = NodePath("../AttackState")
+shoot_state = NodePath("../ShootState")
 animation_name = "run"
 
-[node name="JumpState" type="Node" parent="StateMachine" unique_id=592862481 node_paths=PackedStringArray("idle_state", "run_state", "double_jump_state")]
+[node name="JumpState" type="Node" parent="StateMachine" unique_id=592862481 node_paths=PackedStringArray("idle_state", "run_state", "double_jump_state", "attack_state", "shoot_state")]
 script = ExtResource("7_vxtj5")
 idle_state = NodePath("../IdleState")
 run_state = NodePath("../RunState")
 double_jump_state = NodePath("../DoubleJumpState")
+attack_state = NodePath("../AttackState")
+shoot_state = NodePath("../ShootState")
 animation_name = "jump"
 
-[node name="DoubleJumpState" type="Node" parent="StateMachine" unique_id=1241482067 node_paths=PackedStringArray("idle_state", "run_state")]
+[node name="DoubleJumpState" type="Node" parent="StateMachine" unique_id=1241482067 node_paths=PackedStringArray("idle_state", "run_state", "attack_state", "shoot_state")]
 script = ExtResource("8_phaeh")
 idle_state = NodePath("../IdleState")
 run_state = NodePath("../RunState")
+attack_state = NodePath("../AttackState")
+shoot_state = NodePath("../ShootState")
 animation_name = "jump"
 
 [node name="AttackState" type="Node" parent="StateMachine" unique_id=1560325941 node_paths=PackedStringArray("idle_state")]
@@ -568,7 +533,16 @@ script = ExtResource("9_yl2j2")
 idle_state = NodePath("../IdleState")
 animation_name = "attack"
 
+[node name="ShootState" type="Node" parent="StateMachine" unique_id=1380287972 node_paths=PackedStringArray("idle_state", "run_state")]
+script = ExtResource("10_es4m5")
+idle_state = NodePath("../IdleState")
+run_state = NodePath("../RunState")
+animation_name = "shoot"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1362064814]
 libraries/ = SubResource("AnimationLibrary_fsrjl")
+
+[node name="ArrowStartPosition" type="Marker2D" parent="." unique_id=131331387]
+position = Vector2(8, -26)
 
 [connection signal="area_entered" from="AnimatedSprite/MeleeWeaponHitbox" to="." method="_on_melee_weapon_hitbox_area_entered"]

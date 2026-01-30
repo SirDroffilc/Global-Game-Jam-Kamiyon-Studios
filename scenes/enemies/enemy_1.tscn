@@ -40,10 +40,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a01ek"]
-size = Vector2(8, 10)
+size = Vector2(66, 76)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lsxte"]
-size = Vector2(12, 16)
+size = Vector2(99, 86)
 
 [node name="Enemy1" type="CharacterBody2D" unique_id=977171748]
 collision_layer = 16
@@ -51,19 +51,21 @@ collision_mask = 28
 script = ExtResource("1_lsxte")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=713817366]
-position = Vector2(0, -12)
+position = Vector2(0, -77.00001)
+scale = Vector2(6.416667, 6.416667)
 sprite_frames = SubResource("SpriteFrames_hp0oe")
 autoplay = "default"
 frame_progress = 0.33285806
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1633565539]
-position = Vector2(0, -6)
+position = Vector2(0, -39)
 shape = SubResource("RectangleShape2D_a01ek")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1522830034]
 collision_layer = 32
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=539661387]
-position = Vector2(0, -8)
+position = Vector2(-0.5, -43)
 shape = SubResource("RectangleShape2D_lsxte")
 debug_color = Color(0.5831589, 0.5112057, 0.5649079, 0.41960785)

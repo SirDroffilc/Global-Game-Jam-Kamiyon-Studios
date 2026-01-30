@@ -2,14 +2,23 @@ extends State
 
 @export var idle_state: State
 @export var run_state: State
-@export var double_jump_state: State # New export for the transition
+@export var double_jump_state: State
+@export var attack_state: State # Added for Dark Melee
+@export var shoot_state: State  # Added for Light Ranged
 
 func enter() -> void:
 	super()
-	# Pull the initial jump velocity from the Manager
-	parent.velocity.y = parent.get_jump_velocity()
+	parent.velocity.y = parent.get_jump_velocity() #
 
 func process_physics(delta: float) -> State:
+	# 1. AIR ATTACK CHECK
+	if Input.is_action_just_pressed("attack"):
+		if parent.is_light:
+			return shoot_state
+		else:
+			return attack_state
+
+	# 2. PHYSICS
 	parent.velocity += parent.get_gravity() * delta
 	
 	var dir = Input.get_axis("move_left", "move_right")
@@ -20,12 +29,10 @@ func process_physics(delta: float) -> State:
 		
 	parent.move_and_slide()
 	
-	# Transition to Double Jump:
-	# If the jump button is pressed again while we are NOT on the floor.
+	# 3. TRANSITIONS
 	if Input.is_action_just_pressed("jump") and not parent.is_on_floor():
 		return double_jump_state
 	
-	# Transition back to ground states
 	if parent.is_on_floor():
 		if dir != 0:
 			return run_state

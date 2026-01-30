@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://c3qyc6nl1ju4r"]
+
+[ext_resource type="Script" uid="uid://bt8btg1fpvjs6" path="res://scripts/light_arrow.gd" id="1_x3cet"]
+[ext_resource type="Texture2D" uid="uid://dkehmew5kqk3" path="res://assets/laserBlue01.png" id="2_4ilq1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3sm05"]
+radius = 4.0
+height = 56.0
+
+[node name="LightArrow" type="Area2D" unique_id=784163545]
+collision_layer = 0
+collision_mask = 60
+script = ExtResource("1_x3cet")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=139800836]
+position = Vector2(0, -5)
+rotation = 1.5707964
+texture = ExtResource("2_4ilq1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1705699938]
+position = Vector2(0, -5)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_3sm05")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

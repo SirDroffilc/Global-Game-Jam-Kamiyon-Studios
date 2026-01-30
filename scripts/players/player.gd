@@ -5,9 +5,11 @@ var is_light: bool = true
 
 @onready var state_machine: StateMachine = $StateMachine
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite
-# Path updated to reflect the new hierarchy under AnimatedSprite
 @onready var hitbox_shape: CollisionShape2D = $AnimatedSprite/MeleeWeaponHitbox/CollisionShape2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var arrow_start_position: Marker2D = $ArrowStartPosition
+
+@export var arrow_scene: PackedScene = preload("res://scenes/players/light_arrow.tscn")
 
 func _ready() -> void:
 	state_machine.init(self)
@@ -45,18 +47,20 @@ func update_physics_layers() -> void:
 		set_collision_mask_value(5, true)
 
 func play_animation(anim_base_name: String) -> void:
+	# If we are in Light state, 'attack' should be redirected to 'shoot'
+	var final_base_name = anim_base_name
+	if is_light and anim_base_name == "attack":
+		final_base_name = "shoot"
+		
 	var suffix = "_light" if is_light else "_dark"
-	var anim_to_play = anim_base_name + suffix
-	
-	# Meticulous Check: Use AnimationPlayer ONLY for attack
-	# This avoids "fighting" between the two nodes for idle/run
-	if anim_base_name == "attack":
-		if animation_player.has_animation(anim_to_play):
-			# Stop the AnimatedSprite so the AnimationPlayer can take control
-			animated_sprite.stop() 
-			animation_player.play(anim_to_play)
+	var anim_to_play = final_base_name + suffix
+
+	# Rest of your logic...
+	if final_base_name == "attack" and not is_light:
+		# Use AnimationPlayer for Dark Melee
+		animation_player.play(anim_to_play)
 	else:
-		# For movement, ensure AnimationPlayer isn't overriding the sprite
+		# Use AnimatedSprite for everything else
 		animation_player.stop()
 		animated_sprite.play(anim_to_play)
 
@@ -73,3 +77,16 @@ func get_jump_velocity() -> float:
 func _on_melee_weapon_hitbox_area_entered(area: Area2D) -> void:
 	if area.get_parent().has_method("take_damage"):
 		area.get_parent().take_damage(PlayerManager.get_damage())
+		
+func shoot_arrow() -> void:
+	if arrow_scene:
+		var arrow_instance = arrow_scene.instantiate()
+		arrow_instance.global_position = arrow_start_position.global_position
+		
+		var mouse_pos = get_global_mouse_position()
+		var shoot_dir = (mouse_pos - arrow_instance.global_position).normalized()
+		
+		arrow_instance.direction = shoot_dir
+		arrow_instance.rotation = shoot_dir.angle()
+		
+		get_tree().current_scene.add_child(arrow_instance)

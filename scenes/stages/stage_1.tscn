@@ -280,13 +280,16 @@ tile_map_data = PackedByteArray("AADu/wAAAAAAAAEAAADv/wAAAAAAAAEAAADw/wAAAAAAAAE
 tile_set = SubResource("TileSet_0culs")
 script = ExtResource("2_k45mu")
 
+[node name="Enemies" type="Node" parent="." unique_id=2138966777]
+
+[node name="Enemy1" parent="Enemies" unique_id=977171748 instance=ExtResource("4_k45mu")]
+position = Vector2(-410, -29)
+
 [node name="Player" parent="." unique_id=782149273 instance=ExtResource("2_8q8ih")]
+z_index = 10
 position = Vector2(-569, -23)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1530708046]
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
-
-[node name="Enemy1" parent="." unique_id=977171748 instance=ExtResource("4_k45mu")]
-position = Vector2(-410, -29)
