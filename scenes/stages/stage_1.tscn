@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://q5prthoyfpog" path="res://assets/Other Tiles2.png" id="1_cuow7"]
 [ext_resource type="PackedScene" uid="uid://c3emj4ho0t73a" path="res://scenes/players/player.tscn" id="2_8q8ih"]
 [ext_resource type="Script" uid="uid://dhywv6gbqn1wq" path="res://scripts/levels/tile_map_layer.gd" id="2_k45mu"]
+[ext_resource type="PackedScene" uid="uid://cc0fmgwllh68a" path="res://scenes/enemies/enemy_1.tscn" id="4_k45mu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8q8ih"]
 texture = ExtResource("1_cuow7")
@@ -280,9 +281,12 @@ tile_set = SubResource("TileSet_0culs")
 script = ExtResource("2_k45mu")
 
 [node name="Player" parent="." unique_id=782149273 instance=ExtResource("2_8q8ih")]
-position = Vector2(-223, -24)
+position = Vector2(-569, -23)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1530708046]
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
+
+[node name="Enemy1" parent="." unique_id=977171748 instance=ExtResource("4_k45mu")]
+position = Vector2(-410, -29)

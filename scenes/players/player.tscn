@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://5gjtqmxlqwfy" path="res://scripts/players/run_state.gd" id="6_it8sy"]
 [ext_resource type="Script" uid="uid://cj3ap6gvghpnj" path="res://scripts/players/jump_state.gd" id="7_vxtj5"]
 [ext_resource type="Script" uid="uid://b17kdu1m6ngr7" path="res://scenes/players/double_jump_state.gd" id="8_phaeh"]
+[ext_resource type="Script" uid="uid://dlraub0o0jqin" path="res://scenes/players/attack_state.gd" id="9_yl2j2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_phaeh"]
 atlas = ExtResource("2_lirf0")
@@ -31,6 +32,30 @@ region = Rect2(400, 320, 80, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_18rgo"]
 atlas = ExtResource("2_lirf0")
+region = Rect2(320, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wb5ey"]
+atlas = ExtResource("3_qohf6")
+region = Rect2(720, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjh8g"]
+atlas = ExtResource("3_qohf6")
+region = Rect2(640, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1232"]
+atlas = ExtResource("3_qohf6")
+region = Rect2(560, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7vuu"]
+atlas = ExtResource("3_qohf6")
+region = Rect2(480, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdc4e"]
+atlas = ExtResource("3_qohf6")
+region = Rect2(400, 320, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qb7t6"]
+atlas = ExtResource("3_qohf6")
 region = Rect2(320, 320, 80, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_it8sy"]
@@ -190,8 +215,31 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_18rgo")
 }],
-"loop": true,
-"name": &"attack1_dark",
+"loop": false,
+"name": &"attack_dark",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wb5ey")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjh8g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1232")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7vuu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdc4e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qb7t6")
+}],
+"loop": false,
+"name": &"attack_light",
 "speed": 15.0
 }, {
 "frames": [{
@@ -342,15 +390,16 @@ script = ExtResource("1_6wyko")
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1496140655]
 position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_m713k")
-animation = &"attack1_dark"
-frame_progress = 0.014774298
+animation = &"attack_light"
 
-[node name="Area2D" type="Area2D" parent="AnimatedSprite" unique_id=872769681]
+[node name="Hitbox" type="Area2D" parent="AnimatedSprite" unique_id=872769681]
+collision_layer = 0
 collision_mask = 32
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite/Area2D" unique_id=1221790573]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite/Hitbox" unique_id=1221790573]
 position = Vector2(6.5, 7.5)
 shape = SubResource("RectangleShape2D_wb5ey")
+disabled = true
 debug_color = Color(0.94861215, 0.14732769, 0.44364715, 0.41960785)
 
 [node name="CollisionShape" type="CollisionShape2D" parent="." unique_id=1288298047]
@@ -361,16 +410,18 @@ shape = SubResource("CapsuleShape2D_3s26m")
 script = ExtResource("4_lirf0")
 initial_state = NodePath("IdleState")
 
-[node name="IdleState" type="Node" parent="StateMachine" unique_id=919569677 node_paths=PackedStringArray("run_state", "jump_state")]
+[node name="IdleState" type="Node" parent="StateMachine" unique_id=919569677 node_paths=PackedStringArray("run_state", "jump_state", "attack_state")]
 script = ExtResource("5_qohf6")
 run_state = NodePath("../RunState")
 jump_state = NodePath("../JumpState")
+attack_state = NodePath("../AttackState")
 animation_name = "idle"
 
-[node name="RunState" type="Node" parent="StateMachine" unique_id=793848561 node_paths=PackedStringArray("idle_state", "jump_state")]
+[node name="RunState" type="Node" parent="StateMachine" unique_id=793848561 node_paths=PackedStringArray("idle_state", "jump_state", "attack_state")]
 script = ExtResource("6_it8sy")
 idle_state = NodePath("../IdleState")
 jump_state = NodePath("../JumpState")
+attack_state = NodePath("../AttackState")
 animation_name = "run"
 
 [node name="JumpState" type="Node" parent="StateMachine" unique_id=592862481 node_paths=PackedStringArray("idle_state", "run_state", "double_jump_state")]
@@ -384,3 +435,9 @@ animation_name = "jump"
 script = ExtResource("8_phaeh")
 idle_state = NodePath("../IdleState")
 run_state = NodePath("../RunState")
+animation_name = "jump"
+
+[node name="AttackState" type="Node" parent="StateMachine" unique_id=1560325941 node_paths=PackedStringArray("idle_state")]
+script = ExtResource("9_yl2j2")
+idle_state = NodePath("../IdleState")
+animation_name = "attack"
