@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # --- Attributes ---
-@export var base_health: int = 30
+@export var base_health: int = 15
 @onready var current_health: int = base_health
 
 func _physics_process(delta: float) -> void:

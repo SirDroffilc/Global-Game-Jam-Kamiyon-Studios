@@ -6,7 +6,8 @@ var is_light: bool = true
 @onready var state_machine: StateMachine = $StateMachine
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite
 # Path updated to reflect the new hierarchy under AnimatedSprite
-@onready var hitbox_shape: CollisionShape2D = $AnimatedSprite/Hitbox/CollisionShape2D
+@onready var hitbox_shape: CollisionShape2D = $AnimatedSprite/MeleeWeaponHitbox/CollisionShape2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
 	state_machine.init(self)
@@ -45,20 +46,30 @@ func update_physics_layers() -> void:
 
 func play_animation(anim_base_name: String) -> void:
 	var suffix = "_light" if is_light else "_dark"
-	animated_sprite.play(anim_base_name + suffix)
+	var anim_to_play = anim_base_name + suffix
+	
+	# Meticulous Check: Use AnimationPlayer ONLY for attack
+	# This avoids "fighting" between the two nodes for idle/run
+	if anim_base_name == "attack":
+		if animation_player.has_animation(anim_to_play):
+			# Stop the AnimatedSprite so the AnimationPlayer can take control
+			animated_sprite.stop() 
+			animation_player.play(anim_to_play)
+	else:
+		# For movement, ensure AnimationPlayer isn't overriding the sprite
+		animation_player.stop()
+		animated_sprite.play(anim_to_play)
 
 func _on_death() -> void:
 	if has_node("StateMachine/death"):
 		state_machine.change_state($StateMachine/death)
-
-# This signal remains on the Player script for centralized damage handling
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	# Check if the parent of the area we hit is an enemy with a health system
-	if area.get_parent().has_method("take_damage"):
-		area.get_parent().take_damage(PlayerManager.get_damage())
 
 func get_speed() -> float:
 	return PlayerManager.get_speed()
 
 func get_jump_velocity() -> float:
 	return PlayerManager.get_jump_velocity()
+
+func _on_melee_weapon_hitbox_area_entered(area: Area2D) -> void:
+	if area.get_parent().has_method("take_damage"):
+		area.get_parent().take_damage(PlayerManager.get_damage())

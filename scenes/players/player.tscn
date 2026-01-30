@@ -240,7 +240,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_light",
-"speed": 15.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -376,11 +376,137 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wb5ey"]
-size = Vector2(15, 49)
+size = Vector2(23, 49)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3s26m"]
 radius = 5.0
 height = 46.0
+
+[sub_resource type="Animation" id="Animation_yl2j2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite/MeleeWeaponHitbox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack_light"]
+}
+
+[sub_resource type="Animation" id="Animation_fsrjl"]
+resource_name = "attack_dark"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack_dark"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.13333334, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite/MeleeWeaponHitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.40245593, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_es4m5"]
+resource_name = "attack_light"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite/MeleeWeaponHitbox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack_light"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fsrjl"]
+_data = {
+&"RESET": SubResource("Animation_yl2j2"),
+&"attack_dark": SubResource("Animation_fsrjl"),
+&"attack_light": SubResource("Animation_es4m5")
+}
 
 [node name="Player" type="CharacterBody2D" unique_id=395045780]
 collision_layer = 2
@@ -392,12 +518,12 @@ position = Vector2(0, -32)
 sprite_frames = SubResource("SpriteFrames_m713k")
 animation = &"attack_light"
 
-[node name="Hitbox" type="Area2D" parent="AnimatedSprite" unique_id=872769681]
+[node name="MeleeWeaponHitbox" type="Area2D" parent="AnimatedSprite" unique_id=872769681]
 collision_layer = 0
 collision_mask = 32
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite/Hitbox" unique_id=1221790573]
-position = Vector2(6.5, 7.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite/MeleeWeaponHitbox" unique_id=1221790573]
+position = Vector2(10.5, 7.5)
 shape = SubResource("RectangleShape2D_wb5ey")
 disabled = true
 debug_color = Color(0.94861215, 0.14732769, 0.44364715, 0.41960785)
@@ -441,3 +567,8 @@ animation_name = "jump"
 script = ExtResource("9_yl2j2")
 idle_state = NodePath("../IdleState")
 animation_name = "attack"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1362064814]
+libraries/ = SubResource("AnimationLibrary_fsrjl")
+
+[connection signal="area_entered" from="AnimatedSprite/MeleeWeaponHitbox" to="." method="_on_melee_weapon_hitbox_area_entered"]
