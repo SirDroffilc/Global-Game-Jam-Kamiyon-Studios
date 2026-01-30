@@ -8,7 +8,7 @@ const TILE_MAP = {
 const SOURCE_ID = 0
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("p2_skill"):
+	if event.is_action_pressed("skill2"):
 		toggle_world_state()
 
 func toggle_world_state() -> void:
