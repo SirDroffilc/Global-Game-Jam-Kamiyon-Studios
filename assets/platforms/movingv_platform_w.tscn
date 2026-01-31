@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://y3k3yido3fr2"]
+
+[ext_resource type="Texture2D" uid="uid://csd81ygyilmgx" path="res://assets/spritesheets/white.png" id="1_tgtx1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1mx5o"]
+size = Vector2(50, 6)
+
+[sub_resource type="Animation" id="Animation_om05a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_6ahol"]
+resource_name = "vertical_platform_w"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5, 10),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 50), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_j2hp3"]
+resource_name = "vertical_platform_w_100"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5, 10),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 100), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cd614"]
+_data = {
+&"RESET": SubResource("Animation_om05a"),
+&"vertical_platform_w": SubResource("Animation_6ahol"),
+&"vertical_platform_w_100": SubResource("Animation_j2hp3")
+}
+
+[node name="movingv_platform_w" type="Node2D" unique_id=1477857530]
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="." unique_id=1318011348]
+collision_layer = 10
+
+[node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D" unique_id=1441122361]
+texture = ExtResource("1_tgtx1")
+region_enabled = true
+region_rect = Rect2(120, 10, 50, 6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D" unique_id=1798458056]
+shape = SubResource("RectangleShape2D_1mx5o")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody2D" unique_id=487260494]
+libraries/ = SubResource("AnimationLibrary_cd614")
+autoplay = &"vertical_platform_w_100"
