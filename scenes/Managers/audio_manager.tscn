@@ -5,7 +5,6 @@
 [ext_resource type="Resource" uid="uid://cci0oux2l6d02" path="res://ButtonClick.tres" id="3_r0qx8"]
 [ext_resource type="Resource" uid="uid://bctyop21iniy8" path="res://EnemyWalk.res" id="3_t1iyy"]
 [ext_resource type="Resource" uid="uid://cnubsn76jw6bs" path="res://PlatformSFX.res" id="4_uoktg"]
-[ext_resource type="Resource" uid="uid://coxpc4jrptw78" path="res://PlayerDeath.res" id="5_c4jmg"]
 [ext_resource type="Resource" uid="uid://crdqpba7ji3rp" path="res://EnemyDeath.tres" id="5_xtcyc"]
 [ext_resource type="Resource" uid="uid://dbrl0irwf0wuw" path="res://EnemyFlying.tres" id="6_n0orb"]
 [ext_resource type="Resource" uid="uid://c3e32ega5nlwb" path="res://PlayerFall.res" id="6_x1i1l"]
@@ -22,6 +21,7 @@
 [ext_resource type="Resource" uid="uid://bvp0v85frhiw3" path="res://EnemyThrust.tres" id="12_7ooh3"]
 [ext_resource type="Resource" uid="uid://dhjg4pbpmsoye" path="res://ShardAbsorb.res" id="13_r0qx8"]
 [ext_resource type="Resource" uid="uid://c0e70potk37g2" path="res://EnemyDash.tres" id="14_c4jmg"]
+[ext_resource type="Resource" uid="uid://bcby25ynedmy5" path="res://PlayerDeath.tres" id="15_2iva5"]
 [ext_resource type="Resource" uid="uid://bctrrdh5ij2yw" path="res://switch_element.tres" id="24_xtcyc"]
 [ext_resource type="Resource" uid="uid://d27egicgt1nm4" path="res://PlayerSlash1.res" id="25_2iva5"]
 [ext_resource type="Resource" uid="uid://cdkal56m3cu8t" path="res://PlayerIdle.res" id="25_n0orb"]
@@ -43,7 +43,7 @@ audios_manager_omni = Dictionary[String, ExtResource("2_x0ip0")]({
 "EnemyThrust": ExtResource("12_7ooh3"),
 "EnemyWalk": ExtResource("3_t1iyy"),
 "PlatformSFX": ExtResource("4_uoktg"),
-"PlayerDeath": ExtResource("5_c4jmg"),
+"PlayerDeath": ExtResource("15_2iva5"),
 "PlayerFall": ExtResource("6_x1i1l"),
 "PlayerHurt": ExtResource("7_3yf0c"),
 "PlayerIdle": ExtResource("25_n0orb"),

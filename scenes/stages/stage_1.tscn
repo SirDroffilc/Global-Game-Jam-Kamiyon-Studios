@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://bd7lf8v6d8fm7" path="res://scripts/globals/hudcontroller.gd" id="9_mm8bn"]
 [ext_resource type="Texture2D" uid="uid://02iaflpad2an" path="res://assets/User Interface/Memory Shards.png" id="11_qm7fq"]
 [ext_resource type="Texture2D" uid="uid://b0hdtfkmgh1l4" path="res://assets/spritesheets/Health - Polygon.png" id="12_emlwg"]
+[ext_resource type="PackedScene" uid="uid://vtnqa4okpo1m" path="res://scenes/enemies/enemy_2.tscn" id="13_emlwg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_emlwg"]
 texture = ExtResource("2_qm7fq")
@@ -361,3 +362,6 @@ texture = ExtResource("12_emlwg")
 [node name="AreaLabelTrigger" parent="." unique_id=407906546 instance=ExtResource("2_emlwg")]
 position = Vector2(-195, -51)
 scale = Vector2(5, 5)
+
+[node name="Enemy2" parent="." unique_id=1993727070 instance=ExtResource("13_emlwg")]
+position = Vector2(429, -152)

@@ -69,6 +69,8 @@ func _physics_process(delta: float) -> void:
 		
 		# Set animations
 		if move_velocity.length() > 0:
+			if not AudioManager.is_playing_omni("EnemyFlying"):
+				AudioManager.play_omni("EnemyFlying")
 			animated_sprite.play("idle")
 		else:
 			animated_sprite.play("idle")
@@ -109,6 +111,7 @@ func perform_spit_attack() -> void:
 		
 		# Pass direction and current enemy damage to the spit
 		if spit.has_method("launch"):
+			AudioManager.play_omni("EnemyShoot")
 			spit.launch(shoot_dir, damage)
 
 # --- Damage & Death ---
@@ -123,6 +126,7 @@ func _on_visible_on_screen_notifier_screen_exited() -> void:
 func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
 	if is_dying: return
 	current_health -= amount
+	AudioManager.play_omni("EnemyHurt")
 	flash_hurt()
 	if attacker_pos != Vector2.ZERO:
 		var knockback_dir = (global_position - attacker_pos).normalized()
@@ -141,8 +145,9 @@ func die() -> void:
 	attack_timer.stop()
 	velocity = Vector2.ZERO 
 	collision_layer = 0
-	collision_mask = 0
 	$Hurtbox.queue_free()
+	AudioManager.play_omni("EnemyDeath")
+	AudioManager.stop_omni("EnemyFlying")
 	animated_sprite.play("death")
 
 func _on_animation_finished() -> void:
@@ -162,6 +167,7 @@ func _spawn_loot() -> void:
 
 func _on_item_drop_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
+		AudioManager.play_omni("ShardAbsorb")
 		_apply_loot_bonus()
 		queue_free()
 

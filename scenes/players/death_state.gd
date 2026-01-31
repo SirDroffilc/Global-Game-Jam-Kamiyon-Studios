@@ -5,6 +5,7 @@ extends State
 # Inside death_state.gd
 func enter() -> void:
 	parent.velocity = Vector2.ZERO
+	AudioManager.play_omni("PlayerDeath")
 	parent.play_animation("death")
 	# Defer any manual disability here too just to be safe
 	parent.hitbox_shape.set_deferred("disabled", true)
