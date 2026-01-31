@@ -127,6 +127,9 @@ var _focus_ref = JavaScriptBridge.create_callback(_on_web_focus)
 var audios_stream_players: Dictionary[String, AudioStreamPlayer]
 var audios_stream_players_2d: Dictionary[String, AudioStreamPlayer2D]
 var audios_stream_players_3d: Dictionary[String, AudioStreamPlayer3D]
+
+var _current_music: String = ""
+
 #endregion ****************************************************************************************
 
 
@@ -201,6 +204,49 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 	
 #region AUDIO OMNI *********************************************************************************
+## Stops the currently playing music with an optional fade-out.
+func stop_music(fade_duration: float = 0.0) -> void:
+	if _current_music == "" or not is_playing_omni(_current_music):
+		_current_music = ""
+		return
+
+	var audio_name = _current_music
+	_current_music = ""
+	
+	var music_player: AudioStreamPlayer = get_audio_stream_player(audio_name)
+	if not music_player:
+		return
+
+	if fade_duration > 0.0:
+		_fade_out_volume(music_player, fade_duration, audio_name)
+	else:
+		stop_omni(audio_name)
+
+func _fade_out_volume(audio_player: AudioStreamPlayer, duration: float, audio_name: String) -> void:
+	# Attempt to get original volume from resource
+	var original_vol = audio_player.volume_db
+	if audios_manager_omni.has(audio_name) and audios_manager_omni[audio_name]:
+		original_vol = audios_manager_omni[audio_name].volume_db
+
+	var tween = create_tween()
+	tween.tween_property(audio_player, "volume_db", -80.0, duration).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN)
+	
+	tween.finished.connect(func():
+		audio_player.stop()
+		audio_player.volume_db = original_vol
+	)
+
+## Plays a music track, stopping any currently playing music.
+func play_music(audio_name: String) -> void:
+	if _current_music == audio_name and is_playing_omni(audio_name):
+		return
+		
+	if _current_music != "" and is_playing_omni(_current_music):
+		stop_omni(_current_music)
+		
+	play_omni(audio_name)
+	_current_music = audio_name
+
 ## Start an audio playback with a start and end timer. Works like an audio clip.
 func play_cut_omni(audio_name: String, start_time: float, end_time: float) -> void:
 	var duration := end_time - start_time
