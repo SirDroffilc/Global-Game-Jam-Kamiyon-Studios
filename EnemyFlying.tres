@@ -8,5 +8,5 @@ data = PackedByteArray("//PkZAAAAAGkAAAAAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVVVV
 [resource]
 script = ExtResource("1_rg4gw")
 stream = SubResource("AudioStreamMP3_rg4gw")
-volume_db = -25.9
+volume_db = -15.099999999999994
 metadata/_custom_type_script = "uid://bh17acw8bebir"

@@ -82,11 +82,13 @@ func _physics_process(delta: float) -> void:
 	
 	if is_on_floor() and not was_on_floor:
 		spawn_dust_particles(8, 1.0, 150.0)
+		AudioManager.play_omni("PlayerLand")
 	
 	if is_on_floor() and abs(velocity.x) > 10.0:
 		dust_spawn_timer += delta
 		if dust_spawn_timer >= dust_interval:
 			spawn_dust_particles(2, 0.2, 40.0)
+			AudioManager.play_omni("PlayerRun")
 			dust_spawn_timer = 0
 	else:
 		dust_spawn_timer = 0
@@ -95,7 +97,9 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("jump"):
 		jump_buffer_timer = jump_buffer_time
-		if is_on_floor(): spawn_dust_particles(5, 0.5, 80.0)
+		if is_on_floor(): 
+			spawn_dust_particles(5, 0.5, 80.0)
+			AudioManager.play_omni("PlayerJump")
 
 	if is_on_floor(): can_dash = true
 	
@@ -108,6 +112,8 @@ func _on_melee_weapon_hitbox_area_entered(area: Area2D) -> void:
 	var target = area.get_parent()
 	if target.has_method("take_damage"):
 		apply_shake(0.2)
+		var slash_sfx_list = ["PlayerSlash1", "PlayerSlash2", "PlayerSlash3"]
+		AudioManager.play_omni(slash_sfx_list.pick_random())
 		target.take_damage(PlayerManager.get_damage(), global_position)
 
 # --- Visual Effects Functions ---
@@ -176,6 +182,7 @@ func shoot_arrow() -> void:
 	if arrow_scene:
 		ranged_cooldown_timer = ranged_cooldown
 		apply_shake(0.15) 
+		AudioManager.play_omni("PlayerShoot")
 		spawn_shoot_smoke()
 		var arrow_instance = arrow_scene.instantiate()
 		arrow_instance.global_position = arrow_start_position.global_position
@@ -195,6 +202,7 @@ func _apply_recoil(direction: Vector2) -> void:
 
 func take_damage(amount: int) -> void:
 	PlayerManager.subtract_health(amount)
+	AudioManager.play_omni("PlayerHurt")
 	flash_hurt()
 	apply_shake(0.4) 
 	spawn_hit_particles(global_position, Color.BLACK)
@@ -362,30 +370,8 @@ func play_animation(anim_base_name: String) -> void:
 		if anim_base_name != "attack": hitbox_shape.set_deferred("disabled", true)
 		if animated_sprite.sprite_frames.has_animation(anim_to_play): animated_sprite.play(anim_to_play)
 
-# --- Damage & Shake ---
-func take_damage(amount: int) -> void:
-	PlayerManager.subtract_health(amount)
-	AudioManager.play_omni("PlayerHurt")
-	flash_hurt()
-	apply_shake(0.4) 
-
-func flash_hurt() -> void:
-	# --- Local Variable Definition ---
-	var flash_color: Color = Color(5, 5, 5, 1) # Intense Monochrome Glow
-	var duration: float = 0.12
-
-	var hurt_tween = create_tween()
-	
-	# 2. Instant Impact (No duration)
-	# Sudden high-contrast shift replaces the need for red
-	animated_sprite.modulate = flash_color
-	
-	# 3. Recovery Phase
-	# We run these together so the sprite "bounces" back to normal
-	hurt_tween.set_parallel(true)
-	
-	# Fade from Glow to Normal White
-	hurt_tween.tween_property(animated_sprite, "modulate", Color.WHITE, duration)
+# --- Shake Logic ---
+# (Damage logic merged into top functions)
 
 # FIXED: Added Clamp to prevent excessive shaking
 func apply_shake(amount: float) -> void:
@@ -396,29 +382,12 @@ func _execute_shake() -> void:
 	camera.offset.x = max_shake_offset.x * amount * randf_range(-1, 1)
 	camera.offset.y = max_shake_offset.y * amount * randf_range(-1, 1)
 
-# --- Combat Actions ---
-func shoot_arrow() -> void:
-	if arrow_scene:
-		ranged_cooldown_timer = ranged_cooldown
-		AudioManager.play_omni("PlayerShoot")
-		apply_shake(0.03) 
-		var arrow_instance = arrow_scene.instantiate()
-		arrow_instance.global_position = arrow_start_position.global_position
-		var mouse_pos = get_global_mouse_position()
-		var shoot_dir = (mouse_pos - arrow_instance.global_position).normalized()
-		arrow_instance.direction = shoot_dir
-		arrow_instance.rotation = shoot_dir.angle()
-		get_tree().current_scene.add_child(arrow_instance)
-
-func _on_melee_weapon_hitbox_area_entered(area: Area2D) -> void:
-	if area.get_parent().has_method("PlayerHurt"):
-		apply_shake(0.2)
-		AudioManager.play_omni("PlayerSlash")
-		area.get_parent().take_damage(PlayerManager.get_damage(), global_position)
+# (Combat actions merged into top functions)
 
 func _on_death() -> void:
 	if state_machine.current_state and state_machine.current_state.name != "DeathState":
 		state_machine.change_state($StateMachine/DeathState)
+	AudioManager.play_omni("PlayerDeath")
 	apply_shake(0.25)
 
 func _input(event: InputEvent) -> void:

@@ -34,6 +34,7 @@ func enter() -> void:
 	parent.play_animation("dash")
 	parent.animated_sprite.modulate = Color(15, 15, 15, 1) # Turn player pure white
 	parent.spawn_ghost() # Initial ghost
+	AudioManager.play_omni("PlayerDash")
 
 func process_physics(delta: float) -> State:
 	dash_timer += delta
