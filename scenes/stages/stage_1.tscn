@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cuh3f8k1pur5l" path="res://area_label_trigger.tscn" id="2_emlwg"]
 [ext_resource type="Script" uid="uid://c7baow2cgd3wd" path="res://scenes/stages/tile_map.gd" id="2_f2dxg"]
 [ext_resource type="Texture2D" uid="uid://bx30taerkgaxt" path="res://assets/spritesheets/tileset.png" id="2_qm7fq"]
+[ext_resource type="Texture2D" uid="uid://dek5b8pbq2gqx" path="res://assets/User Interface/bg3.png" id="3_eda8h"]
 [ext_resource type="PackedScene" uid="uid://gaswrufkubp7" path="res://scenes/stages/checkpoint.tscn" id="4_emlwg"]
 [ext_resource type="Script" uid="uid://kebanmfr6qa7" path="res://scenes/stages/spawner.gd" id="4_qm7fq"]
 [ext_resource type="Script" uid="uid://dja4ji2408pv5" path="res://scenes/stages/camera_2d.gd" id="5_ncvry"]
@@ -13,6 +14,36 @@
 [ext_resource type="Script" uid="uid://bd7lf8v6d8fm7" path="res://scenes/stages/hudcontroller.gd" id="9_mm8bn"]
 [ext_resource type="Texture2D" uid="uid://02iaflpad2an" path="res://assets/User Interface/Memory Shards.png" id="11_qm7fq"]
 [ext_resource type="Texture2D" uid="uid://b0hdtfkmgh1l4" path="res://assets/spritesheets/Health - Polygon.png" id="12_emlwg"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ncvry"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(500, 200, 1)
+spread = 86.351
+initial_velocity_min = 20.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 20, 0)
+
+[sub_resource type="Environment" id="Environment_ncvry"]
+background_mode = 3
+background_energy_multiplier = 2.4
+ambient_light_energy = 1.45
+glow_enabled = true
+glow_levels/2 = 1.53
+glow_levels/4 = 1.45
+glow_levels/6 = 1.56
+glow_intensity = 1.5
+glow_strength = 0.51
+glow_bloom = 0.29
+fog_enabled = true
+fog_light_energy = 2.7
+fog_sun_scatter = 0.19
+fog_density = 0.0835
+fog_sky_affect = 0.606
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_l1pay"]
+
+[sub_resource type="Compositor" id="Compositor_1tge3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_emlwg"]
 texture = ExtResource("2_qm7fq")
@@ -187,36 +218,6 @@ physics_layer_0/collision_layer = 16
 physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_qm7fq")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ncvry"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(500, 200, 1)
-spread = 86.351
-initial_velocity_min = 20.0
-initial_velocity_max = 80.0
-gravity = Vector3(0, 20, 0)
-
-[sub_resource type="Environment" id="Environment_ncvry"]
-background_mode = 3
-background_energy_multiplier = 2.4
-ambient_light_energy = 1.45
-glow_enabled = true
-glow_levels/2 = 1.53
-glow_levels/4 = 1.45
-glow_levels/6 = 1.56
-glow_intensity = 1.5
-glow_strength = 0.51
-glow_bloom = 0.29
-fog_enabled = true
-fog_light_energy = 2.7
-fog_sun_scatter = 0.19
-fog_density = 0.0835
-fog_sky_affect = 0.606
-
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_l1pay"]
-
-[sub_resource type="Compositor" id="Compositor_1tge3"]
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qm7fq"]
 bg_color = Color(0.09620472, 0.09620475, 0.09620469, 1)
 border_width_left = 2
@@ -244,25 +245,6 @@ corner_radius_bottom_left = 6
 [node name="Stage1" type="Node2D" unique_id=1551565052]
 script = ExtResource("1_bjuw2")
 
-[node name="TileMap" type="Node" parent="." unique_id=129294795]
-script = ExtResource("2_f2dxg")
-
-[node name="TileMapLayerDark" type="TileMapLayer" parent="TileMap" unique_id=1022112033]
-modulate = Color(0.34407538, 0.34407586, 0.3440756, 1)
-light_mask = 0
-tile_map_data = PackedByteArray("AAAAAAAAAAAFAAMAAAD9/wAAAAAGAAMAAAD+/wAAAAAEAAMAAAD//wAAAAAEAAMAAAA=")
-tile_set = SubResource("TileSet_eda8h")
-
-[node name="TileMapLayerLight" type="TileMapLayer" parent="TileMap" unique_id=1500062370]
-modulate = Color(0.6955032, 0.6955031, 0.6955031, 1)
-tile_map_data = PackedByteArray("AAABAAAAAAAGAAMAAAACAAAAAAADAAMAAAADAAAAAAAHAAMAAAAEAAAAAAAHAAMAAAA=")
-tile_set = SubResource("TileSet_f2dxg")
-
-[node name="TileMapLayerNeutral" type="TileMapLayer" parent="TileMap" unique_id=1415331282]
-modulate = Color(0, 0, 0, 1)
-tile_map_data = PackedByteArray("AAAFAAAAAAAEAAMAAAAGAAAAAAAFAAMAAAAHAAAAAAAGAAMAAAAIAAAAAAAGAAMAAAAJAAAAAAAEAAMAAAAKAAAAAAADAAMAAAALAAAAAAAEAAMAAAAMAAAAAAAFAAMAAAANAAAAAAAGAAMAAAAOAAAAAAAHAAMAAAAPAAAAAAADAAMAAAAQAAAAAAAEAAMAAAARAAAAAAAFAAMAAAASAAAAAAAGAAMAAAATAAAAAAAHAAMAAAAUAAAAAAADAAMAAAAVAAAAAAAEAAMAAAAWAAAAAAAFAAMAAAAXAAAAAAAGAAMAAAAYAAAAAAAHAAMAAAAZAAAAAAADAAMAAAAaAAAAAAAEAAMAAAAbAAAAAAAFAAMAAAAcAAAAAAAGAAMAAAAdAAAAAAAHAAMAAAAeAAAAAAADAAMAAAAfAAAAAAAEAAMAAAAgAAAAAAAFAAMAAAAhAAAAAAAGAAMAAAAiAAAAAAAHAAMAAAAKAPP/AAADAAMAAAAKAPT/AAADAAMAAAAKAPX/AAADAAMAAAAKAPb/AAADAAMAAAAKAPf/AAADAAMAAAAKAPj/AAADAAMAAAAKAPn/AAADAAMAAAAKAPr/AAADAAMAAAAKAPv/AAADAAMAAAAKAPz/AAADAAMAAAAKAP3/AAADAAMAAAAKAP7/AAADAAMAAAAKAP//AAADAAMAAAAKAPD/AAADAAMAAAAKAPH/AAADAAMAAAAKAPL/AAADAAMAAAALAPD/AAADAAMAAAAMAPD/AAAEAAMAAAANAPD/AAAFAAMAAAAOAPD/AAAGAAMAAAAPAPD/AAAHAAMAAAAQAPD/AAADAAMAAAARAPD/AAAEAAMAAAASAPD/AAAFAAMAAAATAPD/AAAGAAMAAAAUAPD/AAAHAAMAAAAVAPD/AAADAAMAAAAWAPD/AAAEAAMAAAAXAPD/AAAFAAMAAAAYAPD/AAAGAAMAAAAZAPD/AAAHAAMAAAAaAPD/AAADAAMAAAAbAPD/AAAEAAMAAAAcAPD/AAAFAAMAAAAdAPD/AAAGAAMAAAAeAPD/AAAHAAMAAAAfAPD/AAADAAMAAAAgAPD/AAAEAAMAAAAhAPD/AAAFAAMAAAAiAPD/AAAGAAMAAAAiAPH/AAADAAMAAAAiAPL/AAADAAMAAAAiAPP/AAADAAMAAAAiAPT/AAADAAMAAAAiAPX/AAADAAMAAAAiAPb/AAADAAMAAAAiAPf/AAADAAMAAAAiAPj/AAADAAMAAAAiAPn/AAADAAMAAAAiAPr/AAADAAMAAAAiAPv/AAADAAMAAAAiAPz/AAADAAMAAAAiAP3/AAADAAMAAAAiAP7/AAADAAMAAAAiAP//AAADAAMAAAA=")
-tile_set = SubResource("TileSet_emlwg")
-
 [node name="Checkpoints" type="Node" parent="." unique_id=74316298]
 
 [node name="Checkpoint" parent="Checkpoints" unique_id=1662477128 instance=ExtResource("4_emlwg")]
@@ -288,6 +270,36 @@ offset_top = -1437.0
 offset_right = 2811.0
 offset_bottom = 1036.0
 color = Color(0.9297146, 0.9297147, 0.9297146, 1)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2041210252]
+visible = false
+self_modulate = Color(0.51478636, 0.51478636, 0.51478636, 1)
+z_index = 22
+offset_left = -552.0
+offset_top = -418.0
+offset_right = 536.6184
+offset_bottom = 146.0
+texture = ExtResource("3_eda8h")
+flip_h = true
+
+[node name="TileMap" type="Node" parent="." unique_id=129294795]
+script = ExtResource("2_f2dxg")
+
+[node name="TileMapLayerDark" type="TileMapLayer" parent="TileMap" unique_id=1022112033]
+modulate = Color(0.34407538, 0.34407586, 0.3440756, 1)
+light_mask = 0
+tile_map_data = PackedByteArray("AAAAAAAAAAAFAAMAAAD9/wAAAAAGAAMAAAD+/wAAAAAEAAMAAAD//wAAAAAEAAMAAAA=")
+tile_set = SubResource("TileSet_eda8h")
+
+[node name="TileMapLayerLight" type="TileMapLayer" parent="TileMap" unique_id=1500062370]
+modulate = Color(0.6955032, 0.6955031, 0.6955031, 1)
+tile_map_data = PackedByteArray("AAABAAAAAAAGAAMAAAACAAAAAAADAAMAAAADAAAAAAAHAAMAAAAEAAAAAAAHAAMAAAA=")
+tile_set = SubResource("TileSet_f2dxg")
+
+[node name="TileMapLayerNeutral" type="TileMapLayer" parent="TileMap" unique_id=1415331282]
+modulate = Color(0, 0, 0, 1)
+tile_map_data = PackedByteArray("AAAFAAAAAAAEAAMAAAAGAAAAAAAFAAMAAAAHAAAAAAAGAAMAAAAIAAAAAAAGAAMAAAAJAAAAAAAEAAMAAAAKAAAAAAADAAMAAAALAAAAAAAEAAMAAAAMAAAAAAAFAAMAAAANAAAAAAAGAAMAAAAOAAAAAAAHAAMAAAAPAAAAAAADAAMAAAAQAAAAAAAEAAMAAAARAAAAAAAFAAMAAAASAAAAAAAGAAMAAAATAAAAAAAHAAMAAAAUAAAAAAADAAMAAAAVAAAAAAAEAAMAAAAWAAAAAAAFAAMAAAAXAAAAAAAGAAMAAAAYAAAAAAAHAAMAAAAZAAAAAAADAAMAAAAaAAAAAAAEAAMAAAAbAAAAAAAFAAMAAAAcAAAAAAAGAAMAAAAdAAAAAAAHAAMAAAAeAAAAAAADAAMAAAAfAAAAAAAEAAMAAAAgAAAAAAAFAAMAAAAhAAAAAAAGAAMAAAAiAAAAAAAHAAMAAAAKAPP/AAADAAMAAAAKAPT/AAADAAMAAAAKAPX/AAADAAMAAAAKAPb/AAADAAMAAAAKAPf/AAADAAMAAAAKAPj/AAADAAMAAAAKAPn/AAADAAMAAAAKAPr/AAADAAMAAAAKAPv/AAADAAMAAAAKAPz/AAADAAMAAAAKAP3/AAADAAMAAAAKAP7/AAADAAMAAAAKAP//AAADAAMAAAAKAPD/AAADAAMAAAAKAPH/AAADAAMAAAAKAPL/AAADAAMAAAALAPD/AAADAAMAAAAMAPD/AAAEAAMAAAANAPD/AAAFAAMAAAAOAPD/AAAGAAMAAAAPAPD/AAAHAAMAAAAQAPD/AAADAAMAAAARAPD/AAAEAAMAAAASAPD/AAAFAAMAAAATAPD/AAAGAAMAAAAUAPD/AAAHAAMAAAAVAPD/AAADAAMAAAAWAPD/AAAEAAMAAAAXAPD/AAAFAAMAAAAYAPD/AAAGAAMAAAAZAPD/AAAHAAMAAAAaAPD/AAADAAMAAAAbAPD/AAAEAAMAAAAcAPD/AAAFAAMAAAAdAPD/AAAGAAMAAAAeAPD/AAAHAAMAAAAfAPD/AAADAAMAAAAgAPD/AAAEAAMAAAAhAPD/AAAFAAMAAAAiAPD/AAAGAAMAAAAiAPH/AAADAAMAAAAiAPL/AAADAAMAAAAiAPP/AAADAAMAAAAiAPT/AAADAAMAAAAiAPX/AAADAAMAAAAiAPb/AAADAAMAAAAiAPf/AAADAAMAAAAiAPj/AAADAAMAAAAiAPn/AAADAAMAAAAiAPr/AAADAAMAAAAiAPv/AAADAAMAAAAiAPz/AAADAAMAAAAiAP3/AAADAAMAAAAiAP7/AAADAAMAAAAiAP//AAADAAMAAAALAPv/AAAAAAYAAAAMAPv/AAAAAAYAAAA=")
+tile_set = SubResource("TileSet_emlwg")
 
 [node name="Spawner" type="Node2D" parent="." unique_id=1874944024]
 script = ExtResource("4_qm7fq")
