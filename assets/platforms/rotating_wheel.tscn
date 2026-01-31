@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://lbk3m7juhs65"]
+
+[ext_resource type="Texture2D" uid="uid://ofk4suifvu13" path="res://assets/spritesheets/Dark.png" id="1_l0li7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hgqr0"]
+radius = 19.0
+
+[sub_resource type="Animation" id="Animation_emjir"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_gkpcc"]
+resource_name = "rotation"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.283185307179586]
+}
+
+[sub_resource type="Animation" id="Animation_j1jsu"]
+resource_name = "rotation_2"
+length = 10.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -6.283185307179586]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2jk8x"]
+_data = {
+&"RESET": SubResource("Animation_emjir"),
+&"rotation": SubResource("Animation_gkpcc"),
+&"rotation_2": SubResource("Animation_j1jsu")
+}
+
+[node name="rotating_wheel" type="Node2D" unique_id=1585717802]
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="." unique_id=866261348]
+collision_layer = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D" unique_id=161869568]
+texture = ExtResource("1_l0li7")
+region_enabled = true
+region_rect = Rect2(156.23969, 42.985878, 40.22296, 42.021545)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D" unique_id=979170608]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_hgqr0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody2D" unique_id=1988211632]
+root_node = NodePath("../CollisionShape2D")
+libraries/ = SubResource("AnimationLibrary_2jk8x")
+autoplay = &"rotation_2"
