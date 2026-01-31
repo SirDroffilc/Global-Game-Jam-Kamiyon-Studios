@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c3qyc6nl1ju4r"]
 
-[ext_resource type="Script" uid="uid://bt8btg1fpvjs6" path="res://scripts/light_arrow.gd" id="1_x3cet"]
+[ext_resource type="Script" uid="uid://bt8btg1fpvjs6" path="res://scripts/players/light_arrow.gd" id="1_x3cet"]
 [ext_resource type="Texture2D" uid="uid://48d0xlfcv4xu" path="res://assets/spritesheets/beam_spritesheet.png" id="2_4ilq1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3sm05"]

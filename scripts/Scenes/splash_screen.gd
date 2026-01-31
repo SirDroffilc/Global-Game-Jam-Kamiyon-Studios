@@ -1,7 +1,7 @@
 extends Control
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-const MAIN_SCENE_PATH: String = "res://scenes/MainScene.tscn"
+const MAIN_SCENE_PATH: String = "res://scenes/MainMenu.tscn"
 
 func _ready() -> void:
 	# Connect the signal from your AnimationPlayer child

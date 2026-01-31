@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxadfraqo2dek"
-path="res://.godot/imported/ECLIPSE Logo.png-ac32b986706185bdc4cbb69cbad64243.ctex"
+uid="uid://6bc3y76rxf8d"
+path="res://.godot/imported/Press to Skip.png-450683e283dd94df9b8a2261fb9c086f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ECLIPSE Logo.png"
-dest_files=["res://.godot/imported/ECLIPSE Logo.png-ac32b986706185bdc4cbb69cbad64243.ctex"]
+source_file="res://assets/User Interface/Press to Skip.png"
+dest_files=["res://.godot/imported/Press to Skip.png-450683e283dd94df9b8a2261fb9c086f.ctex"]
 
 [params]
 
