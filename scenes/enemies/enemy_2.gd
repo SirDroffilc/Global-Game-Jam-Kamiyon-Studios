@@ -1,10 +1,11 @@
 extends CharacterBody2D
 
 # --- Attributes ---
-@export var base_health: int = 30
-@export var damage: int = 50
-@export var walk_speed: float = 50.0 
-@export var stopping_distance: float = 60.0 
+@export var base_health: int = 50
+@export var damage: int = 30
+@export var fly_speed: float = 60.0 
+@export var stopping_distance_x: float = 200.0 # Renamed for clarity
+@export var stopping_distance_y: float = -100.0 # New vertical buffer
 @onready var current_health: int = base_health
 
 # --- Loot Attributes ---
@@ -14,124 +15,118 @@ var assigned_drop: DropType
 @export var heal_amount: int = 25
 
 # --- Attack Attributes ---
-@export var tackle_force_x: float = 450.0 
-@export var tackle_force_y: float = -250.0 
-var is_attacking: bool = false
+@export var spit_scene: PackedScene = preload("res://scenes/enemies/enemy_spit.tscn")
 var is_dying: bool = false
-var tackle_cooldown_timer: float = 0.0 
-var has_dealt_damage: bool = false 
+var time_passed: float = 0.0
 
 # --- Visibility & Target ---
 var is_active: bool = false
 var player: CharacterBody2D = null
 
-# --- Knockback Variables ---
-@export var knockback_strength: float = 150.0 
-@export var knockback_friction: float = 1500.0 
+# --- Meticulous Knockback Variables ---
+@export var knockback_strength: float = 120.0 
+@export var knockback_friction: float = 1000.0 
 var knockback_velocity: Vector2 = Vector2.ZERO
 
 # --- Node References ---
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var tackle_hitbox: Area2D = $TackleHitbox
+@onready var attack_marker: Marker2D = $AttackMarker
+@onready var attack_timer: Timer = $AttackTimer
 @onready var item_drop: Area2D = $ItemDrop
 @onready var item_collision: CollisionShape2D = $ItemDrop/CollisionShape2D
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("Player")
-	# Connect death animation signal
+	if player == null:
+		print(">>> ERROR: Enemy 2 could not find Player group!")
+		
 	animated_sprite.animation_finished.connect(_on_animation_finished)
 	
-	# Initial loot state: Hidden and physically disabled
 	item_drop.visible = false
 	item_collision.disabled = true
 
 func _physics_process(delta: float) -> void:
 	if is_dying: return 
 
-	# Handle gravity
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-	else:
-		velocity.y = 0
-		# Reset horizontal momentum after landing if an attack was finished
-		if is_attacking and tackle_cooldown_timer <= 0:
-			is_attacking = false
-			velocity.x = 0 
-
-	# Manage attack cooldown
-	if tackle_cooldown_timer > 0:
-		tackle_cooldown_timer -= delta
-
+	time_passed += delta
 	var move_velocity = Vector2.ZERO
 	
-	# Following/Chasing Logic
-	if is_active and player and not is_attacking:
-		var dist_to_player = player.global_position.x - global_position.x
+	if is_active and player:
+		# Calculate separate X and Y distances
+		var diff_x = player.global_position.x - global_position.x
+		var diff_y = player.global_position.y - global_position.y
 		
-		if abs(dist_to_player) > stopping_distance:
-			move_velocity.x = sign(dist_to_player) * walk_speed
-			animated_sprite.flip_h = dist_to_player > 0
-			_handle_hitbox_flip(dist_to_player > 0)
-			animated_sprite.play("walk")
-		else:
-			move_velocity.x = 0
+		# --- Adjusted Movement Logic ---
+		# Move on X-axis if beyond horizontal stopping distance
+		if abs(diff_x) > stopping_distance_x:
+			move_velocity.x = sign(diff_x) * fly_speed
+		
+		# Move on Y-axis if beyond vertical stopping distance
+		# We use (diff_y + stopping_distance_y) to aim for a spot ABOVE the player
+		var target_y_offset = diff_y + stopping_distance_y
+		if abs(target_y_offset) > 20.0: # Small buffer to prevent jitter
+			move_velocity.y = sign(target_y_offset) * fly_speed
+		
+		# Set animations
+		if move_velocity.length() > 0:
 			animated_sprite.play("idle")
-			animated_sprite.flip_h = dist_to_player > 0
-			_handle_hitbox_flip(dist_to_player > 0)
-
-	# Apply and decay knockback momentum
-	knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, knockback_friction * delta)
-	
-	if not is_attacking:
-		velocity.x = move_velocity.x + knockback_velocity.x
-	else:
-		velocity.x += knockback_velocity.x 
+		else:
+			animated_sprite.play("idle")
 		
+		# Housefly "Wobble"
+		var fly_wobble = Vector2(0, sin(time_passed * 5.0) * 40.0)
+		move_velocity += fly_wobble
+
+		# Face the player
+		animated_sprite.flip_h = diff_x > 0
+		_handle_marker_flip(diff_x > 0)
+
+	knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, knockback_friction * delta)
+	velocity = move_velocity + knockback_velocity
 	move_and_slide()
 
-func _handle_hitbox_flip(is_flipped: bool) -> void:
-	# Flips the tackle area scale to match sprite orientation
-	tackle_hitbox.scale.x = 1 if not is_flipped else -1
+func _handle_marker_flip(is_flipped: bool) -> void:
+	attack_marker.position.x = abs(attack_marker.position.x) * (1 if is_flipped else -1)
 
 # --- Attack Logic ---
 func _on_attack_timer_timeout() -> void:
-	if is_active and player and is_on_floor() and not is_dying and not is_attacking:
-		perform_tackle()
+	if is_active and player and not is_dying:
+		perform_spit_attack()
 
-func perform_tackle() -> void:
-	is_attacking = true
-	has_dealt_damage = false 
-	tackle_cooldown_timer = 0.2 
+# Inside Enemy2.gd - perform_spit_attack function
+func perform_spit_attack() -> void:
 	animated_sprite.play("attack")
 	
-	var attack_dir = 1 if animated_sprite.flip_h else -1
-	velocity.x = attack_dir * tackle_force_x
-	velocity.y = tackle_force_y
-
-func _on_tackle_hitbox_body_entered(body: Node2D) -> void:
-	if is_attacking and not has_dealt_damage and not is_dying:
-		if body.has_method("take_damage"):
-			body.take_damage(damage)
-			has_dealt_damage = true
+	if spit_scene:
+		var spit = spit_scene.instantiate()
+		spit.global_position = attack_marker.global_position
+		
+		# Calculate straight-line direction toward player
+		var shoot_dir = (player.global_position - global_position).normalized()
+		
+		# Add to the main stage so it doesn't move with the fly
+		get_tree().current_scene.add_child(spit)
+		
+		# Pass direction and current enemy damage to the spit
+		if spit.has_method("launch"):
+			spit.launch(shoot_dir, damage)
 
 # --- Damage & Death ---
 func _on_visible_on_screen_notifier_screen_entered() -> void:
 	is_active = true
+	attack_timer.start()
 
 func _on_visible_on_screen_notifier_screen_exited() -> void:
 	is_active = false
+	attack_timer.stop()
 
 func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
 	if is_dying: return
-	
 	current_health -= amount
 	flash_hurt()
-	
 	if attacker_pos != Vector2.ZERO:
 		var knockback_dir = (global_position - attacker_pos).normalized()
-		var impact_vector = Vector2(knockback_dir.x, -0.1).normalized()
-		knockback_velocity = impact_vector * knockback_strength 
-		
+		knockback_velocity = knockback_dir * knockback_strength 
 	if current_health <= 0:
 		die()
 
@@ -143,14 +138,11 @@ func flash_hurt() -> void:
 func die() -> void:
 	is_dying = true
 	is_active = false
+	attack_timer.stop()
 	velocity = Vector2.ZERO 
-	
-	# Meticulous: Clear physics layers so player can overlap with loot
 	collision_layer = 0
 	collision_mask = 0
-	tackle_hitbox.monitoring = false
 	$Hurtbox.queue_free()
-	
 	animated_sprite.play("death")
 
 func _on_animation_finished() -> void:
@@ -159,29 +151,18 @@ func _on_animation_finished() -> void:
 
 # --- Loot Implementation ---
 func _spawn_loot() -> void:
-	# 1. Randomize drop type
 	assigned_drop = DropType.values().pick_random()
-	
-	# 2. Swap Visibility: Hide enemy corpse, show item
 	animated_sprite.visible = false
 	item_drop.visible = true
-	
-	# 3. Enable collision via set_deferred to avoid physics thread errors
 	item_collision.set_deferred("disabled", false)
 	
-	# 4. Tween "Pop" for visual feedback
 	var tween = create_tween()
 	item_drop.scale = Vector2.ZERO
 	tween.tween_property(item_drop, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK)
-	
-	print(">>> LOOT DROPPED: ", DropType.keys()[assigned_drop])
 
 func _on_item_drop_body_entered(body: Node2D) -> void:
-	# This function handles the actual pickup
 	if body.is_in_group("Player"):
 		_apply_loot_bonus()
-		
-		# Finally free the node from the tree once loot is claimed
 		queue_free()
 
 func _apply_loot_bonus() -> void:

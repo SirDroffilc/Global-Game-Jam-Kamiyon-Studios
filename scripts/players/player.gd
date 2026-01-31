@@ -2,7 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 # --- Signals ---
-signal element_toggled(is_light: bool) # The HUD will listen to this
+signal element_toggled(is_light: bool) 
 
 var is_light: bool = true
 
@@ -17,6 +17,7 @@ var is_light: bool = true
 @onready var camera: Camera2D = get_viewport().get_camera_2d() 
 @export var shake_decay: float = 5.0
 @export var max_shake_offset: Vector2 = Vector2(250, 250) 
+@export var max_shake_trauma: float = 0.2 # Added maximum trauma cap
 var shake_trauma: float = 0.0
 
 @export var arrow_scene: PackedScene = preload("res://scenes/players/light_arrow.tscn")
@@ -60,7 +61,6 @@ func _physics_process(delta: float) -> void:
 	handle_flipping()
 	state_machine.process_physics(delta)
 
-# --- Input Handling ---
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("skill1"):
 		toggle_element_state()
@@ -91,7 +91,6 @@ func toggle_element_state() -> void:
 	PlayerManager.is_light = is_light
 	update_physics_layers()
 	
-	# Emit signal to inform the UI
 	element_toggled.emit(is_light)
 	
 	if state_machine.current_state:
@@ -145,14 +144,29 @@ func take_damage(amount: int) -> void:
 	apply_shake(0.4) 
 
 func flash_hurt() -> void:
-	var tween = create_tween()
-	animated_sprite.modulate = Color(10, 0.2, 0.2, 1) 
-	tween.tween_property(animated_sprite, "modulate", Color.WHITE, 0.1)
+	# --- Local Variable Definition ---
+	var flash_color: Color = Color(5, 5, 5, 1) # Intense Monochrome Glow
+	var duration: float = 0.12
 
+	var hurt_tween = create_tween()
+	
+	# 2. Instant Impact (No duration)
+	# Sudden high-contrast shift replaces the need for red
+	animated_sprite.modulate = flash_color
+	
+	# 3. Recovery Phase
+	# We run these together so the sprite "bounces" back to normal
+	hurt_tween.set_parallel(true)
+	
+	# Fade from Glow to Normal White
+	hurt_tween.tween_property(animated_sprite, "modulate", Color.WHITE, duration)
+
+# FIXED: Added Clamp to prevent excessive shaking
 func apply_shake(amount: float) -> void:
-	shake_trauma = min(shake_trauma + amount, 1.0)
+	shake_trauma = clamp(shake_trauma + amount, 0.0, max_shake_trauma)
 
 func _execute_shake() -> void:
+	# Trauma is squared for a more natural feel
 	var amount = pow(shake_trauma, 2)
 	camera.offset.x = max_shake_offset.x * amount * randf_range(-1, 1)
 	camera.offset.y = max_shake_offset.y * amount * randf_range(-1, 1)
