@@ -4,7 +4,7 @@ extends CharacterBody2D
 # --- Signals ---
 signal element_toggled(is_light: bool) 
 
-var is_light: bool = true
+var is_light: bool = false
 
 # --- Node References ---
 @onready var state_machine: StateMachine = $StateMachine

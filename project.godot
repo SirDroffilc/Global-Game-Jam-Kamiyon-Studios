@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Global Game Jam"
-run/main_scene="uid://d3ykragivhif8"
+run/main_scene="uid://c5sjm2yap5737"
 config/features=PackedStringArray("4.6", "Forward Plus")
 boot_splash/show_image=false
 boot_splash/use_filter=false

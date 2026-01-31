@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://d3ykragivhif8"]
+[gd_scene format=4 uid="uid://c5sjm2yap5737"]
 
 [ext_resource type="Script" uid="uid://bjrudb8ewdhsr" path="res://scenes/stages/stage_1.gd" id="1_m0aea"]
 [ext_resource type="Script" uid="uid://c7baow2cgd3wd" path="res://scenes/stages/tile_map.gd" id="2_hn3wy"]
@@ -9,16 +9,25 @@
 [ext_resource type="Texture2D" uid="uid://csd81ygyilmgx" path="res://assets/spritesheets/white.png" id="5_tdccu"]
 [ext_resource type="PackedScene" uid="uid://dmh3uptk4uctc" path="res://scenes/stages/fall_zone.tscn" id="6_85few"]
 [ext_resource type="PackedScene" uid="uid://gaswrufkubp7" path="res://scenes/stages/checkpoint.tscn" id="6_pfres"]
+[ext_resource type="Texture2D" uid="uid://cnj1p3dh7i1wp" path="res://assets/User Interface/[Tutorial - 1] A+D.png" id="7_s6lcp"]
 [ext_resource type="Script" uid="uid://bd7lf8v6d8fm7" path="res://scenes/stages/hudcontroller.gd" id="7_y2v03"]
+[ext_resource type="Texture2D" uid="uid://c3flmsb3wbboq" path="res://assets/User Interface/bg2.png" id="8_7ayai"]
+[ext_resource type="Texture2D" uid="uid://bw5cuh6y35goy" path="res://assets/User Interface/bg1.png" id="8_88vjm"]
 [ext_resource type="Texture2D" uid="uid://dqtf4avr6746c" path="res://assets/User Interface/Game HUD (Masked).png" id="8_lykdh"]
+[ext_resource type="Texture2D" uid="uid://4oiubpf7jgug" path="res://assets/User Interface/[Tutorial - 2] Double Jump.png" id="8_mp37p"]
+[ext_resource type="Texture2D" uid="uid://da3kawk1pdbx5" path="res://assets/User Interface/[Tutorial - 3] Dash.png" id="9_66lkl"]
 [ext_resource type="Texture2D" uid="uid://02iaflpad2an" path="res://assets/User Interface/Memory Shards.png" id="9_mof2j"]
+[ext_resource type="Texture2D" uid="uid://c17h685hs3xt3" path="res://assets/User Interface/fog_overlay.png" id="9_uhiv2"]
+[ext_resource type="Texture2D" uid="uid://dwnixghf5jq6p" path="res://assets/User Interface/[Tutorial - 4] Mask.png" id="10_f0hf6"]
 [ext_resource type="Texture2D" uid="uid://b0hdtfkmgh1l4" path="res://assets/spritesheets/Health - Polygon.png" id="10_s6lcp"]
+[ext_resource type="Texture2D" uid="uid://cbgw0rjys1uu0" path="res://assets/User Interface/[Tutorial - 5] Attack.png" id="11_88vjm"]
 [ext_resource type="PackedScene" uid="uid://cuh3f8k1pur5l" path="res://area_label_trigger.tscn" id="11_mp37p"]
 [ext_resource type="PackedScene" uid="uid://lbk3m7juhs65" path="res://assets/platforms/rotating_wheel.tscn" id="14_tdccu"]
 [ext_resource type="PackedScene" uid="uid://bs3rud6rdy7ab" path="res://assets/platforms/movingv_platform.tscn" id="16_85few"]
 [ext_resource type="PackedScene" uid="uid://y3k3yido3fr2" path="res://assets/platforms/movingv_platform_w.tscn" id="17_y2v03"]
 [ext_resource type="PackedScene" uid="uid://c25cf3gylkujt" path="res://assets/platforms/movingh_platform.tscn" id="18_mof2j"]
 [ext_resource type="PackedScene" uid="uid://dmgr5aaivybpw" path="res://assets/platforms/movingh_platform_w.tscn" id="19_s6lcp"]
+[ext_resource type="PackedScene" uid="uid://cc0fmgwllh68a" path="res://scenes/enemies/enemy_1.tscn" id="25_f0hf6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_emlwg"]
 texture = ExtResource("3_f0cuo")
@@ -598,18 +607,137 @@ camera_attributes = SubResource("CameraAttributesPractical_l1pay")
 compositor = SubResource("Compositor_1tge3")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=438496847]
-offset_left = -1320.0
-offset_top = -1174.0
-offset_right = 6576.0
-offset_bottom = 1826.0
+offset_left = -2698.0
+offset_top = -4322.0005
+offset_right = 5198.0
+offset_bottom = -1322.0005
+scale = Vector2(5, 5)
 color = Color(0.9297146, 0.9297147, 0.9297146, 1)
 metadata/_edit_use_anchors_ = true
+
+[node name="Tutorial1" type="TextureRect" parent="." unique_id=115780373]
+offset_left = 485.0
+offset_top = -176.0
+offset_right = 867.22217
+offset_bottom = 39.0
+texture = ExtResource("7_s6lcp")
+expand_mode = 1
+
+[node name="BG7" type="TextureRect" parent="." unique_id=87003962]
+modulate = Color(1, 1, 1, 0.4392157)
+self_modulate = Color(1.685791, 1.685791, 1.685791, 1)
+offset_left = 1129.0
+offset_top = -144.0
+offset_right = 1465.0
+offset_bottom = 45.0
+texture = ExtResource("8_7ayai")
+expand_mode = 1
+flip_h = true
+
+[node name="BG6" type="TextureRect" parent="." unique_id=914675056]
+modulate = Color(1, 1, 1, 0.4392157)
+self_modulate = Color(1.685791, 1.685791, 1.685791, 1)
+offset_left = 816.0
+offset_top = -144.0
+offset_right = 1152.0
+offset_bottom = 45.0
+texture = ExtResource("8_7ayai")
+expand_mode = 1
+
+[node name="BG5" type="TextureRect" parent="." unique_id=977999896]
+modulate = Color(1, 1, 1, 0.4392157)
+self_modulate = Color(1.685791, 1.685791, 1.685791, 1)
+offset_left = 562.1111
+offset_top = -139.0
+offset_right = 889.22217
+offset_bottom = 45.0
+texture = ExtResource("8_7ayai")
+expand_mode = 1
+
+[node name="BG" type="TextureRect" parent="." unique_id=1010067833]
+self_modulate = Color(1.685791, 1.685791, 1.685791, 1)
+offset_left = 507.0
+offset_top = -170.0
+offset_right = 889.22217
+offset_bottom = 45.0
+texture = ExtResource("8_88vjm")
+expand_mode = 1
+
+[node name="BG8" type="TextureRect" parent="." unique_id=4190644]
+self_modulate = Color(1.685791, 1.685791, 1.685791, 1)
+offset_left = 150.0
+offset_top = -126.0
+offset_right = 532.22217
+offset_bottom = 89.0
+texture = ExtResource("8_88vjm")
+expand_mode = 1
+flip_h = true
+
+[node name="BG2" type="TextureRect" parent="." unique_id=841556831]
+self_modulate = Color(1.685791, 1.685791, 1.685791, 1)
+offset_left = 866.0
+offset_top = -170.0
+offset_right = 1248.2222
+offset_bottom = 45.0
+texture = ExtResource("8_88vjm")
+expand_mode = 1
+flip_h = true
+
+[node name="BG3" type="TextureRect" parent="." unique_id=832771501]
+self_modulate = Color(1.685791, 1.685791, 1.685791, 1)
+offset_left = 1224.0
+offset_top = -170.0
+offset_right = 1606.2222
+offset_bottom = 45.0
+texture = ExtResource("8_88vjm")
+expand_mode = 1
+
+[node name="FOG" type="TextureRect" parent="." unique_id=1430334021]
+self_modulate = Color(1.685791, 1.685791, 1.685791, 1)
+offset_left = 162.0
+offset_top = -75.0
+offset_right = 2978.0
+offset_bottom = 633.0
+texture = ExtResource("9_uhiv2")
+expand_mode = 1
+
+[node name="Tutorial2" type="TextureRect" parent="." unique_id=1849015854]
+offset_left = 1334.0
+offset_top = -176.0
+offset_right = 1716.2222
+offset_bottom = 39.0
+texture = ExtResource("8_mp37p")
+expand_mode = 1
+
+[node name="Tutorial3" type="TextureRect" parent="." unique_id=139542274]
+offset_left = 2355.0
+offset_top = -205.0
+offset_right = 2737.2222
+offset_bottom = 10.0
+texture = ExtResource("9_66lkl")
+expand_mode = 1
+
+[node name="Tutorial4" type="TextureRect" parent="." unique_id=556096299]
+offset_left = 1670.0
+offset_top = -117.0
+offset_right = 2052.2222
+offset_bottom = 98.0
+texture = ExtResource("10_f0hf6")
+expand_mode = 1
+
+[node name="Tutorial5" type="TextureRect" parent="." unique_id=684619322]
+offset_left = 2996.0
+offset_top = -166.0
+offset_right = 3378.2222
+offset_bottom = 49.0
+texture = ExtResource("11_88vjm")
+expand_mode = 1
 
 [node name="Enemies" type="Node" parent="." unique_id=2138966777]
 
 [node name="Player" parent="." unique_id=782149273 instance=ExtResource("4_tdccu")]
 z_index = 10
-position = Vector2(9740, -11)
+position = Vector2(569, -26)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1530708046]
 position = Vector2(55, -50)
@@ -625,7 +753,6 @@ script = ExtResource("5_pfres")
 position = Vector2(0, 467)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=788818688]
-visible = false
 script = ExtResource("7_y2v03")
 
 [node name="HealthBar" type="ProgressBar" parent="UI" unique_id=917146418]
@@ -809,6 +936,18 @@ position = Vector2(10835, -93)
 
 [node name="AnimationPlayer" parent="movingh_platform4/AnimatableBody2D" parent_id_path=PackedInt32Array(1879051664, 1976295012) index="2" unique_id=2102980724]
 speed_scale = -0.34
+
+[node name="Enemy1" parent="." unique_id=977171748 instance=ExtResource("25_f0hf6")]
+position = Vector2(3370, 4)
+
+[node name="Enemy2" parent="." unique_id=1924932202 instance=ExtResource("25_f0hf6")]
+position = Vector2(3297, 3)
+
+[node name="Enemy3" parent="." unique_id=378476336 instance=ExtResource("25_f0hf6")]
+position = Vector2(3692, 23)
+
+[node name="Enemy4" parent="." unique_id=910154333 instance=ExtResource("25_f0hf6")]
+position = Vector2(5624, 26)
 
 [editable path="rotating_wheel"]
 [editable path="rotating_wheel2"]
