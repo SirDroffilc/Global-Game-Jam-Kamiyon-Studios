@@ -3,12 +3,16 @@
 [ext_resource type="Script" uid="uid://bjrudb8ewdhsr" path="res://scenes/stages/stage_1.gd" id="1_bjuw2"]
 [ext_resource type="Texture2D" uid="uid://q5prthoyfpog" path="res://assets/Other Tiles2.png" id="1_cuow7"]
 [ext_resource type="PackedScene" uid="uid://c3emj4ho0t73a" path="res://scenes/players/player.tscn" id="2_8q8ih"]
+[ext_resource type="PackedScene" uid="uid://cuh3f8k1pur5l" path="res://area_label_trigger.tscn" id="2_emlwg"]
 [ext_resource type="Script" uid="uid://dhywv6gbqn1wq" path="res://scripts/levels/tile_map_layer.gd" id="2_k45mu"]
 [ext_resource type="PackedScene" uid="uid://gaswrufkubp7" path="res://scenes/stages/checkpoint.tscn" id="2_mm8bn"]
 [ext_resource type="PackedScene" uid="uid://cc0fmgwllh68a" path="res://scenes/enemies/enemy_1.tscn" id="4_k45mu"]
 [ext_resource type="Script" uid="uid://dja4ji2408pv5" path="res://scenes/stages/camera_2d.gd" id="5_ncvry"]
 [ext_resource type="PackedScene" uid="uid://dmh3uptk4uctc" path="res://scenes/stages/fall_zone.tscn" id="6_l1pay"]
-[ext_resource type="Texture2D" uid="uid://dxvohiu4fci1y" path="res://assets/HUD - V1.png" id="9_f2dxg"]
+[ext_resource type="Texture2D" uid="uid://dqtf4avr6746c" path="res://assets/User Interface/Game HUD (Masked).png" id="9_bjuw2"]
+[ext_resource type="Script" uid="uid://bd7lf8v6d8fm7" path="res://scenes/stages/hudcontroller.gd" id="9_mm8bn"]
+[ext_resource type="Texture2D" uid="uid://02iaflpad2an" path="res://assets/User Interface/Memory Shards.png" id="11_qm7fq"]
+[ext_resource type="Texture2D" uid="uid://b0hdtfkmgh1l4" path="res://assets/spritesheets/Health - Polygon.png" id="12_emlwg"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ncvry"]
 particle_flag_disable_z = true
@@ -308,6 +312,30 @@ custom_data_layer_0/name = "element_type"
 custom_data_layer_0/type = 4
 sources/0 = SubResource("TileSetAtlasSource_k45mu")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qm7fq"]
+bg_color = Color(0.09620472, 0.09620475, 0.09620469, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.078431375, 0.078431375, 0.078431375, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_emlwg"]
+bg_color = Color(0.973535, 0.9735351, 0.973535, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.078431375, 0.078431375, 0.078431375, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
 [node name="Stage1" type="Node2D" unique_id=1551565052]
 script = ExtResource("1_bjuw2")
 
@@ -334,10 +362,10 @@ camera_attributes = SubResource("CameraAttributesPractical_l1pay")
 compositor = SubResource("Compositor_1tge3")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=438496847]
-offset_left = -715.0
-offset_top = -286.0
-offset_right = 539.0
-offset_bottom = 252.0
+offset_left = -2301.0
+offset_top = -1437.0
+offset_right = 2811.0
+offset_bottom = 1036.0
 color = Color(0.9471993, 0.9471994, 0.9471993, 1)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1478564147]
@@ -367,14 +395,57 @@ script = ExtResource("5_ncvry")
 [node name="FallZone" parent="." unique_id=963070562 instance=ExtResource("6_l1pay")]
 position = Vector2(0, 250)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=788818688]
-visible = false
+[node name="UI" type="CanvasLayer" parent="." unique_id=788818688]
+script = ExtResource("9_mm8bn")
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=2050408214]
+[node name="HealthBar" type="ProgressBar" parent="UI" unique_id=917146418]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 262.0
+offset_top = -454.0
+offset_right = -1390.0
+offset_bottom = -434.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_qm7fq")
+theme_override_styles/fill = SubResource("StyleBoxFlat_emlwg")
+value = 100.0
+show_percentage = false
+
+[node name="MaskHUD" type="TextureRect" parent="UI" unique_id=2050408214]
 texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("9_f2dxg")
+texture = ExtResource("9_bjuw2")
+
+[node name="MemoryShards" type="TextureRect" parent="UI" unique_id=865937013]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_qm7fq")
+
+[node name="HealthPolygon" type="TextureRect" parent="UI" unique_id=302292620]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+texture = ExtResource("12_emlwg")
+
+[node name="AreaLabelTrigger" parent="." unique_id=407906546 instance=ExtResource("2_emlwg")]
+position = Vector2(-195, -51)
+scale = Vector2(5, 5)
+fade_duration = 2.5
+display_time = 5.0
