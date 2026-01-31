@@ -5,11 +5,13 @@
 [ext_resource type="Texture2D" uid="uid://bxadfraqo2dek" path="res://assets/User Interface/ECLIPSE Logo.png" id="3_6xt31"]
 [ext_resource type="Texture2D" uid="uid://8t5wnwioh4bj" path="res://assets/CUTSCENE 1.png" id="3_vtxer"]
 [ext_resource type="Texture2D" uid="uid://yjgs8pgbvslk" path="res://assets/CUTSCENE 2.png" id="4_3cuo6"]
+[ext_resource type="Texture2D" uid="uid://dly4uef72j8i7" path="res://assets/Press to Skip.png" id="6_3cuo6"]
+[ext_resource type="Script" uid="uid://khmph72e66f3" path="res://scenes/skip.gd" id="7_k6lw7"]
 
 [sub_resource type="Environment" id="Environment_j2imu"]
 background_mode = 3
 glow_enabled = true
-glow_strength = 1.06
+glow_strength = 1.05
 glow_bloom = 0.7
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_6xt31"]
@@ -17,7 +19,7 @@ glow_bloom = 0.7
 [sub_resource type="Compositor" id="Compositor_vtxer"]
 
 [sub_resource type="Animation" id="Animation_k6lw7"]
-length = 0.001
+length = 41.533333
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -221,12 +223,27 @@ _data = {
 &"intro_sequence": SubResource("Animation_7igwe")
 }
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3cuo6"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(500, 200, 1)
+spread = 86.351
+initial_velocity_min = 20.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 20, 0)
+
 [node name="OpeningScene" type="Control" unique_id=1402541809]
-clip_contents = true
+custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_j2imu")
@@ -235,6 +252,18 @@ script = ExtResource("1_j2imu")
 environment = SubResource("Environment_j2imu")
 camera_attributes = SubResource("CameraAttributesPractical_6xt31")
 compositor = SubResource("Compositor_vtxer")
+
+[node name="Title" type="TextureRect" parent="." unique_id=1966308679]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_6xt31")
+expand_mode = 1
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=368075867]
 layout_mode = 1
@@ -254,7 +283,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/line_spacing = 16
 theme_override_fonts/font = ExtResource("2_6xt31")
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 36
 text = "The sky was not stolen, it was harvested.
 When the Veiled descended, they did not bring war.
 They brought an end to Gravity, They brought an end to Time.
@@ -271,8 +300,8 @@ visible_ratio = 0.0
 [node name="ColorRect2" type="ColorRect" parent="." unique_id=239439919]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_right = 1175.0
-offset_bottom = 659.0
+offset_right = 3300.0
+offset_bottom = 2363.0
 color = Color(0, 0, 0, 1)
 
 [node name="Subtitle" type="Label" parent="." unique_id=629994691]
@@ -293,16 +322,6 @@ text = "Part I: Echo the Light"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
-
-[node name="Title" type="TextureRect" parent="." unique_id=1966308679]
-modulate = Color(1, 1, 1, 0)
-layout_mode = 0
-offset_left = 325.0
-offset_top = 138.0
-offset_right = 850.0567
-offset_bottom = 418.0
-texture = ExtResource("3_6xt31")
-expand_mode = 1
 
 [node name="Scene1" type="TextureRect" parent="." unique_id=92042105]
 modulate = Color(1, 1, 1, 0)
@@ -326,15 +345,27 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -5.333252
-offset_top = -3.0
-offset_right = 5.333374
-offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_3cuo6")
-expand_mode = 1
 stretch_mode = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=894401854]
 libraries/ = SubResource("AnimationLibrary_0iuqt")
+
+[node name="Skip" type="TextureRect" parent="." unique_id=179877269]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_3cuo6")
+script = ExtResource("7_k6lw7")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=283475361]
+position = Vector2(745, 549)
+scale = Vector2(4, 4)
+amount = 200
+visibility_rect = Rect2(-150, -100, 400, 200)
+process_material = SubResource("ParticleProcessMaterial_3cuo6")

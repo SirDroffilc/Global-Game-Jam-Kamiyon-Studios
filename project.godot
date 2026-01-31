@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Global Game Jam"
-run/main_scene="uid://ccnkndopj53gm"
+run/main_scene="uid://cbrqg3p4k3s3n"
 config/features=PackedStringArray("4.6", "Forward Plus")
 boot_splash/show_image=false
 boot_splash/use_filter=false
@@ -29,7 +29,7 @@ PlayerManager="*uid://ctkso6516d17c"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=4
+window/size/mode=2
 
 [global_group]
 
