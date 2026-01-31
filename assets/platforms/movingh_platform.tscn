@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://c25cf3gylkujt"]
+
+[ext_resource type="Texture2D" uid="uid://ofk4suifvu13" path="res://assets/spritesheets/Dark.png" id="1_7f52m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5cdub"]
+size = Vector2(50, 6)
+
+[sub_resource type="Animation" id="Animation_1t4tv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_h7owc"]
+resource_name = "horizontal_platform"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5, 10),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(50, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7f52m"]
+resource_name = "horizontal_platform_100"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5, 10),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(100, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_58pvg"]
+_data = {
+&"RESET": SubResource("Animation_1t4tv"),
+&"horizontal_platform": SubResource("Animation_h7owc"),
+&"horizontal_platform_100": SubResource("Animation_7f52m")
+}
+
+[node name="movingh_platform" type="Node2D" unique_id=787107349]
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="." unique_id=1976295012]
+collision_layer = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D" unique_id=843803208]
+texture = ExtResource("1_7f52m")
+region_enabled = true
+region_rect = Rect2(70, 50, 50, 6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D" unique_id=1241883956]
+shape = SubResource("RectangleShape2D_5cdub")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody2D" unique_id=2102980724]
+libraries/ = SubResource("AnimationLibrary_58pvg")
+autoplay = &"horizontal_platform_100"

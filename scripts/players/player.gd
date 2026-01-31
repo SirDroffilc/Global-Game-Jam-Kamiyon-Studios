@@ -180,13 +180,23 @@ func spawn_ghost() -> void:
 
 func shoot_arrow() -> void:
 	if arrow_scene:
+		# Meticulous Face-Cursor Logic
+		var mouse_pos = get_global_mouse_position()
+		var side_flipped = mouse_pos.x < global_position.x
+		
+		# Update sprite and child positions based on mouse direction
+		if animated_sprite.flip_h != side_flipped:
+			animated_sprite.flip_h = side_flipped
+			_update_child_positions(side_flipped)
+		
 		ranged_cooldown_timer = ranged_cooldown
 		apply_shake(0.15) 
 		AudioManager.play_omni("PlayerShoot")
 		spawn_shoot_smoke()
+		
 		var arrow_instance = arrow_scene.instantiate()
 		arrow_instance.global_position = arrow_start_position.global_position
-		var mouse_pos = get_global_mouse_position()
+		
 		var shoot_dir = (mouse_pos - arrow_instance.global_position).normalized()
 		arrow_instance.direction = shoot_dir
 		arrow_instance.rotation = shoot_dir.angle()
@@ -262,6 +272,9 @@ func spawn_hit_particles(pos: Vector2, color: Color = Color.WHITE) -> void:
 
 func handle_flipping() -> void:
 	if state_machine.current_state and state_machine.current_state.name == "DeathState": return
+	
+	# Skip auto-flipping if we are currently shooting/ranged aiming logic
+	# Or keep it as a fallback for movement
 	var move_dir = Input.get_axis("move_left", "move_right")
 	if move_dir != 0:
 		var side_flipped = move_dir < 0
@@ -281,11 +294,9 @@ func toggle_element_state() -> void:
 	PlayerManager.is_light = is_light
 	update_physics_layers()
 	
-	AudioManager.play_omni("switch_element")
-	# METICULOUS: Trigger World-Clashing Effects
 	_trigger_element_flash(is_light)
 	_spawn_toggle_burst(is_light)
-	apply_shake(0.2) # Add a small physical jolt to the world
+	apply_shake(0.2) 
 	
 	element_toggled.emit(is_light)
 	
@@ -294,53 +305,38 @@ func toggle_element_state() -> void:
 		
 
 func _trigger_element_flash(is_light_state: bool) -> void:
-	# 1. Create a CanvasLayer so the flash is on top of everything
 	var canvas = CanvasLayer.new()
 	add_child(canvas)
-	
-	# 2. Create the Flash Overlay
 	var rect = ColorRect.new()
 	canvas.add_child(rect)
 	rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	
-	# 3. Choose Ethereal Colors
-	var flash_color = Color(1, 1, 1, 0.8) if is_light_state else Color(0.973, 0.95, 1.0, 0.9)
+	var flash_color = Color(1.0, 1.0, 1.0, 0.137) if is_light_state else Color(0.176, 0.176, 0.176, 0.122)
 	rect.color = flash_color
-	
-	# 4. Tween the flash out meticulously 
 	var tween = create_tween()
-	tween.tween_property(rect, "modulate:a", 0.0, 0.10).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(rect, "modulate:a", 0.0, 0.60).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tween.tween_callback(canvas.queue_free)
 
 func _spawn_toggle_burst(is_light_state: bool) -> void:
 	var particles = CPUParticles2D.new()
 	get_tree().current_scene.add_child(particles)
 	particles.global_position = animated_sprite.global_position
-	
-	# Ethereal Circle Logic
 	particles.amount = 5
 	particles.explosiveness = 1.0
 	particles.one_shot = true
 	particles.lifetime = 0.6
-	
-	# Physics
 	particles.spread = 180.0
 	particles.gravity = Vector2.ZERO
 	particles.initial_velocity_min = 150.0
 	particles.initial_velocity_max = 300.0
 	particles.damping_min = 100.0
-	
-	# Visuals 
 	var p_color = Color(2, 2, 1.5, 0.8) if is_light_state else Color(0.0, 0.0, 0.0, 0.655)
 	particles.color = p_color
 	particles.scale_amount_min = 4.0
 	particles.scale_amount_max = 8.0
-	
 	var curve = Curve.new()
 	curve.add_point(Vector2(0, 1))
 	curve.add_point(Vector2(1, 0))
 	particles.scale_amount_curve = curve
-	
 	particles.emitting = true
 	particles.finished.connect(particles.queue_free)
 
