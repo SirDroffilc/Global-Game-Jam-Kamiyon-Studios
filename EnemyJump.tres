@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="GodotAudioManagerOmni" format=3 uid="uid://dqn3spwsffdxo"]
+
+[ext_resource type="Script" uid="uid://bh17acw8bebir" path="res://Addons/godot_audio_manager/godot_audio_manager_omni.gd" id="1_e364u"]
+
+[resource]
+script = ExtResource("1_e364u")
+metadata/_custom_type_script = "uid://bh17acw8bebir"

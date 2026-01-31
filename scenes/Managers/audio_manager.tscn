@@ -1,6 +1,41 @@
 [gd_scene format=3 uid="uid://lcx5qln1yyao"]
 
 [ext_resource type="Script" uid="uid://b5ljaslwrlin8" path="res://Addons/godot_audio_manager/godot_audio_manager.gd" id="1_v3rsy"]
+[ext_resource type="Script" uid="uid://bh17acw8bebir" path="res://Addons/godot_audio_manager/godot_audio_manager_omni.gd" id="2_x0ip0"]
+[ext_resource type="Resource" uid="uid://bctyop21iniy8" path="res://EnemyWalk.res" id="3_t1iyy"]
+[ext_resource type="Resource" uid="uid://cnubsn76jw6bs" path="res://PlatformSFX.res" id="4_uoktg"]
+[ext_resource type="Resource" uid="uid://coxpc4jrptw78" path="res://PlayerDeath.res" id="5_c4jmg"]
+[ext_resource type="Resource" uid="uid://c3e32ega5nlwb" path="res://PlayerFall.res" id="6_x1i1l"]
+[ext_resource type="Resource" uid="uid://dmuw5rokviim4" path="res://PlayerHurt.res" id="7_3yf0c"]
+[ext_resource type="Resource" uid="uid://4afuptbi3en7" path="res://PlayerJump.res" id="8_73jg8"]
+[ext_resource type="Resource" uid="uid://dt2gehpyylwd" path="res://PlayerLand.res" id="9_fj41i"]
+[ext_resource type="Resource" uid="uid://bah131lesf3lx" path="res://PlayerRun.res" id="10_j4117"]
+[ext_resource type="Resource" uid="uid://bi5ghirasdt5j" path="res://PlayerShoot.res" id="11_a5tet"]
+[ext_resource type="Resource" uid="uid://bi7ny1ch3vume" path="res://PlayerSlash.res" id="12_w7jee"]
+[ext_resource type="Resource" uid="uid://dhjg4pbpmsoye" path="res://ShardAbsorb.res" id="13_r0qx8"]
 
 [node name="AudioManager" type="Node2D" unique_id=2072533618]
 script = ExtResource("1_v3rsy")
+audios_manager_omni = Dictionary[String, ExtResource("2_x0ip0")]({
+"ButtonClick": ExtResource("3_t1iyy"),
+"EnemyDash": ExtResource("3_t1iyy"),
+"EnemyDeath": ExtResource("3_t1iyy"),
+"EnemyFlying": ExtResource("3_t1iyy"),
+"EnemyHurt": ExtResource("3_t1iyy"),
+"EnemyJump": ExtResource("3_t1iyy"),
+"EnemyShoot": ExtResource("3_t1iyy"),
+"EnemySlash": ExtResource("3_t1iyy"),
+"EnemyTackle": ExtResource("3_t1iyy"),
+"EnemyThrust": ExtResource("3_t1iyy"),
+"EnemyWalk": ExtResource("3_t1iyy"),
+"PlatformSFX": ExtResource("4_uoktg"),
+"PlayerDeath": ExtResource("5_c4jmg"),
+"PlayerFall": ExtResource("6_x1i1l"),
+"PlayerHurt": ExtResource("7_3yf0c"),
+"PlayerJump": ExtResource("8_73jg8"),
+"PlayerLand": ExtResource("9_fj41i"),
+"PlayerRun": ExtResource("10_j4117"),
+"PlayerShoot": ExtResource("11_a5tet"),
+"PlayerSlash": ExtResource("12_w7jee"),
+"ShardAbsorb": ExtResource("13_r0qx8")
+})
