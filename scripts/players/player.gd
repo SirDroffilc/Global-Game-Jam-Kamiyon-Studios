@@ -97,6 +97,8 @@ func toggle_element_state() -> void:
 	PlayerManager.is_light = is_light
 	update_physics_layers()
 	
+	AudioManager.play_omni("switch_element")
+	
 	element_toggled.emit(is_light)
 	
 	if state_machine.current_state:
@@ -146,6 +148,7 @@ func play_animation(anim_base_name: String) -> void:
 # --- Damage & Shake ---
 func take_damage(amount: int) -> void:
 	PlayerManager.subtract_health(amount)
+	AudioManager.play_omni("PlayerHurt")
 	flash_hurt()
 	apply_shake(0.4) 
 
@@ -181,6 +184,7 @@ func _execute_shake() -> void:
 func shoot_arrow() -> void:
 	if arrow_scene:
 		ranged_cooldown_timer = ranged_cooldown
+		AudioManager.play_omni("PlayerShoot")
 		apply_shake(0.03) 
 		var arrow_instance = arrow_scene.instantiate()
 		arrow_instance.global_position = arrow_start_position.global_position
@@ -191,8 +195,9 @@ func shoot_arrow() -> void:
 		get_tree().current_scene.add_child(arrow_instance)
 
 func _on_melee_weapon_hitbox_area_entered(area: Area2D) -> void:
-	if area.get_parent().has_method("take_damage"):
+	if area.get_parent().has_method("PlayerHurt"):
 		apply_shake(0.2)
+		AudioManager.play_omni("PlayerSlash")
 		area.get_parent().take_damage(PlayerManager.get_damage(), global_position)
 
 func _on_death() -> void:

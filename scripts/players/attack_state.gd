@@ -12,6 +12,11 @@ func enter() -> void:
 	
 	print(">>> ATTACK STATE: Starting Combo Step ", parent.combo_count)
 	
+	var sfx_key = "PlayerSlash" + str(parent.combo_count)
+	if AudioManager.has_audio_stream_player(sfx_key): # Check if specific exists (PlayerSlash1)
+		AudioManager.play_omni(sfx_key)
+	else:
+		AudioManager.play_omni("PlayerSlash") # Fallback to generic
 	parent.play_animation("attack")
 	
 	if not parent.animation_player.animation_finished.is_connected(_on_animation_finished):

@@ -6,6 +6,16 @@ extends State
 @export var shoot_state: State
 @export var dash_state: State
 
+func enter() -> void:
+	super()
+	parent.play_animation("run") 
+	# Safely enable looping via manager just in case user didn't set it on import
+	AudioManager.set_loop_omni("PlayerRun", true)
+	AudioManager.play_omni("PlayerRun")
+
+func exit() -> void:
+	AudioManager.stop_omni("PlayerRun")
+
 func process_physics(delta: float) -> State:
 	# 1. IMMEDIATE TRANSITION CHECKS
 	if Input.is_action_just_pressed("attack"): # Left Click

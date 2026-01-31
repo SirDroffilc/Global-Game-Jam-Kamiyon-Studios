@@ -6,6 +6,16 @@ extends State
 @export var shoot_state: State
 @export var dash_state: State
 
+func enter() -> void:
+	super()
+	# Safely enable looping via manager just in case user didn't set it on import
+	AudioManager.stop_omni("PlayerRun") # Safety stop to prevent overlap
+	AudioManager.set_loop_omni("PlayerIdle", true)
+	AudioManager.play_omni("PlayerIdle")
+
+func exit() -> void:
+	AudioManager.stop_omni("PlayerIdle")
+
 func process_physics(delta: float) -> State:
 	if Input.is_action_just_pressed("dash") and parent.can_dash:
 		if dash_state != null:

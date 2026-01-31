@@ -19,6 +19,7 @@ func enter() -> void:
 	# Meticulous Note: Clear the buffer once we successfully jump
 	parent.jump_buffer_timer = 0.0 
 	parent.velocity.y = parent.get_jump_velocity()
+	AudioManager.play_omni("PlayerJump")
 
 func process_physics(delta: float) -> State:
 	jump_hold_timer += delta

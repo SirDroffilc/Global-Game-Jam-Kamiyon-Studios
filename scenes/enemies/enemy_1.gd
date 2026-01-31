@@ -72,6 +72,8 @@ func _physics_process(delta: float) -> void:
 			move_velocity.x = sign(dist_to_player) * walk_speed
 			animated_sprite.flip_h = dist_to_player > 0
 			_handle_hitbox_flip(dist_to_player > 0)
+			if not AudioManager.is_playing_omni("EnemyWalk"):
+				AudioManager.play_omni("EnemyWalk")
 			animated_sprite.play("walk")
 		else:
 			move_velocity.x = 0
@@ -102,6 +104,7 @@ func perform_tackle() -> void:
 	is_attacking = true
 	has_dealt_damage = false 
 	tackle_cooldown_timer = 0.2 
+	
 	animated_sprite.play("attack")
 	
 	var attack_dir = 1 if animated_sprite.flip_h else -1
@@ -125,6 +128,7 @@ func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
 	if is_dying: return
 	
 	current_health -= amount
+	AudioManager.play_omni("EnemyHurt")
 	flash_hurt()
 	
 	if attacker_pos != Vector2.ZERO:
@@ -150,6 +154,7 @@ func die() -> void:
 	collision_mask = 0
 	tackle_hitbox.monitoring = false
 	
+	AudioManager.play_omni("EnemyDeath")
 	animated_sprite.play("death")
 
 func _on_animation_finished() -> void:
@@ -178,6 +183,7 @@ func _spawn_loot() -> void:
 func _on_item_drop_body_entered(body: Node2D) -> void:
 	# This function handles the actual pickup
 	if body.is_in_group("Player"):
+		AudioManager.play_omni("ShardAbsorb")
 		_apply_loot_bonus()
 		
 		# Finally free the node from the tree once loot is claimed

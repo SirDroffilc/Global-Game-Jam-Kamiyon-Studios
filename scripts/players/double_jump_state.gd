@@ -10,6 +10,7 @@ extends State
 
 func enter() -> void:
 	parent.play_animation("jump") 
+	AudioManager.play_omni("PlayerJump")
 	parent.velocity.y = parent.get_jump_velocity() * jump_multiplier #
 
 func process_physics(delta: float) -> State:
