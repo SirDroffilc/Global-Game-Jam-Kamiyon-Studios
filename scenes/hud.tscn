@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bmq7n5i5ed7c8"]
+
+[ext_resource type="Texture2D" uid="uid://d1ax43bm8y55d" path="res://assets/Game HUD.png" id="1_ahhtf"]
+
+[node name="HUD" type="CanvasLayer" unique_id=795672831]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=300594486]
+offset_right = 890.0
+offset_bottom = 640.0
+texture = ExtResource("1_ahhtf")
+expand_mode = 1
