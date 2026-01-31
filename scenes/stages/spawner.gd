@@ -5,10 +5,10 @@ extends Node2D
 @onready var enemy_marker_1: Marker2D = %EnemyMarker1
 
 # 2. Preload your Enemy scene
-@export var enemy_scene: PackedScene = preload("res://scenes/enemies/enemy_1.tscn")
+@export var enemy_scene: PackedScene = preload("res://scenes/enemies/enemy_2.tscn")
 
 # --- Configuration ---
-@export var spawn_count: int = 5
+@export var spawn_count: int = 1
 @export var interval: float = 3.0
 
 func _ready() -> void:

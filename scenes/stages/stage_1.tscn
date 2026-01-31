@@ -290,7 +290,7 @@ unique_name_in_owner = true
 
 [node name="EnemyMarker1" type="Marker2D" parent="EnemiesContainer" unique_id=1562843469]
 unique_name_in_owner = true
-position = Vector2(520, -15)
+position = Vector2(509, -99)
 
 [node name="Player" parent="." unique_id=782149273 instance=ExtResource("2_8q8ih")]
 z_index = 10
