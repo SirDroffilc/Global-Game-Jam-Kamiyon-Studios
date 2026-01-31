@@ -12,7 +12,6 @@
 [ext_resource type="Resource" uid="uid://dogm3b751pwox" path="res://EnemyHurt.tres" id="7_612pd"]
 [ext_resource type="Resource" uid="uid://dqn3spwsffdxo" path="res://EnemyJump.tres" id="8_2iva5"]
 [ext_resource type="Resource" uid="uid://4afuptbi3en7" path="res://PlayerJump.res" id="8_73jg8"]
-[ext_resource type="Resource" uid="uid://dt2gehpyylwd" path="res://PlayerLand.res" id="9_fj41i"]
 [ext_resource type="Resource" uid="uid://dikcldidk3u6s" path="res://EnemyShoot.tres" id="9_uu4x8"]
 [ext_resource type="Resource" uid="uid://ey4w3taxatyf" path="res://EnemySlash.tres" id="10_cmb36"]
 [ext_resource type="Resource" uid="uid://bah131lesf3lx" path="res://PlayerRun.res" id="10_j4117"]
@@ -27,6 +26,7 @@
 [ext_resource type="Resource" uid="uid://cdkal56m3cu8t" path="res://PlayerIdle.res" id="25_n0orb"]
 [ext_resource type="Resource" uid="uid://dbknrltjhk1kf" path="res://PlayerSlash2.res" id="26_uu4x8"]
 [ext_resource type="Resource" uid="uid://bswk37bcrp5xi" path="res://PlayerSlash3.res" id="27_cmb36"]
+[ext_resource type="Resource" uid="uid://b8x1sex2rjre2" path="res://PlayerDash.res" id="28_uu4x8"]
 
 [node name="AudioManager" type="Node2D" unique_id=2072533618]
 script = ExtResource("1_v3rsy")
@@ -43,12 +43,13 @@ audios_manager_omni = Dictionary[String, ExtResource("2_x0ip0")]({
 "EnemyThrust": ExtResource("12_7ooh3"),
 "EnemyWalk": ExtResource("3_t1iyy"),
 "PlatformSFX": ExtResource("4_uoktg"),
+"PlayerDash": ExtResource("28_uu4x8"),
 "PlayerDeath": ExtResource("15_2iva5"),
 "PlayerFall": ExtResource("6_x1i1l"),
 "PlayerHurt": ExtResource("7_3yf0c"),
 "PlayerIdle": ExtResource("25_n0orb"),
 "PlayerJump": ExtResource("8_73jg8"),
-"PlayerLand": ExtResource("9_fj41i"),
+"PlayerLand": ExtResource("11_upx3d"),
 "PlayerRun": ExtResource("10_j4117"),
 "PlayerShoot": ExtResource("11_a5tet"),
 "PlayerSlash1": ExtResource("25_2iva5"),

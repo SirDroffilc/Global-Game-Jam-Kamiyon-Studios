@@ -12,7 +12,7 @@ func enter() -> void:
 	super()
 	parent.can_dash = false
 	dash_timer = dash_duration
-	AudioManager.play_omni("EnemyTackle") # Requested sound
+	AudioManager.play_omni("PlayerDash") # Requested sound
 	
 	parent.play_animation("dash") 
 	# Or if no dash anim exists, keep running but with trail effect (later)
