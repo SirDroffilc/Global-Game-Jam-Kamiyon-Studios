@@ -5,6 +5,8 @@ const MAIN_SCENE_PATH: String = "res://scenes/MainMenu.tscn"
 
 func _ready() -> void:
 	# Connect the signal from your AnimationPlayer child
+	await get_tree().process_frame
+	AudioManager.play_music("TitleScreenMusic")
 	if animation_player:
 		animation_player.animation_finished.connect(_on_animation_finished)
 

@@ -4,6 +4,7 @@ extends Node2D
 var latest_checkpoint_pos: Vector2
 
 func _ready() -> void:
+	AudioManager.play_music("GameSceneMusic")
 	# 1. Initialize the checkpoint to the player's starting position
 	latest_checkpoint_pos = player.global_position
 	

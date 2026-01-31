@@ -4,6 +4,8 @@ func _ready():
 	# 1. Connect the signal: "When any animation finishes, run the _on_animation_finished function"
 	$AnimationPlayer.animation_finished.connect(_on_animation_finished)
 	
+	AudioManager.play_music("CutSceneMusic")
+	
 	# 2. Start the cutscene
 	$AnimationPlayer.play("intro_sequence")
 
@@ -13,6 +15,7 @@ func _on_animation_finished(anim_name: StringName):
 		_start_game()
 
 func _start_game():
+	AudioManager.stop_music(1.0)
 	get_tree().change_scene_to_file("res://scenes/stages/stage_1.tscn")
 
 # Keep the skip functionality just in case the player is impatient!

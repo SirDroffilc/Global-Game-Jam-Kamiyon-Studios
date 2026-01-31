@@ -13,6 +13,6 @@ autoplay = false
 stream_paused = false
 loop = false
 max_polyphony = 1
-bus = &"Master"
+bus = &"SFX"
 playback_type = 0
 pause_on_blur = false

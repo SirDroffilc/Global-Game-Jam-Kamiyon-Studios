@@ -13,7 +13,7 @@
 [ext_resource type="Resource" uid="uid://4afuptbi3en7" path="res://PlayerJump.res" id="8_73jg8"]
 [ext_resource type="Resource" uid="uid://dikcldidk3u6s" path="res://EnemyShoot.tres" id="9_uu4x8"]
 [ext_resource type="Resource" uid="uid://ey4w3taxatyf" path="res://EnemySlash.tres" id="10_cmb36"]
-[ext_resource type="Resource" path="res://PlayerRun.tres" id="10_j4117_new"]
+[ext_resource type="Resource" uid="uid://hbdj3ohefwxr" path="res://PlayerRun.tres" id="10_j4117_new"]
 [ext_resource type="Resource" uid="uid://bi5ghirasdt5j" path="res://PlayerShoot.res" id="11_a5tet"]
 [ext_resource type="Resource" uid="uid://bt3hku7mvwgps" path="res://EnemyTackle.tres" id="11_upx3d"]
 [ext_resource type="Resource" uid="uid://bvp0v85frhiw3" path="res://EnemyThrust.tres" id="12_7ooh3"]
@@ -26,11 +26,18 @@
 [ext_resource type="Resource" uid="uid://dbknrltjhk1kf" path="res://PlayerSlash2.res" id="26_uu4x8"]
 [ext_resource type="Resource" uid="uid://bswk37bcrp5xi" path="res://PlayerSlash3.res" id="27_cmb36"]
 [ext_resource type="Resource" uid="uid://b8x1sex2rjre2" path="res://PlayerDash.res" id="28_uu4x8_new"]
+[ext_resource type="Resource" uid="uid://startgame456" path="res://StartGame.tres" id="30_start_new"]
+[ext_resource type="Resource" uid="uid://p4ieotdhxshe" path="res://ButtonHover.tres" id="31_hover_new"]
+[ext_resource type="Resource" path="res://TitleScreenMusic.tres" id="32_music_title"]
+[ext_resource type="Resource" uid="uid://53bibyv7qy22" path="res://CutSceneMusic.tres" id="33_music_cutscene"]
+[ext_resource type="Resource" uid="uid://dkje363gswu6c" path="res://GameSceneMusic.tres" id="34_music_game"]
 
 [node name="AudioManager" type="Node2D" unique_id=2072533618]
 script = ExtResource("1_v3rsy")
 audios_manager_omni = Dictionary[String, ExtResource("2_x0ip0")]({
 "ButtonClick": ExtResource("3_r0qx8"),
+"ButtonHover": ExtResource("31_hover_new"),
+"CutSceneMusic": ExtResource("33_music_cutscene"),
 "EnemyDash": ExtResource("14_c4jmg"),
 "EnemyDeath": ExtResource("5_xtcyc"),
 "EnemyFlying": ExtResource("6_n0orb"),
@@ -41,6 +48,7 @@ audios_manager_omni = Dictionary[String, ExtResource("2_x0ip0")]({
 "EnemyTackle": ExtResource("11_upx3d"),
 "EnemyThrust": ExtResource("12_7ooh3"),
 "EnemyWalk": ExtResource("3_t1iyy"),
+"GameSceneMusic": ExtResource("34_music_game"),
 "PlatformSFX": ExtResource("4_uoktg"),
 "PlayerDash": ExtResource("28_uu4x8_new"),
 "PlayerDeath": ExtResource("15_2iva5"),
@@ -54,5 +62,7 @@ audios_manager_omni = Dictionary[String, ExtResource("2_x0ip0")]({
 "PlayerSlash2": ExtResource("26_uu4x8"),
 "PlayerSlash3": ExtResource("27_cmb36"),
 "ShardAbsorb": ExtResource("13_r0qx8"),
+"StartGame": ExtResource("30_start_new"),
+"TitleScreenMusic": ExtResource("32_music_title"),
 "switch_element": ExtResource("24_xtcyc")
 })

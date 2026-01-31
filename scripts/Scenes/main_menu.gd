@@ -10,6 +10,7 @@ var normal_scale = Vector2(1.0, 1.0)
 var duration = 0.1 # Seconds
 
 func _ready() -> void:
+	
 	# Loop through all buttons in your VBoxContainer to set them up
 	for button in $VBoxContainer.get_children():
 		if button is Button:
@@ -21,6 +22,7 @@ func _ready() -> void:
 			button.mouse_exited.connect(_on_button_unhovered.bind(button))
 
 func _on_button_hovered(button: Button) -> void:
+	AudioManager.play_omni("ButtonHover")
 	# Create a smooth pop-out animation
 	var tween = create_tween()
 	tween.tween_property(button, "scale", hover_scale, duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
@@ -34,6 +36,9 @@ func _on_start_pressed() -> void:
 	start_button.disabled = true
 	# Optional: Reset scale on click so it doesn't stay big during the fade
 	start_button.scale = normal_scale 
+	
+	AudioManager.play_omni("StartGame")
+	AudioManager.stop_music(1.0)
 	
 	anim_player.play("fade_to_black")
 	await anim_player.animation_finished
