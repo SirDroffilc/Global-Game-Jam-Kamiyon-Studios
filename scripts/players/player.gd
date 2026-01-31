@@ -9,7 +9,22 @@ var is_light: bool = true
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var arrow_start_position: Marker2D = $ArrowStartPosition
 
+# --- Meticulous Camera Shake Additions ---
+@onready var camera: Camera2D = get_viewport().get_camera_2d() 
+@export var shake_decay: float = 5.0
+@export var max_shake_offset: Vector2 = Vector2(250, 250) 
+var shake_trauma: float = 0.0
+
 @export var arrow_scene: PackedScene = preload("res://scenes/players/light_arrow.tscn")
+
+# --- Combo System Variables ---
+var combo_count: int = 0
+var can_combo: bool = false # Managed by AnimationPlayer Call Method tracks
+
+# --- Meticulous Jump Buffer Additions ---
+@export var jump_buffer_time: float = 0.15 
+var jump_buffer_timer: float = 0.0
+var can_dash: bool = true 
 
 func _ready() -> void:
 	state_machine.init(self)
@@ -19,8 +34,33 @@ func _ready() -> void:
 	if PlayerManager.has_signal("player_died"):
 		PlayerManager.player_died.connect(_on_death)
 
+func _process(delta: float) -> void:
+	if shake_trauma > 0:
+		shake_trauma = max(shake_trauma - shake_decay * delta, 0)
+		_execute_shake()
+	else:
+		if camera and camera.offset != Vector2.ZERO:
+			camera.offset = Vector2.ZERO
+
 func _physics_process(delta: float) -> void:
+	if jump_buffer_timer > 0:
+		jump_buffer_timer -= delta
+	
+	if Input.is_action_just_pressed("jump"):
+		jump_buffer_timer = jump_buffer_time
+
+	if is_on_floor():
+		can_dash = true
+		
 	state_machine.process_physics(delta)
+
+func apply_shake(amount: float) -> void:
+	shake_trauma = min(shake_trauma + amount, 1.0)
+
+func _execute_shake() -> void:
+	var amount = pow(shake_trauma, 2)
+	camera.offset.x = max_shake_offset.x * amount * randf_range(-1, 1)
+	camera.offset.y = max_shake_offset.y * amount * randf_range(-1, 1)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("skill1"):
@@ -30,7 +70,6 @@ func _input(event: InputEvent) -> void:
 
 func toggle_element_state() -> void:	
 	is_light = !is_light
-	print("is_light: ", is_light)
 	update_physics_layers()
 	if state_machine.current_state:
 		play_animation(state_machine.current_state.animation_name)
@@ -40,37 +79,51 @@ func update_physics_layers() -> void:
 	collision_mask = 0
 	
 	if is_light:
-		# 1. Light Player (Layer 2)
 		set_collision_layer_value(2, true) 
-		# 2. Match: Stands ONLY on Light Objects (Layer 4)
 		set_collision_mask_value(4, true) 
-		# 3. Always collide with Neutral Objects (Layer 5)
 		set_collision_mask_value(5, true) 
 	else:
-		# 1. Dark Player (Layer 1)
 		set_collision_layer_value(1, true) 
-		# 2. Match: Stands ONLY on Dark Objects (Layer 3)
 		set_collision_mask_value(3, true) 
-		# 3. Always collide with Neutral Objects (Layer 5)
 		set_collision_mask_value(5, true)
 
 func play_animation(anim_base_name: String) -> void:
-	# If we are in Light state, 'attack' should be redirected to 'shoot'
 	var final_base_name = anim_base_name
+	
+	# Handle Combo Naming for Dark Melee
+	if anim_base_name == "attack" and not is_light:
+		final_base_name = "attack" + str(combo_count)
+		apply_shake(0.2)
+	
+	# Handle Light Projectile Redirection
 	if is_light and anim_base_name == "attack":
 		final_base_name = "shoot"
 		
 	var suffix = "_light" if is_light else "_dark"
 	var anim_to_play = final_base_name + suffix
 
-	# Rest of your logic...
-	if final_base_name == "attack" and not is_light:
-		# Use AnimationPlayer for Dark Melee
+	if not is_light and anim_base_name == "attack":
 		animation_player.play(anim_to_play)
 	else:
-		# Use AnimatedSprite for everything else
 		animation_player.stop()
 		animated_sprite.play(anim_to_play)
+
+func shoot_arrow() -> void:
+	if arrow_scene:
+		apply_shake(0.2)
+		var arrow_instance = arrow_scene.instantiate()
+		arrow_instance.global_position = arrow_start_position.global_position
+		var mouse_pos = get_global_mouse_position()
+		var shoot_dir = (mouse_pos - arrow_instance.global_position).normalized()
+		arrow_instance.direction = shoot_dir
+		arrow_instance.rotation = shoot_dir.angle()
+		get_tree().current_scene.add_child(arrow_instance)
+
+func _on_melee_weapon_hitbox_area_entered(area: Area2D) -> void:
+	if area.get_parent().has_method("take_damage"):
+		apply_shake(0.2)
+		# Pass the player's global position to the enemy
+		area.get_parent().take_damage(PlayerManager.get_damage(), global_position)
 
 func _on_death() -> void:
 	if has_node("StateMachine/death"):
@@ -81,20 +134,3 @@ func get_speed() -> float:
 
 func get_jump_velocity() -> float:
 	return PlayerManager.get_jump_velocity()
-
-func _on_melee_weapon_hitbox_area_entered(area: Area2D) -> void:
-	if area.get_parent().has_method("take_damage"):
-		area.get_parent().take_damage(PlayerManager.get_damage())
-		
-func shoot_arrow() -> void:
-	if arrow_scene:
-		var arrow_instance = arrow_scene.instantiate()
-		arrow_instance.global_position = arrow_start_position.global_position
-		
-		var mouse_pos = get_global_mouse_position()
-		var shoot_dir = (mouse_pos - arrow_instance.global_position).normalized()
-		
-		arrow_instance.direction = shoot_dir
-		arrow_instance.rotation = shoot_dir.angle()
-		
-		get_tree().current_scene.add_child(arrow_instance)

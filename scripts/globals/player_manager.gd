@@ -14,7 +14,7 @@ var current_health: int = 100:
 			player_died.emit()
 
 var base_damage: int = 10
-var speed: float = 170.0
+var speed: float = 150.0
 var jump_velocity: float = -300.0
 var consumption_timer_cooldown: float = 10.0
 
