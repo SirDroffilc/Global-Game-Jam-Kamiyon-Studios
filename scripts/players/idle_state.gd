@@ -11,13 +11,12 @@ func process_physics(delta: float) -> State:
 		if dash_state != null:
 			return dash_state
 
-	if Input.is_action_just_pressed("attack"): # Left Click Input
-		if parent.is_light:
-			# Transitions to Ranged mode (Bow and Arrow)
-			return shoot_state
-		else:
-			# Transitions to Melee mode (Sword/Dark element)
-			return attack_state
+	# Inside your IdleState or RunState process_physics:
+	if Input.is_action_just_pressed("attack"):
+		if parent.is_light and parent.ranged_cooldown_timer <= 0:
+			return (shoot_state)
+		elif not parent.is_light:
+			return (attack_state)
 	
 	# Handle vertical movement
 	if Input.is_action_just_pressed("jump") and parent.is_on_floor():

@@ -442,6 +442,7 @@ debug_color = Color(0.9543254, 1.347661e-06, 0.5515211, 0.41960785)
 [node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier2D" parent="." unique_id=283839844]
 
 [node name="AttackTimer" type="Timer" parent="." unique_id=1940485624]
+wait_time = 1.2999999999999998
 
 [node name="ItemDrop" type="Area2D" parent="." unique_id=1104608700]
 visible = false
