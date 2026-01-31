@@ -1,10 +1,11 @@
-[gd_scene format=3 uid="uid://ccnkndopj53gm"]
+[gd_scene format=4 uid="uid://ccnkndopj53gm"]
 
 [ext_resource type="Script" uid="uid://bjrudb8ewdhsr" path="res://scenes/stages/stage_1.gd" id="1_bjuw2"]
 [ext_resource type="PackedScene" uid="uid://c3emj4ho0t73a" path="res://scenes/players/player.tscn" id="2_8q8ih"]
 [ext_resource type="PackedScene" uid="uid://cuh3f8k1pur5l" path="res://area_label_trigger.tscn" id="2_emlwg"]
 [ext_resource type="Script" uid="uid://c7baow2cgd3wd" path="res://scenes/stages/tile_map.gd" id="2_f2dxg"]
 [ext_resource type="Texture2D" uid="uid://bx30taerkgaxt" path="res://assets/spritesheets/tileset.png" id="2_qm7fq"]
+[ext_resource type="Script" uid="uid://kebanmfr6qa7" path="res://scenes/stages/spawner.gd" id="4_qm7fq"]
 [ext_resource type="Script" uid="uid://dja4ji2408pv5" path="res://scenes/stages/camera_2d.gd" id="5_ncvry"]
 [ext_resource type="PackedScene" uid="uid://dmh3uptk4uctc" path="res://scenes/stages/fall_zone.tscn" id="6_l1pay"]
 [ext_resource type="Texture2D" uid="uid://dqtf4avr6746c" path="res://assets/User Interface/Game HUD (Masked).png" id="9_bjuw2"]
@@ -248,17 +249,17 @@ script = ExtResource("2_f2dxg")
 [node name="TileMapLayerDark" type="TileMapLayer" parent="TileMap" unique_id=1022112033]
 modulate = Color(0.34407538, 0.34407586, 0.3440756, 1)
 light_mask = 0
-tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 3, 0, 0, 0, 253, 255, 0, 0, 0, 0, 6, 0, 3, 0, 0, 0, 254, 255, 0, 0, 0, 0, 4, 0, 3, 0, 0, 0, 255, 255, 0, 0, 0, 0, 4, 0, 3, 0, 0, 0)
+tile_map_data = PackedByteArray("AAAAAAAAAAAFAAMAAAD9/wAAAAAGAAMAAAD+/wAAAAAEAAMAAAD//wAAAAAEAAMAAAA=")
 tile_set = SubResource("TileSet_eda8h")
 
 [node name="TileMapLayerLight" type="TileMapLayer" parent="TileMap" unique_id=1500062370]
 modulate = Color(0.6955032, 0.6955031, 0.6955031, 1)
-tile_map_data = PackedByteArray(0, 0, 1, 0, 0, 0, 0, 0, 6, 0, 3, 0, 0, 0, 2, 0, 0, 0, 0, 0, 3, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 7, 0, 3, 0, 0, 0, 4, 0, 0, 0, 0, 0, 7, 0, 3, 0, 0, 0)
+tile_map_data = PackedByteArray("AAABAAAAAAAGAAMAAAACAAAAAAADAAMAAAADAAAAAAAHAAMAAAAEAAAAAAAHAAMAAAA=")
 tile_set = SubResource("TileSet_f2dxg")
 
 [node name="TileMapLayerNeutral" type="TileMapLayer" parent="TileMap" unique_id=1415331282]
 modulate = Color(0, 0, 0, 1)
-tile_map_data = PackedByteArray(0, 0, 5, 0, 0, 0, 0, 0, 4, 0, 3, 0, 0, 0, 6, 0, 0, 0, 0, 0, 5, 0, 3, 0, 0, 0, 7, 0, 0, 0, 0, 0, 6, 0, 3, 0, 0, 0, 8, 0, 0, 0, 0, 0, 6, 0, 3, 0, 0, 0, 9, 0, 0, 0, 0, 0, 4, 0, 3, 0, 0, 0)
+tile_map_data = PackedByteArray("AAAFAAAAAAAEAAMAAAAGAAAAAAAFAAMAAAAHAAAAAAAGAAMAAAAIAAAAAAAGAAMAAAAJAAAAAAAEAAMAAAAKAAAAAAADAAMAAAALAAAAAAAEAAMAAAAMAAAAAAAFAAMAAAANAAAAAAAGAAMAAAAOAAAAAAAHAAMAAAAPAAAAAAADAAMAAAAQAAAAAAAEAAMAAAARAAAAAAAFAAMAAAASAAAAAAAGAAMAAAATAAAAAAAHAAMAAAAUAAAAAAADAAMAAAAVAAAAAAAEAAMAAAAWAAAAAAAFAAMAAAAXAAAAAAAGAAMAAAAYAAAAAAAHAAMAAAAZAAAAAAADAAMAAAAaAAAAAAAEAAMAAAAbAAAAAAAFAAMAAAAcAAAAAAAGAAMAAAAdAAAAAAAHAAMAAAAeAAAAAAADAAMAAAAfAAAAAAAEAAMAAAAgAAAAAAAFAAMAAAAhAAAAAAAGAAMAAAAiAAAAAAAHAAMAAAAKAPP/AAADAAMAAAAKAPT/AAADAAMAAAAKAPX/AAADAAMAAAAKAPb/AAADAAMAAAAKAPf/AAADAAMAAAAKAPj/AAADAAMAAAAKAPn/AAADAAMAAAAKAPr/AAADAAMAAAAKAPv/AAADAAMAAAAKAPz/AAADAAMAAAAKAP3/AAADAAMAAAAKAP7/AAADAAMAAAAKAP//AAADAAMAAAAKAPD/AAADAAMAAAAKAPH/AAADAAMAAAAKAPL/AAADAAMAAAALAPD/AAADAAMAAAAMAPD/AAAEAAMAAAANAPD/AAAFAAMAAAAOAPD/AAAGAAMAAAAPAPD/AAAHAAMAAAAQAPD/AAADAAMAAAARAPD/AAAEAAMAAAASAPD/AAAFAAMAAAATAPD/AAAGAAMAAAAUAPD/AAAHAAMAAAAVAPD/AAADAAMAAAAWAPD/AAAEAAMAAAAXAPD/AAAFAAMAAAAYAPD/AAAGAAMAAAAZAPD/AAAHAAMAAAAaAPD/AAADAAMAAAAbAPD/AAAEAAMAAAAcAPD/AAAFAAMAAAAdAPD/AAAGAAMAAAAeAPD/AAAHAAMAAAAfAPD/AAADAAMAAAAgAPD/AAAEAAMAAAAhAPD/AAAFAAMAAAAiAPD/AAAGAAMAAAAiAPH/AAADAAMAAAAiAPL/AAADAAMAAAAiAPP/AAADAAMAAAAiAPT/AAADAAMAAAAiAPX/AAADAAMAAAAiAPb/AAADAAMAAAAiAPf/AAADAAMAAAAiAPj/AAADAAMAAAAiAPn/AAADAAMAAAAiAPr/AAADAAMAAAAiAPv/AAADAAMAAAAiAPz/AAADAAMAAAAiAP3/AAADAAMAAAAiAP7/AAADAAMAAAAiAP//AAADAAMAAAA=")
 tile_set = SubResource("TileSet_emlwg")
 
 [node name="Checkpoints" type="Node" parent="." unique_id=74316298]
@@ -281,11 +282,19 @@ offset_right = 2811.0
 offset_bottom = 1036.0
 color = Color(0.9297146, 0.9297147, 0.9297146, 1)
 
-[node name="Enemies" type="Node" parent="." unique_id=2138966777]
+[node name="Spawner" type="Node2D" parent="." unique_id=1874944024]
+script = ExtResource("4_qm7fq")
+
+[node name="EnemiesContainer" type="Node2D" parent="." unique_id=92714298]
+unique_name_in_owner = true
+
+[node name="EnemyMarker1" type="Marker2D" parent="EnemiesContainer" unique_id=1562843469]
+unique_name_in_owner = true
+position = Vector2(520, -15)
 
 [node name="Player" parent="." unique_id=782149273 instance=ExtResource("2_8q8ih")]
 z_index = 10
-position = Vector2(140, -17)
+position = Vector2(219, -25)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1530708046]
 position = Vector2(0, -41)
