@@ -43,3 +43,9 @@ func set_speed(new_speed: float) -> void:
 
 func set_jump_velocity(new_velocity: float) -> void:
 	jump_velocity = new_velocity
+
+# Inside PlayerManager.gd
+func reset_health() -> void:
+	current_health = base_health
+	print(">>> PlayerManager: Health reset to ", current_health)
+	

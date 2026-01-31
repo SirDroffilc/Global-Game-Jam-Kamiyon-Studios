@@ -26,6 +26,7 @@ PlayerManager="*uid://ctkso6516d17c"
 [global_group]
 
 Checkpoints=""
+Player=""
 
 [input]
 

@@ -33,7 +33,7 @@ func process_physics(delta: float) -> State:
 		parent.animated_sprite.flip_h = dir < 0
 		
 	parent.move_and_slide()
-	if Input.is_action_just_pressed("skill3"):
+	if Input.is_action_just_pressed("dash"):
 		return dash_state
 	# 3. TRANSITIONS
 	if parent.is_on_floor():

@@ -27,6 +27,7 @@ func _on_player_respawn() -> void:
 	call_deferred("_move_player_to_checkpoint")
 
 func _move_player_to_checkpoint() -> void:
+	PlayerManager.reset_health() # Reset stats
 	player.global_position = latest_checkpoint_pos
 	
 	# Optional: Reset player velocity so they don't spawn with 'death momentum'
@@ -35,3 +36,4 @@ func _move_player_to_checkpoint() -> void:
 	# Optional: If your player has a 'respawn' or 'idle' state, force it here
 	if player.state_machine:
 		player.state_machine.init(player) # Re-init logic to reset states
+		
