@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://dlraub0o0jqin" path="res://scripts/attack_state.gd" id="9_yl2j2"]
 [ext_resource type="Script" uid="uid://n80882fu15ah" path="res://scripts/shoot_state.gd" id="10_es4m5"]
 [ext_resource type="Script" uid="uid://dmlwh5v5e23dq" path="res://scenes/players/dash_state.gd" id="15_vjh8g"]
+[ext_resource type="Script" uid="uid://0b3acg44ji2a" path="res://scenes/players/death_state.gd" id="16_f1232"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dajw2"]
 atlas = ExtResource("2_vjh8g")
@@ -175,6 +176,30 @@ region = Rect2(32, 32, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_v5uka"]
 atlas = ExtResource("6_vjh8g")
 region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjh8g"]
+atlas = ExtResource("2_vjh8g")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqtr3"]
+atlas = ExtResource("2_vjh8g")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hjlhr"]
+atlas = ExtResource("2_vjh8g")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tpj5"]
+atlas = ExtResource("2_vjh8g")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uf77t"]
+atlas = ExtResource("2_vjh8g")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dgvqg"]
+atlas = ExtResource("2_vjh8g")
+region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pf4la"]
 atlas = ExtResource("3_mh0hk")
@@ -578,6 +603,29 @@ animations = [{
 "loop": true,
 "name": &"dash_light",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjh8g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fqtr3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hjlhr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tpj5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uf77t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dgvqg")
+}],
+"loop": false,
+"name": &"death",
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1150,6 +1198,9 @@ script = ExtResource("10_es4m5")
 idle_state = NodePath("../IdleState")
 run_state = NodePath("../RunState")
 animation_name = "shoot"
+
+[node name="DeathState" type="Node" parent="StateMachine" unique_id=482105472]
+script = ExtResource("16_f1232")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=2100532177]
 position = Vector2(0, -8)

@@ -60,6 +60,9 @@ func _physics_process(delta: float) -> void:
 
 # Meticulous Flipping Logic
 func handle_flipping() -> void:
+	if state_machine.current_state == $StateMachine/DeathState:
+		return
+	
 	var move_dir = Input.get_axis("move_left", "move_right")
 	
 	# Only flip if moving and not currently locked by an attack
@@ -153,8 +156,9 @@ func _on_melee_weapon_hitbox_area_entered(area: Area2D) -> void:
 		area.get_parent().take_damage(PlayerManager.get_damage(), global_position)
 
 func _on_death() -> void:
-	if has_node("StateMachine/death"):
-		state_machine.change_state($StateMachine/death)
+	# Change to the death state immediately when health hits zero
+	if state_machine.current_state != $StateMachine/DeathState:
+		state_machine.change_state($StateMachine/DeathState)
 
 func get_speed() -> float:
 	return PlayerManager.get_speed()

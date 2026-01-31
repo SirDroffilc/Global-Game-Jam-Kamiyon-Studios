@@ -334,7 +334,6 @@ camera_attributes = SubResource("CameraAttributesPractical_l1pay")
 compositor = SubResource("Compositor_1tge3")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=438496847]
-visible = false
 offset_left = -715.0
 offset_top = -286.0
 offset_right = 539.0
