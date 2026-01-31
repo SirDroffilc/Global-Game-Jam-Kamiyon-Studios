@@ -49,7 +49,7 @@ var dash_cooldown_timer: float = 0.0
 # --- Movement "Juice" Logic ---
 var was_on_floor: bool = false
 var dust_spawn_timer: float = 0.0
-@export var dust_interval: float = 0.15
+@export var dust_interval: float = 0.35
 
 # --- Lifecycle ---
 func _ready() -> void:
@@ -296,6 +296,7 @@ func toggle_element_state() -> void:
 	
 	_trigger_element_flash(is_light)
 	_spawn_toggle_burst(is_light)
+	AudioManager.play_omni("switch_element")
 	apply_shake(0.2) 
 	
 	element_toggled.emit(is_light)

@@ -13,7 +13,7 @@
 [ext_resource type="Resource" uid="uid://4afuptbi3en7" path="res://PlayerJump.res" id="8_73jg8"]
 [ext_resource type="Resource" uid="uid://dikcldidk3u6s" path="res://EnemyShoot.tres" id="9_uu4x8"]
 [ext_resource type="Resource" uid="uid://ey4w3taxatyf" path="res://EnemySlash.tres" id="10_cmb36"]
-[ext_resource type="Resource" uid="uid://bah131lesf3lx" path="res://PlayerRun.res" id="10_j4117"]
+[ext_resource type="Resource" path="res://PlayerRun.tres" id="10_j4117_new"]
 [ext_resource type="Resource" uid="uid://bi5ghirasdt5j" path="res://PlayerShoot.res" id="11_a5tet"]
 [ext_resource type="Resource" uid="uid://bt3hku7mvwgps" path="res://EnemyTackle.tres" id="11_upx3d"]
 [ext_resource type="Resource" uid="uid://bvp0v85frhiw3" path="res://EnemyThrust.tres" id="12_7ooh3"]
@@ -48,7 +48,7 @@ audios_manager_omni = Dictionary[String, ExtResource("2_x0ip0")]({
 "PlayerIdle": ExtResource("25_n0orb"),
 "PlayerJump": ExtResource("8_73jg8"),
 "PlayerLand": ExtResource("11_upx3d"),
-"PlayerRun": ExtResource("10_j4117"),
+"PlayerRun": ExtResource("10_j4117_new"),
 "PlayerShoot": ExtResource("11_a5tet"),
 "PlayerSlash1": ExtResource("25_2iva5"),
 "PlayerSlash2": ExtResource("26_uu4x8"),

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="GodotAudioManagerOmni" format=3 uid="uid://bah131lesf3lx_new"]
+
+[ext_resource type="Script" uid="uid://bh17acw8bebir" path="res://Addons/godot_audio_manager/godot_audio_manager_omni.gd" id="1_audio_mgr"]
+[ext_resource type="AudioStream" uid="uid://runsound" path="res://assets/Audio/SFX/SFXrun.mp3" id="2_stream"]
+
+[resource]
+script = ExtResource("1_audio_mgr")
+stream = ExtResource("2_stream")
+volume_db = -5.0
+pitch_scale = 1.0
+playing = false
+autoplay = false
+stream_paused = false
+loop = false
+max_polyphony = 3
+bus = &"Master"
+playback_type = 0
+pause_on_blur = false
