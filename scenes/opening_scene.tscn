@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://duvygrcds4shx"]
+[gd_scene format=3 uid="uid://c0hylunuepn4s"]
 
-[ext_resource type="Script" uid="uid://bf4hwhrm47n5p" path="res://scenes/opening_scene.gd" id="1_j2imu"]
+[ext_resource type="Script" path="res://scenes/opening_scene.gd" id="1_j2imu"]
 [ext_resource type="FontFile" uid="uid://dq5hf3t42mogi" path="res://assets/ferrum.otf" id="2_6xt31"]
 [ext_resource type="Texture2D" uid="uid://bxadfraqo2dek" path="res://scenes/ECLIPSE Logo.png" id="3_6xt31"]
 [ext_resource type="Texture2D" uid="uid://8t5wnwioh4bj" path="res://assets/CUTSCENE 1.png" id="3_vtxer"]
