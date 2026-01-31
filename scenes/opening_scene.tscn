@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://8t5wnwioh4bj" path="res://assets/CUTSCENE 1.png" id="3_vtxer"]
 [ext_resource type="Texture2D" uid="uid://yjgs8pgbvslk" path="res://assets/CUTSCENE 2.png" id="4_3cuo6"]
 [ext_resource type="Texture2D" uid="uid://dly4uef72j8i7" path="res://assets/Press to Skip.png" id="6_3cuo6"]
-[ext_resource type="Script" uid="uid://khmph72e66f3" path="res://scenes/skip.gd" id="7_k6lw7"]
+[ext_resource type="Script" uid="uid://khmph72e66f3" path="res://scripts/Scenes/skip.gd" id="7_k6lw7"]
 
 [sub_resource type="Environment" id="Environment_j2imu"]
 background_mode = 3

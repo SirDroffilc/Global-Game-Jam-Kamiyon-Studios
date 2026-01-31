@@ -24,6 +24,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 PlayerManager="*uid://ctkso6516d17c"
+AudioManager="*uid://b5ljaslwrlin8"
 
 [display]
 
