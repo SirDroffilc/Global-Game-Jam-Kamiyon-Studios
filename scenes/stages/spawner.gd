@@ -7,8 +7,8 @@ extends Node2D
 @onready var enemy_marker_1: Marker2D = %EnemyMarker1
 
 # --- Configuration ---
-@export var enemy_scene: PackedScene = preload("res://scenes/enemies/enemy_3.tscn")
-@export var spawn_count: int = 5
+@export var enemy_scene: PackedScene = preload("res://scenes/enemies/enemy_4.tscn")
+@export var spawn_count: int = 1
 @export var interval: float = 3.0
 
 # Tracks the current valid session. Incrementing this "kills" old loops.
