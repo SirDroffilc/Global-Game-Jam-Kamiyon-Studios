@@ -34,6 +34,7 @@ func _ready() -> void:
 	update_physics_layers()
 	hitbox_shape.set_deferred("disabled", true)
 	PlayerManager.reset_health()
+	PlayerManager.is_light = is_light
 	
 	if PlayerManager.has_signal("player_died"):
 		PlayerManager.player_died.connect(_on_death)
@@ -87,6 +88,7 @@ func _update_child_positions(is_flipped: bool) -> void:
 # --- Element / State Logic ---
 func toggle_element_state() -> void:	
 	is_light = !is_light
+	PlayerManager.is_light = is_light
 	update_physics_layers()
 	
 	# Emit signal to inform the UI

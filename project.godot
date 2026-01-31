@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Global Game Jam"
-run/main_scene="uid://claiv7vfj00ms"
+run/main_scene="uid://ccnkndopj53gm"
 config/features=PackedStringArray("4.6", "Forward Plus")
 boot_splash/show_image=false
 boot_splash/use_filter=false
@@ -89,3 +89,4 @@ dash={
 
 textures/canvas_textures/default_texture_filter=0
 viewport/hdr_2d=true
+environment/defaults/default_clear_color=Color(0.12016112, 2.4498553e-05, 0.46735948, 1)
