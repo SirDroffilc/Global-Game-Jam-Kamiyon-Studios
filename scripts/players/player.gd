@@ -117,26 +117,38 @@ func update_physics_layers() -> void:
 func play_animation(anim_base_name: String) -> void:
 	var final_base_name = anim_base_name
 	
-	# SHAKE LOGIC REFINEMENT:
+	# 1. Handle combat naming logic
 	if anim_base_name == "attack":
 		if not is_light:
-			# DARK MELEE: Keep the heavy impact (0.2 per hit)
 			final_base_name = "attack" + str(combo_count)
 			apply_shake(0.2)
 		else:
-			# LIGHT PROJECTILE: Change base name to shoot
 			final_base_name = "shoot"
-			# We do NOT call apply_shake(0.2) here anymore
 	
+	# 2. Determine animation naming with fallback
 	var suffix = "_light" if is_light else "_dark"
 	var anim_to_play = final_base_name + suffix
+	
+	if not animated_sprite.sprite_frames.has_animation(anim_to_play):
+		anim_to_play = final_base_name
 
+	# 3. Handle AnimationPlayer (Dark Melee)
 	if not is_light and anim_base_name == "attack":
 		animation_player.play(anim_to_play)
 	else:
 		animation_player.stop()
-		animated_sprite.play(anim_to_play)
-
+		
+		# 4. THE COMPREHENSIVE FIX: Defer ALL hitbox changes
+		# Only disable the hitbox if we aren't currently attacking.
+		if anim_base_name != "attack":
+			hitbox_shape.set_deferred("disabled", true)
+		
+		# 5. Play the animation safely
+		if animated_sprite.sprite_frames.has_animation(anim_to_play):
+			animated_sprite.play(anim_to_play)
+		else:
+			print("WARNING: Animation not found: ", anim_to_play)
+			
 func shoot_arrow() -> void:
 	if arrow_scene:
 		# LESSENED SHAKE: Reduced from 0.2 to 0.03 for "close to none" feel
@@ -154,6 +166,27 @@ func _on_melee_weapon_hitbox_area_entered(area: Area2D) -> void:
 	if area.get_parent().has_method("take_damage"):
 		apply_shake(0.2)
 		area.get_parent().take_damage(PlayerManager.get_damage(), global_position)
+
+func take_damage(amount: int) -> void:
+	# 1. Update health via the manager
+	PlayerManager.subtract_health(amount)
+	
+	# 2. Trigger visual feedback
+	flash_hurt()
+	apply_shake(0.2) # Slightly stronger shake for player damage
+	
+	print(">>> PLAYER HIT: Health remaining: ", PlayerManager.get_health())
+
+# Using a Tween for a smooth, high-quality flash
+func flash_hurt() -> void:
+	var tween = create_tween()
+	
+	# Set to an HDR-style Red Flash
+	animated_sprite.modulate = Color("8c8c8c")
+	
+	# Transition back to normal (White) over 0.1 seconds
+	tween.tween_property(animated_sprite, "modulate", Color.WHITE, 0.1)
+
 
 func _on_death() -> void:
 	# Change to the death state immediately when health hits zero

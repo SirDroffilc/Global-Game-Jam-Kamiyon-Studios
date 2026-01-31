@@ -1,17 +1,13 @@
 extends State
 
+# Inside death_state.gd
+
+# Inside death_state.gd
 func enter() -> void:
-	# 1. Stop all current momentum
 	parent.velocity = Vector2.ZERO
-	
-	# 2. Play the death animation
-	# This uses your play_animation logic which handles light/dark suffixes
 	parent.play_animation("death")
-	
-	# 3. Disable the hitbox just in case it was active
-	parent.hitbox_shape.disabled = true
-	
-	print(">>> PLAYER STATE: Entered Death State")
+	# Defer any manual disability here too just to be safe
+	parent.hitbox_shape.set_deferred("disabled", true)
 
 @warning_ignore("unused_parameter")
 func process_physics(delta: float) -> State:
