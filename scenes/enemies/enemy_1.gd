@@ -130,6 +130,7 @@ func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
 	current_health -= amount
 	AudioManager.play_omni("EnemyHurt")
 	flash_hurt()
+	spawn_hit_particles(global_position, Color.DIM_GRAY)
 	
 	if attacker_pos != Vector2.ZERO:
 		var knockback_dir = (global_position - attacker_pos).normalized()
@@ -141,7 +142,7 @@ func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
 
 func flash_hurt() -> void:
 	var tween = create_tween()
-	animated_sprite.modulate = Color("8c8c8c")
+	animated_sprite.modulate = Color("0b0b0bff")
 	tween.tween_property(animated_sprite, "modulate", Color.WHITE, 0.1)
 
 func die() -> void:
@@ -196,3 +197,40 @@ func _apply_loot_bonus() -> void:
 	else:
 		PlayerManager.add_health(heal_amount)
 		print(">>> LOOT COLLECTED: Healed +", heal_amount)
+		
+func spawn_hit_particles(pos: Vector2, color: Color = Color.WHITE) -> void:
+	# 1. Create the particle node
+	var particles = CPUParticles2D.new()
+	get_tree().current_scene.add_child(particles)
+	particles.global_position = pos
+	
+	# 2. Shape and Look
+	particles.amount = 8                  # Number of circles
+	particles.explosiveness = 1.0         # All fire at once
+	particles.one_shot = true             # Don't loop
+	particles.lifetime = 0.5              # How long they last
+	
+	# 3. Physics & Motion
+	particles.spread = 180.0              # Explode in all directions
+	particles.gravity = Vector2(0, 400)   # Make them 'fall' after exploding
+	particles.initial_velocity_min = 100.0
+	particles.initial_velocity_max = 200.0
+	
+	# 4. Creating the "Circle" via Code
+	# We use a simple built-in texture or a generated one. 
+	# For "pure code," we can use a small white square and round it with scale curves.
+	particles.scale_amount_min = 2.0
+	particles.scale_amount_max = 4.0
+	
+	# Create a Scale Curve (particles shrink as they fall)
+	var curve = Curve.new()
+	curve.add_point(Vector2(0, 1)) # Start full size
+	curve.add_point(Vector2(1, 0)) # End at zero
+	particles.scale_amount_curve = curve
+	
+	# 5. Color and Cleanup
+	particles.color = color
+	particles.emitting = true
+	
+	# Automatically delete the node after it finishes
+	particles.finished.connect(particles.queue_free)
