@@ -16,7 +16,7 @@ func _on_animation_finished(anim_name: StringName):
 
 func _start_game():
 	AudioManager.stop_music(1.0)
-	get_tree().change_scene_to_file("res://scenes/stages/stage_1.tscn")
+	get_tree().change_scene_to_file("res://scenes/stages/level_2.tscn")
 
 # Keep the skip functionality just in case the player is impatient!
 func _input(event):

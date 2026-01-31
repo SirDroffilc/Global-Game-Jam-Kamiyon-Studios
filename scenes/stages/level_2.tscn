@@ -1,24 +1,34 @@
 [gd_scene format=4 uid="uid://d3ykragivhif8"]
 
-[ext_resource type="Script" uid="uid://bjrudb8ewdhsr" path="res://scenes/stages/stage_1.gd" id="1_m0aea"]
-[ext_resource type="Script" uid="uid://c7baow2cgd3wd" path="res://scenes/stages/tile_map.gd" id="2_hn3wy"]
+[ext_resource type="Script" uid="uid://bjrudb8ewdhsr" path="res://scripts/stage_1.gd" id="1_m0aea"]
+[ext_resource type="Script" uid="uid://c7baow2cgd3wd" path="res://scripts/tile_map.gd" id="2_hn3wy"]
 [ext_resource type="Texture2D" uid="uid://bx30taerkgaxt" path="res://assets/spritesheets/tileset.png" id="3_f0cuo"]
 [ext_resource type="Texture2D" uid="uid://ofk4suifvu13" path="res://assets/spritesheets/Dark.png" id="4_f0cuo"]
 [ext_resource type="PackedScene" uid="uid://c3emj4ho0t73a" path="res://scenes/players/player.tscn" id="4_tdccu"]
-[ext_resource type="Script" uid="uid://dja4ji2408pv5" path="res://scenes/stages/camera_2d.gd" id="5_pfres"]
+[ext_resource type="Script" uid="uid://dja4ji2408pv5" path="res://scripts/camera_2d.gd" id="5_pfres"]
 [ext_resource type="Texture2D" uid="uid://csd81ygyilmgx" path="res://assets/spritesheets/white.png" id="5_tdccu"]
 [ext_resource type="PackedScene" uid="uid://dmh3uptk4uctc" path="res://scenes/stages/fall_zone.tscn" id="6_85few"]
 [ext_resource type="PackedScene" uid="uid://gaswrufkubp7" path="res://scenes/stages/checkpoint.tscn" id="6_pfres"]
-[ext_resource type="Script" uid="uid://bd7lf8v6d8fm7" path="res://scenes/stages/hudcontroller.gd" id="7_y2v03"]
+[ext_resource type="Script" uid="uid://bd7lf8v6d8fm7" path="res://scripts/globals/hudcontroller.gd" id="7_y2v03"]
 [ext_resource type="Texture2D" uid="uid://dqtf4avr6746c" path="res://assets/User Interface/Game HUD (Masked).png" id="8_lykdh"]
 [ext_resource type="Texture2D" uid="uid://02iaflpad2an" path="res://assets/User Interface/Memory Shards.png" id="9_mof2j"]
 [ext_resource type="Texture2D" uid="uid://b0hdtfkmgh1l4" path="res://assets/spritesheets/Health - Polygon.png" id="10_s6lcp"]
-[ext_resource type="PackedScene" uid="uid://cuh3f8k1pur5l" path="res://area_label_trigger.tscn" id="11_mp37p"]
+[ext_resource type="PackedScene" uid="uid://cuh3f8k1pur5l" path="res://scenes/stages/area_label_trigger.tscn" id="11_mp37p"]
 [ext_resource type="PackedScene" uid="uid://lbk3m7juhs65" path="res://assets/platforms/rotating_wheel.tscn" id="14_tdccu"]
 [ext_resource type="PackedScene" uid="uid://bs3rud6rdy7ab" path="res://assets/platforms/movingv_platform.tscn" id="16_85few"]
 [ext_resource type="PackedScene" uid="uid://y3k3yido3fr2" path="res://assets/platforms/movingv_platform_w.tscn" id="17_y2v03"]
 [ext_resource type="PackedScene" uid="uid://c25cf3gylkujt" path="res://assets/platforms/movingh_platform.tscn" id="18_mof2j"]
 [ext_resource type="PackedScene" uid="uid://dmgr5aaivybpw" path="res://assets/platforms/movingh_platform_w.tscn" id="19_s6lcp"]
+[ext_resource type="Texture2D" uid="uid://cnj1p3dh7i1wp" path="res://assets/User Interface/[Tutorial - 1] A+D.png" id="20_s6lcp"]
+[ext_resource type="Texture2D" uid="uid://c3flmsb3wbboq" path="res://assets/User Interface/bg2.png" id="21_7ayai"]
+[ext_resource type="Texture2D" uid="uid://4oiubpf7jgug" path="res://assets/User Interface/[Tutorial - 2] Double Jump.png" id="21_mp37p"]
+[ext_resource type="Texture2D" uid="uid://bw5cuh6y35goy" path="res://assets/User Interface/bg1.png" id="22_6amog"]
+[ext_resource type="Texture2D" uid="uid://dwnixghf5jq6p" path="res://assets/User Interface/[Tutorial - 4] Mask.png" id="22_66lkl"]
+[ext_resource type="Texture2D" uid="uid://c17h685hs3xt3" path="res://assets/User Interface/fog_overlay.png" id="23_bvpxd"]
+[ext_resource type="Texture2D" uid="uid://da3kawk1pdbx5" path="res://assets/User Interface/[Tutorial - 3] Dash.png" id="23_f0hf6"]
+[ext_resource type="Texture2D" uid="uid://cbgw0rjys1uu0" path="res://assets/User Interface/[Tutorial - 5] Attack.png" id="24_88vjm"]
+[ext_resource type="Texture2D" uid="uid://dek5b8pbq2gqx" path="res://assets/User Interface/bg3.png" id="28_6amog"]
+[ext_resource type="PackedScene" uid="uid://cc0fmgwllh68a" path="res://scenes/enemies/enemy_1.tscn" id="28_djwji"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_emlwg"]
 texture = ExtResource("3_f0cuo")
@@ -558,6 +568,53 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
+[sub_resource type="Animation" id="Animation_6amog"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Fog Overlay2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-231, 21)]
+}
+
+[sub_resource type="Animation" id="Animation_bvpxd"]
+resource_name = "fog_floating"
+length = 9.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Fog Overlay2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.26666668, 4.4333334, 8.933333),
+"transitions": PackedFloat32Array(3.3635848, 3.0314324, 2.0705302),
+"update": 0,
+"values": [Vector2(-231, 21), Vector2(0, 21), Vector2(-231, 21)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_djwji"]
+_data = {
+&"RESET": SubResource("Animation_6amog"),
+&"fog_floating": SubResource("Animation_bvpxd")
+}
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7la6k"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(500, 200, 1)
+spread = 86.351
+initial_velocity_min = 20.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 20, 0)
+
 [node name="Level1" type="Node2D" unique_id=1551565052]
 script = ExtResource("1_m0aea")
 
@@ -598,10 +655,11 @@ camera_attributes = SubResource("CameraAttributesPractical_l1pay")
 compositor = SubResource("Compositor_1tge3")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=438496847]
-offset_left = -1320.0
-offset_top = -1174.0
-offset_right = 6576.0
-offset_bottom = 1826.0
+offset_left = -4245.0
+offset_top = -4330.0
+offset_right = 3651.0
+offset_bottom = -1330.0
+scale = Vector2(5, 5)
 color = Color(0.9297146, 0.9297147, 0.9297146, 1)
 metadata/_edit_use_anchors_ = true
 
@@ -609,7 +667,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." unique_id=782149273 instance=ExtResource("4_tdccu")]
 z_index = 10
-position = Vector2(9740, -11)
+position = Vector2(570, -36)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1530708046]
 position = Vector2(55, -50)
@@ -625,7 +683,6 @@ script = ExtResource("5_pfres")
 position = Vector2(0, 467)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=788818688]
-visible = false
 script = ExtResource("7_y2v03")
 
 [node name="HealthBar" type="ProgressBar" parent="UI" unique_id=917146418]
@@ -809,6 +866,267 @@ position = Vector2(10835, -93)
 
 [node name="AnimationPlayer" parent="movingh_platform4/AnimatableBody2D" parent_id_path=PackedInt32Array(1879051664, 1976295012) index="2" unique_id=2102980724]
 speed_scale = -0.34
+
+[node name="Tutorial1" type="TextureRect" parent="." unique_id=1494563616]
+offset_left = 500.0
+offset_top = -203.0
+offset_right = 932.0
+offset_bottom = 40.0
+texture = ExtResource("20_s6lcp")
+expand_mode = 1
+
+[node name="BG16" type="TextureRect" parent="." unique_id=1030899731]
+modulate = Color(1, 1, 1, 0.8)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 4109.0
+offset_top = -85.0
+offset_right = 4500.1113
+offset_bottom = 135.0
+texture = ExtResource("21_7ayai")
+expand_mode = 1
+
+[node name="BG13" type="TextureRect" parent="." unique_id=1960832245]
+modulate = Color(1, 1, 1, 0.68235296)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 3662.0
+offset_top = -132.0
+offset_right = 4053.1113
+offset_bottom = 88.0
+texture = ExtResource("22_6amog")
+expand_mode = 1
+
+[node name="BG14" type="TextureRect" parent="." unique_id=583672821]
+modulate = Color(1, 1, 1, 0.68235296)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 4610.0
+offset_top = -128.0
+offset_right = 5001.1113
+offset_bottom = 92.0
+texture = ExtResource("22_6amog")
+expand_mode = 1
+flip_h = true
+
+[node name="BG15" type="TextureRect" parent="." unique_id=212950238]
+modulate = Color(1, 1, 1, 0.68235296)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 5173.0
+offset_top = -121.0
+offset_right = 5564.1113
+offset_bottom = 99.0
+texture = ExtResource("22_6amog")
+expand_mode = 1
+
+[node name="BG12" type="TextureRect" parent="." unique_id=1916285417]
+modulate = Color(1, 1, 1, 0.8)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 3209.0
+offset_top = -78.0
+offset_right = 3600.111
+offset_bottom = 142.0
+texture = ExtResource("21_7ayai")
+expand_mode = 1
+
+[node name="BG10" type="TextureRect" parent="." unique_id=79563435]
+modulate = Color(1, 1, 1, 0.8)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 1926.0
+offset_top = -111.0
+offset_right = 2317.111
+offset_bottom = 109.0
+texture = ExtResource("21_7ayai")
+expand_mode = 1
+
+[node name="BG11" type="TextureRect" parent="." unique_id=1186346172]
+modulate = Color(1, 1, 1, 0.8)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 2323.0
+offset_top = -109.0
+offset_right = 2714.111
+offset_bottom = 111.0
+texture = ExtResource("21_7ayai")
+expand_mode = 1
+flip_h = true
+
+[node name="BG6" type="TextureRect" parent="." unique_id=1043037953]
+modulate = Color(1, 1, 1, 0.58431375)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 597.0
+offset_top = -128.0
+offset_right = 851.22217
+offset_bottom = 15.0
+texture = ExtResource("21_7ayai")
+expand_mode = 1
+
+[node name="BG7" type="TextureRect" parent="." unique_id=1432107014]
+modulate = Color(1, 1, 1, 0.58431375)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 830.0
+offset_top = -123.0
+offset_right = 1084.2222
+offset_bottom = 20.0
+texture = ExtResource("21_7ayai")
+expand_mode = 1
+
+[node name="BG9" type="TextureRect" parent="." unique_id=1926847023]
+modulate = Color(1, 1, 1, 0.58431375)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 1283.0
+offset_top = -121.0
+offset_right = 1537.2222
+offset_bottom = 22.0
+texture = ExtResource("21_7ayai")
+expand_mode = 1
+
+[node name="BG8" type="TextureRect" parent="." unique_id=1677912457]
+modulate = Color(1, 1, 1, 0.58431375)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 1053.0
+offset_top = -94.0
+offset_right = 1307.2222
+offset_bottom = 49.0
+texture = ExtResource("21_7ayai")
+expand_mode = 1
+
+[node name="BG1" type="TextureRect" parent="." unique_id=1245853556]
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 522.0
+offset_top = -180.0
+offset_right = 913.1111
+offset_bottom = 40.0
+texture = ExtResource("22_6amog")
+expand_mode = 1
+
+[node name="BG3" type="TextureRect" parent="." unique_id=2123198426]
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 882.0
+offset_top = -153.0
+offset_right = 1273.1111
+offset_bottom = 67.0
+texture = ExtResource("22_6amog")
+expand_mode = 1
+flip_h = true
+
+[node name="BG5" type="TextureRect" parent="." unique_id=2115581727]
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 1248.0
+offset_top = -196.0
+offset_right = 1639.1111
+offset_bottom = 24.0
+texture = ExtResource("22_6amog")
+expand_mode = 1
+
+[node name="BG2" type="TextureRect" parent="." unique_id=1971104707]
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 160.0
+offset_top = -137.0
+offset_right = 551.1111
+offset_bottom = 83.0
+texture = ExtResource("22_6amog")
+expand_mode = 1
+flip_h = true
+
+[node name="Fog Overlay" type="TextureRect" parent="." unique_id=2053305008]
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+texture_filter = 2
+offset_left = -444.0
+offset_top = -93.0
+offset_right = 6538.0
+offset_bottom = 858.0
+texture = ExtResource("23_bvpxd")
+expand_mode = 1
+
+[node name="Tutorial2" type="TextureRect" parent="." unique_id=547209558]
+offset_left = 1296.0
+offset_top = -203.0
+offset_right = 1728.0
+offset_bottom = 40.0
+texture = ExtResource("21_mp37p")
+expand_mode = 1
+
+[node name="Tutorial3" type="TextureRect" parent="." unique_id=1522680479]
+offset_left = 1653.0
+offset_top = -134.0
+offset_right = 2085.0
+offset_bottom = 109.0
+texture = ExtResource("22_66lkl")
+expand_mode = 1
+
+[node name="Tutorial4" type="TextureRect" parent="." unique_id=1625685276]
+offset_left = 2361.0
+offset_top = -188.0
+offset_right = 2793.0
+offset_bottom = 55.0
+texture = ExtResource("23_f0hf6")
+expand_mode = 1
+
+[node name="Tutorial5" type="TextureRect" parent="." unique_id=1883756474]
+offset_left = 2980.0
+offset_top = -149.0
+offset_right = 3412.0
+offset_bottom = 94.0
+texture = ExtResource("24_88vjm")
+expand_mode = 1
+
+[node name="FG1" type="TextureRect" parent="." unique_id=1780116015]
+self_modulate = Color(0.38007212, 0.38007212, 0.38007212, 1)
+z_index = 50
+offset_left = 807.0
+offset_top = -273.0
+offset_right = 1489.6665
+offset_bottom = 111.0
+texture = ExtResource("28_6amog")
+expand_mode = 1
+
+[node name="FG2" type="TextureRect" parent="." unique_id=1484180310]
+self_modulate = Color(0.38007212, 0.38007212, 0.38007212, 1)
+z_index = 50
+offset_left = -166.0
+offset_top = -273.0
+offset_right = 516.6665
+offset_bottom = 111.0
+texture = ExtResource("28_6amog")
+expand_mode = 1
+flip_h = true
+
+[node name="Fog Overlay2" type="TextureRect" parent="." unique_id=1040308515]
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+z_index = 40
+texture_filter = 2
+offset_left = -231.0
+offset_top = 21.0
+offset_right = 5681.4053
+offset_bottom = 663.0
+texture = ExtResource("23_bvpxd")
+expand_mode = 1
+
+[node name="Enemy1" parent="." unique_id=977171748 instance=ExtResource("28_djwji")]
+position = Vector2(3305, 7)
+
+[node name="Enemy2" parent="." unique_id=252806201 instance=ExtResource("28_djwji")]
+position = Vector2(3381, 6)
+
+[node name="Enemy3" parent="." unique_id=13012590 instance=ExtResource("28_djwji")]
+position = Vector2(3707, 22)
+
+[node name="Enemy4" parent="." unique_id=168296814 instance=ExtResource("28_djwji")]
+position = Vector2(5617, 26)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1492377946]
+libraries/ = SubResource("AnimationLibrary_djwji")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="." unique_id=942734879]
+position = Vector2(3252, -25)
+scale = Vector2(4, 4)
+amount = 200
+visibility_rect = Rect2(-150, -100, 400, 200)
+process_material = SubResource("ParticleProcessMaterial_7la6k")
+
+[node name="GPUParticles2D3" type="GPUParticles2D" parent="." unique_id=1343228297]
+position = Vector2(861, -109)
+scale = Vector2(4, 4)
+amount = 200
+visibility_rect = Rect2(-150, -100, 400, 200)
+process_material = SubResource("ParticleProcessMaterial_7la6k")
 
 [editable path="rotating_wheel"]
 [editable path="rotating_wheel2"]
