@@ -17,6 +17,7 @@ var base_damage: int = 10
 var speed: float = 150.0
 var jump_velocity: float = -300.0
 var consumption_timer_cooldown: float = 10.0
+var is_light := true
 
 # --- Getters ---
 func get_speed() -> float:
@@ -43,6 +44,9 @@ func set_speed(new_speed: float) -> void:
 
 func set_jump_velocity(new_velocity: float) -> void:
 	jump_velocity = new_velocity
+	
+func set_is_light(state: bool) -> void:
+	is_light = state
 
 # Inside PlayerManager.gd
 func reset_health() -> void:

@@ -20,8 +20,8 @@ var is_active: bool = false
 var player: CharacterBody2D = null
 
 # --- Meticulous Knockback Variables ---
-@export var knockback_strength: float = 120.0 
-@export var knockback_friction: float = 1800.0 
+@export var knockback_strength: float = 150.0 
+@export var knockback_friction: float = 1500.0 
 var knockback_velocity: Vector2 = Vector2.ZERO
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -91,15 +91,13 @@ func perform_tackle() -> void:
 	velocity.y = tackle_force_y
 
 # --- Meticulous Tackle Hit Logic ---
+# Inside enemy.gd
 func _on_tackle_hitbox_body_entered(body: Node2D) -> void:
 	if is_attacking and not has_dealt_damage and not is_dying:
-		if body.is_in_group("Player"):
-			# 1. Apply damage via PlayerManager
-			PlayerManager.subtract_health(damage)
-			has_dealt_damage = true # Ensure only one hit per tackle
-			
-			# 2. Print health as requested
-			print("--- TACKLE HIT! Player Health: ", PlayerManager.get_health(), " ---")
+		# Check if the body we hit has the take_damage method
+		if body.has_method("take_damage"):
+			body.take_damage(damage) # This triggers the flash and the shake!
+			has_dealt_damage = true
 
 # --- Signals & Death ---
 func _on_visible_on_screen_notifier_screen_entered() -> void:
@@ -110,13 +108,31 @@ func _on_visible_on_screen_notifier_screen_exited() -> void:
 
 func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
 	if is_dying: return
+	
 	current_health -= amount
+	
+	# Trigger the visual flash effect
+	flash_hurt()
+	
 	if attacker_pos != Vector2.ZERO:
 		var knockback_dir = (global_position - attacker_pos).normalized()
 		var impact_vector = Vector2(knockback_dir.x, -0.1).normalized()
 		knockback_velocity = impact_vector * knockback_strength 
+		
 	if current_health <= 0:
 		die()
+
+# --- Meticulous Hit Flash Logic ---
+func flash_hurt() -> void:
+	# 1. Create a tween specifically for this node
+	var tween = create_tween()
+	
+	# 2. Instantly set the color to a "Hurt" color (Red or pure White)
+	# Color(Red, Green, Blue, Alpha) - 10, 10, 10 makes it glow if you use HDR
+	animated_sprite.modulate = Color("8c8c8c")
+	
+	# 3. Transition back to normal (Color.WHITE) over 0.1 seconds
+	tween.tween_property(animated_sprite, "modulate", Color.WHITE, 0.1)
 
 func die() -> void:
 	is_dying = true
