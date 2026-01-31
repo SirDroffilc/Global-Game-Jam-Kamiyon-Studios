@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cuh3f8k1pur5l" path="res://scenes/stages/area_label_trigger.tscn" id="2_emlwg"]
 [ext_resource type="Script" uid="uid://c7baow2cgd3wd" path="res://scripts/tile_map.gd" id="2_f2dxg"]
 [ext_resource type="Texture2D" uid="uid://bx30taerkgaxt" path="res://assets/spritesheets/tileset.png" id="2_qm7fq"]
-[ext_resource type="PackedScene" uid="uid://gaswrufkubp7" path="res://scenes/stages/checkpoint.tscn" id="4_emlwg"]
+[ext_resource type="PackedScene" path="res://scenes/stages/checkpoint.tscn" id="4_emlwg"]
 [ext_resource type="Script" uid="uid://kebanmfr6qa7" path="res://scenes/stages/spawner.gd" id="4_qm7fq"]
 [ext_resource type="Script" uid="uid://dja4ji2408pv5" path="res://scripts/camera_2d.gd" id="5_ncvry"]
 [ext_resource type="PackedScene" path="res://scenes/stages/fall_zone.tscn" id="6_l1pay"]
@@ -292,6 +292,7 @@ offset_bottom = 1036.0
 color = Color(0.9297146, 0.9297147, 0.9297146, 1)
 
 [node name="Spawner" type="Node2D" parent="." unique_id=1874944024]
+visible = false
 script = ExtResource("4_qm7fq")
 
 [node name="EnemyMarkers" type="Node2D" parent="." unique_id=35972328]
@@ -378,5 +379,4 @@ visible = false
 position = Vector2(429, -152)
 
 [node name="Enemy3" parent="." unique_id=689474609 instance=ExtResource("14_eda8h")]
-visible = false
 position = Vector2(418, -97)

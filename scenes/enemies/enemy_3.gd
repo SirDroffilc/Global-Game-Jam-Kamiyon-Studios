@@ -166,16 +166,19 @@ func start_attack_sequence() -> void:
 		_handle_hitbox_flip(animated_sprite.flip_h)
 		
 	current_state = EnemyState.DASHING 
+	AudioManager.play_omni("EnemyDash")
 	ghost_timer = 0 
 
 func _on_dash_finished() -> void:
 	if is_dying or current_state != EnemyState.DASHING: return
 	current_state = EnemyState.ATTACKING 
 	velocity.x = 0 
+	AudioManager.play_omni("EnemySlash")
 	animation_player.play("attack_sequence")
 
 func start_retreat() -> void:
 	current_state = EnemyState.RETREATING 
+	AudioManager.play_omni("EnemyWalk")
 	get_tree().create_timer(0.6).timeout.connect(_on_retreat_finished)
 
 func _on_retreat_finished() -> void:
@@ -192,6 +195,7 @@ func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
 	if is_dying: return
 	current_health -= amount
 	flash_hurt()
+	AudioManager.play_omni("EnemyHurt")
 	spawn_hit_particles(global_position, Color.DIM_GRAY)
 	
 	if attacker_pos != Vector2.ZERO:
@@ -212,6 +216,7 @@ func die() -> void:
 	collision_mask = 0
 	attack_hitbox.monitoring = false
 	if has_node("Hurtbox"): $Hurtbox.queue_free()
+	AudioManager.play_omni("EnemyDeath")
 	animated_sprite.play("death")
 
 func _on_animation_finished() -> void:
@@ -229,6 +234,7 @@ func _spawn_loot() -> void:
 
 func _on_item_drop_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
+		AudioManager.play_omni("ShardAbsorb")
 		_apply_loot_bonus()
 		queue_free()
 
