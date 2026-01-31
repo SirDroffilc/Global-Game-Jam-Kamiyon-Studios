@@ -1,0 +1,270 @@
+[gd_scene format=3 uid="uid://df3ay8qiu2tlm"]
+
+[ext_resource type="Texture2D" uid="uid://bxadfraqo2dek" path="res://scenes/ECLIPSE Logo.png" id="1_0ykhv"]
+[ext_resource type="Script" uid="uid://d0ff71a2ym7r3" path="res://scenes/main_menu.gd" id="1_ow34m"]
+[ext_resource type="FontFile" uid="uid://dq5hf3t42mogi" path="res://assets/ferrum.otf" id="2_2wh52"]
+[ext_resource type="FontFile" uid="uid://c7glfdk4ol3c3" path="res://assets/Thole-Thinpersonal.otf" id="3_2wh52"]
+
+[sub_resource type="Environment" id="Environment_ow34m"]
+background_mode = 3
+glow_enabled = true
+glow_strength = 1.06
+glow_bloom = 0.7
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_l72w3"]
+
+[sub_resource type="Compositor" id="Compositor_826wr"]
+
+[sub_resource type="Gradient" id="Gradient_ow34m"]
+offsets = PackedFloat32Array(0, 0.8396226)
+colors = PackedColorArray(0, 0, 0, 1, 0.2908377, 0.31563637, 0.29634854, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l72w3"]
+gradient = SubResource("Gradient_ow34m")
+width = 1080
+height = 1920
+fill_from = Vector2(0.6305793, 0.21153846)
+fill_to = Vector2(0.91168094, 0.0042735045)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ow34m"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l72w3"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_826wr"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ucygd"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mipys"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="Animation" id="Animation_ow34m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransitionLayer/ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_l72w3"]
+resource_name = "fade_from_black"
+length = 1.5333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransitionLayer/ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.06666667, 1.4333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_826wr"]
+resource_name = "fade_to_black"
+length = 1.8666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TransitionLayer/ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.53333336, 1.6666666),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ucygd"]
+_data = {
+&"RESET": SubResource("Animation_ow34m"),
+&"fade_from_black": SubResource("Animation_l72w3"),
+&"fade_to_black": SubResource("Animation_826wr")
+}
+
+[node name="MainMenu" type="Control" unique_id=500844473]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+script = ExtResource("1_ow34m")
+
+[node name="Panel" type="Panel" parent="." unique_id=88405420]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TransitionLayer" type="CanvasLayer" parent="." unique_id=84754170]
+layer = 100
+
+[node name="ColorRect" type="ColorRect" parent="TransitionLayer" unique_id=365658658]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1197954464]
+environment = SubResource("Environment_ow34m")
+camera_attributes = SubResource("CameraAttributesPractical_l72w3")
+compositor = SubResource("Compositor_826wr")
+
+[node name="BG" type="TextureRect" parent="." unique_id=1820380706]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -575.5
+offset_right = 776.0
+offset_bottom = 1920.0
+grow_horizontal = 2
+texture = SubResource("GradientTexture2D_l72w3")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=66269625]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 105.0
+offset_right = 428.78442
+offset_bottom = 275.0
+texture = ExtResource("1_0ykhv")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=102439047]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 111.0
+offset_top = -26.0
+offset_right = 427.0
+offset_bottom = 225.0
+grow_vertical = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="Start" type="Button" parent="VBoxContainer" unique_id=828730647]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8625217, 0.86252177, 0.8625217, 1)
+theme_override_colors/font_pressed_color = Color(0.61948895, 0.6194886, 0.6194887, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_2wh52")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ow34m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_l72w3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_826wr")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ucygd")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mipys")
+text = "Start Journey"
+alignment = 0
+
+[node name="Settings" type="Button" parent="VBoxContainer" unique_id=724071915]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8625217, 0.86252177, 0.8625217, 1)
+theme_override_colors/font_pressed_color = Color(0.61948895, 0.6194886, 0.6194887, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_2wh52")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ow34m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_l72w3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_826wr")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ucygd")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mipys")
+text = "Settings"
+alignment = 0
+
+[node name="Credits" type="Button" parent="VBoxContainer" unique_id=1918127244]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8625217, 0.86252177, 0.8625217, 1)
+theme_override_colors/font_pressed_color = Color(0.61948895, 0.6194886, 0.6194887, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_2wh52")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ow34m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_l72w3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_826wr")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ucygd")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mipys")
+text = "Credits"
+alignment = 0
+
+[node name="Quit" type="Button" parent="VBoxContainer" unique_id=966652291]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8625217, 0.86252177, 0.8625217, 1)
+theme_override_colors/font_pressed_color = Color(0.61948895, 0.6194886, 0.6194887, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_2wh52")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ow34m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_l72w3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_826wr")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ucygd")
+theme_override_styles/focus = SubResource("StyleBoxFlat_mipys")
+text = "Quit"
+alignment = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=379393984]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -122.0
+offset_top = 11.0
+offset_right = 122.0
+offset_bottom = 95.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("3_2wh52")
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "KAMIYON STUDIOS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="." unique_id=96170822]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -122.0
+offset_top = 16.0
+offset_right = 122.0
+offset_bottom = 139.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("3_2wh52")
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "PRESENTS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1267012277]
+libraries/ = SubResource("AnimationLibrary_ucygd")
+
+[connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]
