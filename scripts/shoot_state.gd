@@ -12,14 +12,18 @@ func enter() -> void:
 		parent.animated_sprite.animation_finished.connect(_on_animation_finished)
 
 func process_physics(delta: float) -> State:
-	# 1. Continue Gravity
+	# 1. Gravity
 	parent.velocity += parent.get_gravity() * delta
 	
-	# 2. Allow horizontal movement while shooting
+	# 2. Movement + Physical Recoil
 	var dir = Input.get_axis("move_left", "move_right")
-	parent.velocity.x = dir * parent.get_speed()
+	# Meticulously add the recoil_physics_velocity to the movement
+	parent.velocity.x = (dir * parent.get_speed()) + parent.recoil_physics_velocity.x
 	
-	# 3. Handle Sprite Flipping based on movement (or mouse)
+	# 3. Handle Jump, Flipping, etc...
+	if Input.is_action_just_pressed("jump") and parent.is_on_floor():
+		parent.velocity.y = parent.get_jump_velocity()
+	
 	if dir != 0:
 		parent.animated_sprite.flip_h = dir < 0
 		

@@ -1198,6 +1198,7 @@ script = ExtResource("10_es4m5")
 idle_state = NodePath("../IdleState")
 run_state = NodePath("../RunState")
 animation_name = "shoot"
+jump_state = null
 
 [node name="DeathState" type="Node" parent="StateMachine" unique_id=482105472]
 script = ExtResource("16_f1232")

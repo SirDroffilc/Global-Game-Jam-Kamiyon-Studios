@@ -4,18 +4,27 @@ extends State
 @export var attack_speed_multiplier: float = 0.4 # Move at 40% speed while attacking
 var attack_input_received: bool = false
 
+# Inside AttackState.gd
 func enter() -> void:
-	# 1. Increment combo (1 -> 2 -> 3 -> 1)
 	parent.combo_count = (parent.combo_count % 3) + 1
 	parent.can_combo = false
 	attack_input_received = false
 	
-	print(">>> ATTACK STATE: Starting Combo Step ", parent.combo_count)
+	# Meticulous Logic: Enable the hitbox so it can detect collisions
+	parent.hitbox_shape.set_deferred("disabled", false)
 	
+	parent.spawn_attack_slash()
 	parent.play_animation("attack")
 	
 	if not parent.animation_player.animation_finished.is_connected(_on_animation_finished):
 		parent.animation_player.animation_finished.connect(_on_animation_finished)
+
+func exit() -> void:
+	# Ensure the hitbox is turned off so you don't deal damage while walking
+	parent.hitbox_shape.set_deferred("disabled", true)
+	
+	if parent.animation_player.animation_finished.is_connected(_on_animation_finished):
+		parent.animation_player.animation_finished.disconnect(_on_animation_finished)
 
 func process_input(event: InputEvent) -> State:
 	if event.is_action_pressed("attack"):
@@ -43,9 +52,3 @@ func process_physics(delta: float) -> State:
 func _on_animation_finished(_anim_name: String) -> void:
 	parent.combo_count = 0
 	parent.state_machine.change_state(idle_state)
-
-func exit() -> void:
-	parent.hitbox_shape.disabled = true
-	# Safety reset
-	if parent.animation_player.animation_finished.is_connected(_on_animation_finished):
-		parent.animation_player.animation_finished.disconnect(_on_animation_finished)
