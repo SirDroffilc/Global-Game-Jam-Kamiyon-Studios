@@ -20,6 +20,9 @@ var is_light: bool = true
 @export var max_shake_trauma: float = 0.2 # Added maximum trauma cap
 var shake_trauma: float = 0.0
 
+@export var ranged_cooldown: float = 0.5  # Time in seconds between shots
+var ranged_cooldown_timer: float = 0.0     # The active countdown
+
 @export var arrow_scene: PackedScene = preload("res://scenes/players/light_arrow.tscn")
 
 # --- Combat & Movement ---
@@ -49,6 +52,9 @@ func _process(delta: float) -> void:
 			camera.offset = Vector2.ZERO
 
 func _physics_process(delta: float) -> void:
+	if ranged_cooldown_timer > 0:
+		ranged_cooldown_timer -= delta
+		
 	if jump_buffer_timer > 0:
 		jump_buffer_timer -= delta
 	
@@ -174,6 +180,7 @@ func _execute_shake() -> void:
 # --- Combat Actions ---
 func shoot_arrow() -> void:
 	if arrow_scene:
+		ranged_cooldown_timer = ranged_cooldown
 		apply_shake(0.03) 
 		var arrow_instance = arrow_scene.instantiate()
 		arrow_instance.global_position = arrow_start_position.global_position

@@ -9,7 +9,7 @@ extends State
 func process_physics(delta: float) -> State:
 	# 1. IMMEDIATE TRANSITION CHECKS
 	if Input.is_action_just_pressed("attack"): # Left Click
-		if parent.is_light:
+		if parent.is_light and parent.ranged_cooldown_timer <= 0:
 			return shoot_state
 		else:
 			return attack_state

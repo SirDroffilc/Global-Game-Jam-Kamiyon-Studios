@@ -26,7 +26,7 @@ func process_physics(delta: float) -> State:
 	
 	# 1. AIR ATTACK CHECK (Meticulous Addition)
 	if Input.is_action_just_pressed("attack"):
-		if parent.is_light:
+		if parent.is_light and parent.ranged_cooldown_timer <= 0:
 			return shoot_state
 		else:
 			return attack_state

@@ -149,7 +149,6 @@ func die() -> void:
 	collision_layer = 0
 	collision_mask = 0
 	tackle_hitbox.monitoring = false
-	$Hurtbox.queue_free()
 	
 	animated_sprite.play("death")
 
