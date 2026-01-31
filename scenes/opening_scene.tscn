@@ -17,7 +17,7 @@ glow_bloom = 0.7
 [sub_resource type="Compositor" id="Compositor_vtxer"]
 
 [sub_resource type="Animation" id="Animation_k6lw7"]
-length = 0.001
+length = 60.066666
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
