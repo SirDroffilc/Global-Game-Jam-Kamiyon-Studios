@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dmh3uptk4uctc"]
+
+[ext_resource type="Script" uid="uid://hg436rionlh6" path="res://scripts/levels/fall_zone.gd" id="1_2ad3m"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qp1kv"]
+
+[node name="FallZone" type="Area2D" unique_id=963070562]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_2ad3m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=572203398]
+shape = SubResource("WorldBoundaryShape2D_qp1kv")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

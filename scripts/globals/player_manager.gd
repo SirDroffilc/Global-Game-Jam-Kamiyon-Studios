@@ -14,7 +14,7 @@ var current_health: int = 100:
 			player_died.emit()
 
 var base_damage: int = 10
-var speed: float = 300.0
+var speed: float = 150.0
 var jump_velocity: float = -300.0
 var consumption_timer_cooldown: float = 10.0
 
@@ -43,3 +43,9 @@ func set_speed(new_speed: float) -> void:
 
 func set_jump_velocity(new_velocity: float) -> void:
 	jump_velocity = new_velocity
+
+# Inside PlayerManager.gd
+func reset_health() -> void:
+	current_health = base_health
+	print(">>> PlayerManager: Health reset to ", current_health)
+	
