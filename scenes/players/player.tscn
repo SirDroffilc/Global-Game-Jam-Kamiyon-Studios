@@ -11,11 +11,11 @@
 [ext_resource type="Texture2D" uid="uid://cv3u7imjs86gq" path="res://assets/spritesheets/jump_spritesheet_masked.png" id="6_vjh8g"]
 [ext_resource type="Texture2D" uid="uid://ba4ma0u34twer" path="res://assets/spritesheets/shoot_attack_spritesheet.png" id="7_vjh8g"]
 [ext_resource type="Script" uid="uid://cj3ap6gvghpnj" path="res://scripts/players/jump_state.gd" id="7_vxtj5"]
-[ext_resource type="Script" uid="uid://b17kdu1m6ngr7" path="res://scripts/double_jump_state.gd" id="8_phaeh"]
-[ext_resource type="Script" uid="uid://dlraub0o0jqin" path="res://scripts/attack_state.gd" id="9_yl2j2"]
-[ext_resource type="Script" uid="uid://n80882fu15ah" path="res://scripts/shoot_state.gd" id="10_es4m5"]
-[ext_resource type="Script" uid="uid://dmlwh5v5e23dq" path="res://scenes/players/dash_state.gd" id="15_vjh8g"]
-[ext_resource type="Script" uid="uid://0b3acg44ji2a" path="res://scenes/players/death_state.gd" id="16_f1232"]
+[ext_resource type="Script" uid="uid://b17kdu1m6ngr7" path="res://scripts/players/double_jump_state.gd" id="8_phaeh"]
+[ext_resource type="Script" uid="uid://dlraub0o0jqin" path="res://scripts/players/attack_state.gd" id="9_yl2j2"]
+[ext_resource type="Script" uid="uid://n80882fu15ah" path="res://scripts/players/shoot_state.gd" id="10_es4m5"]
+[ext_resource type="Script" path="res://scenes/players/dash_state.gd" id="15_vjh8g"]
+[ext_resource type="Script" path="res://scenes/players/death_state.gd" id="16_f1232"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dajw2"]
 atlas = ExtResource("2_vjh8g")

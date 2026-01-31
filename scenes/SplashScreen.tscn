@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cbrqg3p4k3s3n"]
 
-[ext_resource type="Script" uid="uid://cvvkm33b0opx7" path="res://scripts/splash_screen.gd" id="1_wxot6"]
+[ext_resource type="Script" uid="uid://cvvkm33b0opx7" path="res://scripts/Scenes/splash_screen.gd" id="1_wxot6"]
 [ext_resource type="Texture2D" uid="uid://ctttsfblxcmcc" path="res://assets/User Interface/logo.png" id="2_l2g8s"]
 
 [sub_resource type="Animation" id="Animation_rc2kg"]
