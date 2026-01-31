@@ -32,7 +32,7 @@ func _on_area_entered(area: Area2D) -> void:
 			area.get_parent().take_damage(PlayerManager.get_damage(), global_position)
 		
 		# Only vanish if we actually hit a valid target
-		print("area entered: ", area)
+		#print("area entered: ", area)
 		queue_free()
 
 func _on_body_entered(body: Node2D) -> void:
@@ -42,5 +42,5 @@ func _on_body_entered(body: Node2D) -> void:
 		
 	# 3. Vanish if hitting the world/environment
 	# This ensures arrows don't fly through walls.
-	print("body entered: ", body)
+	#print("body entered: ", body)
 	queue_free()
