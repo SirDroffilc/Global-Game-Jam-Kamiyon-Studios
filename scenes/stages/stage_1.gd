@@ -27,11 +27,18 @@ func _on_player_respawn() -> void:
 	call_deferred("_move_player_to_checkpoint")
 
 func _move_player_to_checkpoint() -> void:
-	player.global_position = latest_checkpoint_pos
+	# 1. Trigger the death state first to play the animation
+	player._on_death() 
 	
-	# Optional: Reset player velocity so they don't spawn with 'death momentum'
+	# 2. Wait for the animation within the AnimatedSprite
+	await player.animated_sprite.animation_finished
+	
+	# 3. Perform the reset and teleport
+	PlayerManager.reset_health()
+	player.global_position = latest_checkpoint_pos
 	player.velocity = Vector2.ZERO
 	
-	# Optional: If your player has a 'respawn' or 'idle' state, force it here
-	if player.state_machine:
-		player.state_machine.init(player) # Re-init logic to reset states
+	# 4. CRITICAL: Re-init the state machine to return to IdleState
+	player.state_machine.init(player)
+	
+	print(">>> LEVEL: Respawn sequence complete.")

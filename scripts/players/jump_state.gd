@@ -24,40 +24,47 @@ func process_physics(delta: float) -> State:
 	jump_hold_timer += delta
 	var current_gravity = parent.get_gravity()
 	
-	# VARIABLE JUMP HEIGHT LOGIC
+	# 1. AIR ATTACK CHECK (Meticulous Addition)
+	if Input.is_action_just_pressed("attack"):
+		if parent.is_light:
+			return shoot_state
+		else:
+			return attack_state
+
+	# 2. VARIABLE JUMP HEIGHT LOGIC
 	if Input.is_action_pressed("jump") and jump_hold_timer < max_jump_hold_time and parent.velocity.y < 0:
 		parent.velocity += current_gravity * hold_gravity_multiplier * delta
 	else:
 		parent.velocity += current_gravity * delta
 
-	# JUMP CUT (Short Hop)
+	# 3. JUMP CUT (Short Hop)
 	if Input.is_action_just_released("jump") and parent.velocity.y < 0:
 		parent.velocity.y *= jump_cut_multiplier
 		jump_hold_timer = max_jump_hold_time 
 
-	# MOVEMENT
+	# 4. MOVEMENT
 	var dir = Input.get_axis("move_left", "move_right")
 	parent.velocity.x = dir * parent.get_speed()
 	
 	if dir != 0:
+		# Note: Your player.gd handle_flipping() is preferred, 
+		# but if you use this, ensure it matches your flip_h logic.
 		parent.animated_sprite.flip_h = dir < 0
 		
 	parent.move_and_slide()
 
-	# DASH TRANSITION
+	# 5. DASH TRANSITION
 	if Input.is_action_just_pressed("dash") and parent.can_dash:
 		return dash_state
 
-	# DOUBLE JUMP CHECK
-	# We use raw input here because buffering a double-jump feels "laggy"
+	# 6. DOUBLE JUMP CHECK
 	if Input.is_action_just_pressed("jump") and not parent.is_on_floor():
 		return double_jump_state
 	
-	# LANDING & BUFFERED JUMP CHECK
+	# 7. LANDING & BUFFERED JUMP CHECK
 	if parent.is_on_floor():
-		# If we land and the buffer is still active, JUMP AGAIN IMMEDIATELY
 		if parent.jump_buffer_timer > 0:
-			return self # Re-enters JumpState
+			return self 
 		
 		return run_state if dir != 0 else idle_state
 		

@@ -5,9 +5,10 @@ var is_light: bool = true
 
 @onready var state_machine: StateMachine = $StateMachine
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite
+@onready var hitbox: Area2D = $AnimatedSprite/MeleeWeaponHitbox # Child node reference
 @onready var hitbox_shape: CollisionShape2D = $AnimatedSprite/MeleeWeaponHitbox/CollisionShape2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var arrow_start_position: Marker2D = $ArrowStartPosition
+@onready var arrow_start_position: Marker2D = $AnimatedSprite/ArrowStartPosition
 
 # --- Meticulous Camera Shake Additions ---
 @onready var camera: Camera2D = get_viewport().get_camera_2d() 
@@ -19,7 +20,7 @@ var shake_trauma: float = 0.0
 
 # --- Combo System Variables ---
 var combo_count: int = 0
-var can_combo: bool = false # Managed by AnimationPlayer Call Method tracks
+var can_combo: bool = false 
 
 # --- Meticulous Jump Buffer Additions ---
 @export var jump_buffer_time: float = 0.15 
@@ -30,6 +31,7 @@ func _ready() -> void:
 	state_machine.init(self)
 	update_physics_layers()
 	hitbox_shape.disabled = true
+	PlayerManager.reset_health()
 	
 	if PlayerManager.has_signal("player_died"):
 		PlayerManager.player_died.connect(_on_death)
@@ -51,8 +53,33 @@ func _physics_process(delta: float) -> void:
 
 	if is_on_floor():
 		can_dash = true
-		
+	
+	# Handle flipping before processing state movement
+	handle_flipping()
 	state_machine.process_physics(delta)
+
+# Meticulous Flipping Logic
+func handle_flipping() -> void:
+	if state_machine.current_state == $StateMachine/DeathState:
+		return
+	
+	var move_dir = Input.get_axis("move_left", "move_right")
+	
+	# Only flip if moving and not currently locked by an attack
+	if move_dir != 0:
+		var side_flipped = move_dir < 0
+		if animated_sprite.flip_h != side_flipped:
+			animated_sprite.flip_h = side_flipped
+			_update_child_positions(side_flipped)
+
+# Helper to mirror children horizontally
+func _update_child_positions(is_flipped: bool) -> void:
+	# Mirror the Arrow Position
+	arrow_start_position.position.x = abs(arrow_start_position.position.x) * (-1 if is_flipped else 1)
+	
+	# Mirror the Melee Hitbox
+	# Note: This ensures your sword swing hits the correct side!
+	hitbox.position.x = abs(hitbox.position.x) * (-1 if is_flipped else 1)
 
 func apply_shake(amount: float) -> void:
 	shake_trauma = min(shake_trauma + amount, 1.0)
@@ -90,15 +117,17 @@ func update_physics_layers() -> void:
 func play_animation(anim_base_name: String) -> void:
 	var final_base_name = anim_base_name
 	
-	# Handle Combo Naming for Dark Melee
-	if anim_base_name == "attack" and not is_light:
-		final_base_name = "attack" + str(combo_count)
-		apply_shake(0.2)
+	# SHAKE LOGIC REFINEMENT:
+	if anim_base_name == "attack":
+		if not is_light:
+			# DARK MELEE: Keep the heavy impact (0.2 per hit)
+			final_base_name = "attack" + str(combo_count)
+			apply_shake(0.2)
+		else:
+			# LIGHT PROJECTILE: Change base name to shoot
+			final_base_name = "shoot"
+			# We do NOT call apply_shake(0.2) here anymore
 	
-	# Handle Light Projectile Redirection
-	if is_light and anim_base_name == "attack":
-		final_base_name = "shoot"
-		
 	var suffix = "_light" if is_light else "_dark"
 	var anim_to_play = final_base_name + suffix
 
@@ -110,7 +139,9 @@ func play_animation(anim_base_name: String) -> void:
 
 func shoot_arrow() -> void:
 	if arrow_scene:
-		apply_shake(0.2)
+		# LESSENED SHAKE: Reduced from 0.2 to 0.03 for "close to none" feel
+		apply_shake(0.03) 
+		
 		var arrow_instance = arrow_scene.instantiate()
 		arrow_instance.global_position = arrow_start_position.global_position
 		var mouse_pos = get_global_mouse_position()
@@ -122,12 +153,12 @@ func shoot_arrow() -> void:
 func _on_melee_weapon_hitbox_area_entered(area: Area2D) -> void:
 	if area.get_parent().has_method("take_damage"):
 		apply_shake(0.2)
-		# Pass the player's global position to the enemy
 		area.get_parent().take_damage(PlayerManager.get_damage(), global_position)
 
 func _on_death() -> void:
-	if has_node("StateMachine/death"):
-		state_machine.change_state($StateMachine/death)
+	# Change to the death state immediately when health hits zero
+	if state_machine.current_state != $StateMachine/DeathState:
+		state_machine.change_state($StateMachine/DeathState)
 
 func get_speed() -> float:
 	return PlayerManager.get_speed()
