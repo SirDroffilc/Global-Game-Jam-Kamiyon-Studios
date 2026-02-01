@@ -198,10 +198,13 @@ func die() -> void:
 	attack_timer.stop()
 	# Ensure AnimatedSprite is stopped so AnimationPlayer can play 'death' cleanly
 	animated_sprite.stop()
-	animation_player.play("death")
+	$Hurtbox.queue_free()
+	animated_sprite.play("death")
 	collision_layer = 0
 	collision_mask = 0
 	set_physics_process(false)
+	await get_tree().create_timer(2.0).timeout
+	queue_free()
 
 # --- Helpers ---
 
