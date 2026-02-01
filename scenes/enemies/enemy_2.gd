@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 # --- Attributes ---
 @export var base_health: int = 50
-@export var damage: int = 30
+@export var damage: int = 10
 @export var fly_speed: float = 60.0 
 @export var stopping_distance_x: float = 200.0 # Renamed for clarity
 @export var stopping_distance_y: float = -100.0 # New vertical buffer

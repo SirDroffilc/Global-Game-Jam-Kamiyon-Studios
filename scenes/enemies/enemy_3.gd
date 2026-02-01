@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 # --- Attributes ---
-@export var base_health: int = 100
-@export var damage: int = 75
+@export var base_health: int = 200
+@export var damage: int = 15
 @export var dash_speed: float = 900.0 
 @export var retreat_speed: float = 300.0 
 @export var dash_stop_distance: float = 10.0 

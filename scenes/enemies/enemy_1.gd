@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 # --- Attributes ---
 @export var base_health: int = 30
-@export var damage: int = 50
+@export var damage: int = 5
 @export var walk_speed: float = 50.0 
 @export var stopping_distance: float = 60.0 
 @onready var current_health: int = base_health
