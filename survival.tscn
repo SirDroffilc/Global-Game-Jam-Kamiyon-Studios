@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://bnv7lg5a80t5"]
 
-[ext_resource type="Script" uid="uid://c7baow2cgd3wd" path="res://scripts/tile_map.gd" id="1_abc88"]
+[ext_resource type="Script" uid="uid://yuc6nvb0hia5" path="res://scripts/levels/survival.gd" id="1_b1jyj"]
 [ext_resource type="Texture2D" uid="uid://bx30taerkgaxt" path="res://assets/spritesheets/tileset.png" id="2_b1jyj"]
 [ext_resource type="Texture2D" uid="uid://c3flmsb3wbboq" path="res://assets/User Interface/bg2.png" id="3_6d2l4"]
 [ext_resource type="Texture2D" uid="uid://bw5cuh6y35goy" path="res://assets/User Interface/bg1.png" id="4_xbx4m"]
@@ -8,6 +8,12 @@
 [ext_resource type="Texture2D" uid="uid://dek5b8pbq2gqx" path="res://assets/User Interface/bg3.png" id="6_gn857"]
 [ext_resource type="PackedScene" uid="uid://c3emj4ho0t73a" path="res://scenes/players/player.tscn" id="7_gjf0t"]
 [ext_resource type="Script" uid="uid://dja4ji2408pv5" path="res://scripts/camera_2d.gd" id="8_cdm3r"]
+[ext_resource type="Script" uid="uid://bkncf5b046xob" path="res://scripts/levels/spawner_survival.gd" id="9_b1jyj"]
+[ext_resource type="Script" uid="uid://bd7lf8v6d8fm7" path="res://scripts/globals/hudcontroller.gd" id="10_gjf0t"]
+[ext_resource type="Texture2D" uid="uid://dqtf4avr6746c" path="res://assets/User Interface/Game HUD (Masked).png" id="11_cdm3r"]
+[ext_resource type="Texture2D" uid="uid://02iaflpad2an" path="res://assets/User Interface/Memory Shards.png" id="12_rwvoj"]
+[ext_resource type="Texture2D" uid="uid://b0hdtfkmgh1l4" path="res://assets/spritesheets/Health - Polygon.png" id="13_qbdmv"]
+[ext_resource type="FontFile" uid="uid://bphsesp23w8gl" path="res://assets/Font/ferrum.otf" id="14_jexiy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qm7fq"]
 texture = ExtResource("2_b1jyj")
@@ -67,8 +73,38 @@ physics_layer_0/collision_layer = 16
 physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_qm7fq")
 
-[node name="TileMap" type="Node" unique_id=516316421]
-script = ExtResource("1_abc88")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ac4mc"]
+bg_color = Color(0.09620472, 0.09620475, 0.09620469, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.078431375, 0.078431375, 0.078431375, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oxu42"]
+bg_color = Color(0.973535, 0.9735351, 0.973535, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.078431375, 0.078431375, 0.078431375, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="LabelSettings" id="LabelSettings_4dr2m"]
+font = ExtResource("14_jexiy")
+font_size = 32
+outline_size = 5
+outline_color = Color(0.033853278, 0.033853278, 0.033853274, 1)
+
+[node name="Survival" type="Node2D" unique_id=1022620126]
+script = ExtResource("1_b1jyj")
 
 [node name="TileMapLayerNeutral" type="TileMapLayer" parent="." unique_id=785529983]
 modulate = Color(0, 0, 0, 1)
@@ -110,7 +146,7 @@ expand_mode = 1
 [node name="BG2" type="TextureRect" parent="BG9" unique_id=1302629521]
 modulate = Color(0.8175213, 0.8175213, 0.81752115, 1)
 self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
-z_index = 10
+z_index = -1
 layout_mode = 0
 offset_left = 523.0
 offset_top = -147.0
@@ -147,7 +183,7 @@ flip_h = true
 [node name="FG2" type="TextureRect" parent="FG2" unique_id=372963886]
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0.38007212, 0.38007212, 0.38007212, 1)
-z_index = 20
+z_index = -2
 layout_mode = 0
 offset_left = 1593.0
 offset_top = -3.0
@@ -181,6 +217,9 @@ texture = ExtResource("4_xbx4m")
 expand_mode = 1
 flip_h = true
 
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=1934654903]
+position = Vector2(964, -45)
+
 [node name="Player" parent="." unique_id=395045780 instance=ExtResource("7_gjf0t")]
 z_index = 10
 position = Vector2(964, -17)
@@ -194,3 +233,90 @@ position_smoothing_speed = 6.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 script = ExtResource("8_cdm3r")
+
+[node name="Spawner" type="Node2D" parent="." unique_id=2018670335]
+script = ExtResource("9_b1jyj")
+
+[node name="EnemyMarkers" type="Node2D" parent="." unique_id=973450453]
+
+[node name="EnemyMarker1" type="Marker2D" parent="EnemyMarkers" unique_id=94775516]
+unique_name_in_owner = true
+position = Vector2(681, -107)
+
+[node name="EnemyMarker2" type="Marker2D" parent="EnemyMarkers" unique_id=1614516413]
+unique_name_in_owner = true
+position = Vector2(1269, -115)
+
+[node name="EnemyMarker3" type="Marker2D" parent="EnemyMarkers" unique_id=284290533]
+unique_name_in_owner = true
+position = Vector2(642, -109)
+
+[node name="EnemyMarker4" type="Marker2D" parent="EnemyMarkers" unique_id=181699556]
+unique_name_in_owner = true
+position = Vector2(1375, -120)
+
+[node name="EnemiesContainer" type="Node2D" parent="." unique_id=1969355143]
+unique_name_in_owner = true
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1752502696]
+script = ExtResource("10_gjf0t")
+
+[node name="HealthBar" type="ProgressBar" parent="UI" unique_id=1278209494]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 262.0
+offset_top = -454.0
+offset_right = -1390.0
+offset_bottom = -434.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_ac4mc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_oxu42")
+value = 100.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="MaskHUD" type="TextureRect" parent="UI" unique_id=56579282]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_cdm3r")
+metadata/_edit_use_anchors_ = true
+
+[node name="MemoryShards" type="TextureRect" parent="UI" unique_id=120130521]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_rwvoj")
+metadata/_edit_use_anchors_ = true
+
+[node name="HealthPolygon" type="TextureRect" parent="UI" unique_id=40520777]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+texture = ExtResource("13_qbdmv")
+metadata/_edit_use_anchors_ = true
+
+[node name="ShardsCount" type="Label" parent="UI" unique_id=846590485]
+offset_left = 278.0
+offset_top = 108.0
+offset_right = 320.0
+offset_bottom = 174.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "0"
+label_settings = SubResource("LabelSettings_4dr2m")
