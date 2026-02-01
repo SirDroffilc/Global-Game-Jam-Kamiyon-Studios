@@ -3,6 +3,7 @@ extends CanvasLayer
 # --- UI References ---
 @onready var mask_hud: TextureRect = $MaskHUD
 @onready var health_bar: ProgressBar = $HealthBar # Ensure this name matches your scene node
+@onready var shards_count: Label = $ShardsCount
 
 # --- Textures ---
 @export var unmasked_hud_tex: Texture = preload("res://assets/User Interface/Game HUD (Masked).png")
@@ -32,6 +33,14 @@ func _ready() -> void:
 	if PlayerManager.health_changed.is_connected(_on_player_health_changed):
 		PlayerManager.health_changed.disconnect(_on_player_health_changed)
 	PlayerManager.health_changed.connect(_on_player_health_changed)
+	
+	if PlayerManager.shards_count_changed.is_connected(_on_shards_count_changed):
+		PlayerManager.shards_count_changed.disconnect(_on_shards_count_changed)
+	PlayerManager.shards_count_changed.connect(_on_shards_count_changed)
+	
+
+func _on_shards_count_changed():
+	shards_count.text = str(PlayerManager.shards_count)
 
 func _on_player_element_toggled(is_light: bool) -> void:
 	if mask_hud:

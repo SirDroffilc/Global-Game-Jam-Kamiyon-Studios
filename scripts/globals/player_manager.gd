@@ -2,6 +2,7 @@ extends Node
 
 # --- Signals ---
 signal health_changed(new_health: int)
+signal shards_count_changed
 signal player_died
 
 # --- Attributes ---
@@ -18,6 +19,7 @@ var speed: float = 150.0
 var jump_velocity: float = -300.0
 var consumption_timer_cooldown: float = 10.0
 var is_light := true
+var shards_count := 0
 
 # --- Getters ---
 func get_speed() -> float:

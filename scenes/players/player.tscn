@@ -14,8 +14,8 @@
 [ext_resource type="Script" uid="uid://b17kdu1m6ngr7" path="res://scripts/players/double_jump_state.gd" id="8_phaeh"]
 [ext_resource type="Script" uid="uid://dlraub0o0jqin" path="res://scripts/players/attack_state.gd" id="9_yl2j2"]
 [ext_resource type="Script" uid="uid://n80882fu15ah" path="res://scripts/players/shoot_state.gd" id="10_es4m5"]
-[ext_resource type="Script" path="res://scenes/players/dash_state.gd" id="15_vjh8g"]
-[ext_resource type="Script" path="res://scenes/players/death_state.gd" id="16_f1232"]
+[ext_resource type="Script" uid="uid://dmlwh5v5e23dq" path="res://scenes/players/dash_state.gd" id="15_vjh8g"]
+[ext_resource type="Script" uid="uid://0b3acg44ji2a" path="res://scenes/players/death_state.gd" id="16_f1232"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dajw2"]
 atlas = ExtResource("2_vjh8g")
@@ -1111,6 +1111,8 @@ fill_to = Vector2(0.5, 0)
 collision_layer = 2
 collision_mask = 24
 script = ExtResource("1_6wyko")
+dash_cooldown = 3.0
+dust_interval = 1.0
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1496140655]
 self_modulate = Color(0.69099766, 0.69099766, 0.69099766, 1)
@@ -1181,8 +1183,6 @@ animation_name = "jump"
 
 [node name="DashState" type="Node" parent="StateMachine" unique_id=232494158 node_paths=PackedStringArray("idle_state", "run_state", "jump_state")]
 script = ExtResource("15_vjh8g")
-dash_speed = 1000.0
-dashing = true
 idle_state = NodePath("../IdleState")
 run_state = NodePath("../RunState")
 jump_state = NodePath("../JumpState")
@@ -1198,7 +1198,6 @@ script = ExtResource("10_es4m5")
 idle_state = NodePath("../IdleState")
 run_state = NodePath("../RunState")
 animation_name = "shoot"
-jump_state = null
 
 [node name="DeathState" type="Node" parent="StateMachine" unique_id=482105472]
 script = ExtResource("16_f1232")

@@ -7,12 +7,15 @@ signal element_toggled(is_light: bool)
 var is_light: bool = false
 
 # --- Node References ---
+@export var dash_available: bool = true
+@onready var dash_state: State = $StateMachine/DashState
 @onready var state_machine: StateMachine = $StateMachine
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite
 @onready var hitbox: Area2D = $AnimatedSprite/MeleeWeaponHitbox 
 @onready var hitbox_shape: CollisionShape2D = $AnimatedSprite/MeleeWeaponHitbox/CollisionShape2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var arrow_start_position: Marker2D = $AnimatedSprite/ArrowStartPosition
+@export var can_dash_in_air: bool = true
 
 # --- Camera Shake Settings ---
 @onready var camera: Camera2D = get_viewport().get_camera_2d() 
@@ -80,6 +83,7 @@ func _physics_process(delta: float) -> void:
 	
 	recoil_physics_velocity = recoil_physics_velocity.move_toward(Vector2.ZERO, recoil_friction * delta)
 	
+			
 	if is_on_floor() and not was_on_floor:
 		spawn_dust_particles(8, 1.0, 150.0)
 		AudioManager.play_omni("PlayerLand")
@@ -95,6 +99,14 @@ func _physics_process(delta: float) -> void:
 	
 	was_on_floor = is_on_floor()
 	
+	if is_on_floor():
+		dash_available = true
+		
+	if Input.is_action_just_pressed("dash"):
+		# Now 'dash_state' is a recognized identifier
+		if dash_available: 
+			state_machine.change_state(dash_state)
+		
 	if Input.is_action_just_pressed("jump"):
 		jump_buffer_timer = jump_buffer_time
 		if is_on_floor(): 
