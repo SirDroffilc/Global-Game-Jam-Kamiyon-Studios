@@ -35,14 +35,14 @@
 [ext_resource type="Texture2D" uid="uid://cuww36vio3qwk" path="res://assets/User Interface/bg4c.png" id="32_pq2ya"]
 [ext_resource type="PackedScene" uid="uid://vtnqa4okpo1m" path="res://scenes/enemies/enemy_2.tscn" id="34_bgu0u"]
 [ext_resource type="PackedScene" uid="uid://cegd8vj1aui1w" path="res://scenes/stages/shard.tscn" id="36_pq2ya"]
-[ext_resource type="PackedScene" path="res://assets/platforms/moving_blocks_3.tscn" id="37_2muur"]
-[ext_resource type="PackedScene" path="res://assets/platforms/moving_blocks_2.tscn" id="38_2uf0s"]
-[ext_resource type="PackedScene" path="res://assets/platforms/moving_blocks_1.tscn" id="39_cssca"]
+[ext_resource type="PackedScene" uid="uid://dpbje56fwkhil" path="res://assets/platforms/moving_blocks_3.tscn" id="37_2muur"]
+[ext_resource type="PackedScene" uid="uid://b7yvurdnn7aw1" path="res://assets/platforms/moving_blocks_2.tscn" id="38_2uf0s"]
+[ext_resource type="PackedScene" uid="uid://dkaxjkut8mhyh" path="res://assets/platforms/moving_blocks_1.tscn" id="39_cssca"]
 [ext_resource type="PackedScene" uid="uid://m7hkqu6uj4qp" path="res://assets/platforms/rotating_platform_b.tscn" id="40_mjijm"]
 [ext_resource type="PackedScene" uid="uid://cdsds1b0pec7n" path="res://assets/platforms/rotating_platform_w.tscn" id="41_37g55"]
 [ext_resource type="PackedScene" uid="uid://bwusti61ooyo7" path="res://assets/platforms/blinking_platform_b.tscn" id="42_cssca"]
 [ext_resource type="PackedScene" uid="uid://4q7pxnx2hmbo" path="res://assets/platforms/blinking_platform_w.tscn" id="43_mjijm"]
-[ext_resource type="Script" path="res://scenes/stages/spawner_level2.gd" id="44_mjijm"]
+[ext_resource type="Script" uid="uid://c5ex0x7t4qr2t" path="res://scenes/stages/spawner_level2.gd" id="44_mjijm"]
 
 [sub_resource type="GDScript" id="GDScript_cssca"]
 
@@ -647,6 +647,92 @@ initial_velocity_min = 20.0
 initial_velocity_max = 80.0
 gravity = Vector3(0, 20, 0)
 
+[sub_resource type="Animation" id="Animation_cssca"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BG1:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(522, -180)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BG3:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(882, -153)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BG5:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1248, -196)]
+}
+
+[sub_resource type="Animation" id="Animation_mjijm"]
+resource_name = "floating"
+length = 3.8666666
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BG1:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.03333333, 1.7333333, 3.8),
+"transitions": PackedFloat32Array(3.7321322, 0.5547847, 3.0314324),
+"update": 0,
+"values": [Vector2(522, -180), Vector2(522, -165), Vector2(522, -180)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BG3:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.03333333, 1.3666667, 3.8),
+"transitions": PackedFloat32Array(0.7071066, 1, 3.0314333),
+"update": 0,
+"values": [Vector2(882, -153), Vector2(882, -173), Vector2(882, -153)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BG5:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.03333336, 1.9, 3.7666667),
+"transitions": PackedFloat32Array(2.2973979, 1.5157171, 3.363586),
+"update": 0,
+"values": [Vector2(1248, -196), Vector2(1248, -216), Vector2(1248, -196)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_37g55"]
+_data = {
+&"RESET": SubResource("Animation_cssca"),
+&"floating": SubResource("Animation_mjijm")
+}
+
 [node name="TileMapLayerNeutral" type="Node2D" unique_id=1551565052]
 script = ExtResource("1_m0aea")
 
@@ -765,10 +851,10 @@ camera_attributes = SubResource("CameraAttributesPractical_l1pay")
 compositor = SubResource("Compositor_1tge3")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=438496847]
-offset_left = -4573.0
-offset_top = -4496.0
-offset_right = 3323.0
-offset_bottom = -1496.0
+offset_left = -4597.0005
+offset_top = -4555.0005
+offset_right = 3298.9995
+offset_bottom = -1555.0005
 scale = Vector2(5, 5)
 color = Color(0.9297146, 0.9297147, 0.9297146, 1)
 metadata/_edit_use_anchors_ = true
@@ -1331,6 +1417,119 @@ rotation = -0.1308997
 texture = ExtResource("31_jlg8c")
 expand_mode = 1
 
+[node name="BG26" type="TextureRect" parent="." unique_id=186174417]
+modulate = Color(1, 1, 1, 0.68235296)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 8594.0
+offset_top = -199.0
+offset_right = 8985.111
+offset_bottom = 21.0
+texture = ExtResource("22_6amog")
+expand_mode = 1
+
+[node name="BG27" type="TextureRect" parent="." unique_id=1390281599]
+modulate = Color(1, 1, 1, 0.68235296)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 8957.0
+offset_top = -199.0
+offset_right = 9348.111
+offset_bottom = 21.0
+texture = ExtResource("22_6amog")
+expand_mode = 1
+flip_h = true
+
+[node name="BG28" type="TextureRect" parent="." unique_id=1150888619]
+modulate = Color(1, 1, 1, 0.68235296)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 9351.0
+offset_top = -199.0
+offset_right = 9742.111
+offset_bottom = 21.0
+texture = ExtResource("22_6amog")
+expand_mode = 1
+
+[node name="BG29" type="TextureRect" parent="." unique_id=2091111478]
+modulate = Color(1, 1, 1, 0.68235296)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 12995.0
+offset_top = -533.0
+offset_right = 13386.111
+offset_bottom = -313.0
+texture = ExtResource("22_6amog")
+expand_mode = 1
+
+[node name="BG30" type="TextureRect" parent="." unique_id=549508765]
+modulate = Color(1, 1, 1, 0.68235296)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 13386.0
+offset_top = -587.0
+offset_right = 13855.334
+offset_bottom = -323.0
+texture = ExtResource("22_6amog")
+expand_mode = 1
+flip_h = true
+
+[node name="BG31" type="TextureRect" parent="." unique_id=543712446]
+modulate = Color(1, 1, 1, 0.68235296)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 13872.0
+offset_top = -578.0
+offset_right = 14341.334
+offset_bottom = -314.0
+texture = ExtResource("22_6amog")
+expand_mode = 1
+
+[node name="BG32" type="TextureRect" parent="." unique_id=569433874]
+modulate = Color(1, 1, 1, 0.68235296)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 14313.0
+offset_top = -578.0
+offset_right = 14782.334
+offset_bottom = -314.0
+texture = ExtResource("22_6amog")
+expand_mode = 1
+flip_h = true
+
+[node name="BG33" type="TextureRect" parent="." unique_id=1914195994]
+modulate = Color(1, 1, 1, 0.68235296)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+offset_left = 14790.0
+offset_top = -578.0
+offset_right = 15259.334
+offset_bottom = -314.0
+texture = ExtResource("22_6amog")
+expand_mode = 1
+
+[node name="Fog Overlay3" type="TextureRect" parent="." unique_id=491420485]
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+texture_filter = 2
+offset_left = 7512.0
+offset_top = -49.0
+offset_right = 15179.0
+offset_bottom = 968.0
+texture = ExtResource("23_bvpxd")
+expand_mode = 1
+
+[node name="Fog Overlay4" type="TextureRect" parent="." unique_id=1318925508]
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+texture_filter = 2
+offset_left = 11730.0
+offset_top = -439.0
+offset_right = 16281.0
+offset_bottom = 583.0
+texture = ExtResource("23_bvpxd")
+expand_mode = 1
+
+[node name="FG3" type="TextureRect" parent="." unique_id=838950721]
+self_modulate = Color(0.38007212, 0.38007212, 0.38007212, 1)
+z_index = 50
+offset_left = 12892.0
+offset_top = -766.0
+offset_right = 13574.666
+offset_bottom = -382.0
+texture = ExtResource("28_6amog")
+expand_mode = 1
+
 [node name="PointLight2D5" type="PointLight2D" parent="." unique_id=489128143]
 z_index = 40
 texture_filter = 2
@@ -1747,6 +1946,10 @@ script = ExtResource("44_mjijm")
 interval_fast = 1.0
 interval_medium = 1.0
 interval_slow = 1.0
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="." unique_id=1843855575]
+libraries/ = SubResource("AnimationLibrary_37g55")
+autoplay = &"floating"
 
 [editable path="rotating_wheel"]
 [editable path="rotating_wheel2"]
