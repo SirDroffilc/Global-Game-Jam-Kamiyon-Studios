@@ -1,7 +1,6 @@
 [gd_scene format=4 uid="uid://d3ykragivhif8"]
 
 [ext_resource type="Script" uid="uid://bjrudb8ewdhsr" path="res://scripts/stage_1.gd" id="1_m0aea"]
-[ext_resource type="Script" uid="uid://c7baow2cgd3wd" path="res://scripts/tile_map.gd" id="2_hn3wy"]
 [ext_resource type="Texture2D" uid="uid://bx30taerkgaxt" path="res://assets/spritesheets/tileset.png" id="3_f0cuo"]
 [ext_resource type="Texture2D" uid="uid://ofk4suifvu13" path="res://assets/spritesheets/Dark.png" id="4_f0cuo"]
 [ext_resource type="PackedScene" uid="uid://c3emj4ho0t73a" path="res://scenes/players/player.tscn" id="4_tdccu"]
@@ -43,6 +42,9 @@
 [ext_resource type="PackedScene" uid="uid://cdsds1b0pec7n" path="res://assets/platforms/rotating_platform_w.tscn" id="41_37g55"]
 [ext_resource type="PackedScene" uid="uid://bwusti61ooyo7" path="res://assets/platforms/blinking_platform_b.tscn" id="42_cssca"]
 [ext_resource type="PackedScene" uid="uid://4q7pxnx2hmbo" path="res://assets/platforms/blinking_platform_w.tscn" id="43_mjijm"]
+[ext_resource type="Script" uid="uid://c5ex0x7t4qr2t" path="res://scenes/stages/spawner_level2.gd" id="44_mjijm"]
+
+[sub_resource type="GDScript" id="GDScript_cssca"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_emlwg"]
 texture = ExtResource("3_f0cuo")
@@ -649,7 +651,7 @@ gravity = Vector3(0, 20, 0)
 script = ExtResource("1_m0aea")
 
 [node name="TileMap" type="Node" parent="." unique_id=129294795]
-script = ExtResource("2_hn3wy")
+script = SubResource("GDScript_cssca")
 
 [node name="TileMapLayerDark" type="TileMapLayer" parent="TileMap" unique_id=1022112033]
 modulate = Color(0.34407538, 0.34407586, 0.3440756, 1)
@@ -1377,7 +1379,7 @@ texture = SubResource("GradientTexture2D_bgu0u")
 
 [node name="Player" parent="." unique_id=782149273 instance=ExtResource("4_tdccu")]
 z_index = 10
-position = Vector2(6586.91, -288.37646)
+position = Vector2(612, -50)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1530708046]
 position = Vector2(55, -50)
@@ -1705,6 +1707,45 @@ position = Vector2(11619, -216)
 
 [node name="AnimationPlayer" parent="blinking_platform_b7/AnimatableBody2D" parent_id_path=PackedInt32Array(592828582, 1902553568) index="2" unique_id=1537231674]
 speed_scale = 1.4
+
+[node name="EnemyMarkers" type="Node2D" parent="." unique_id=395505559]
+
+[node name="EnemyMarker1" type="Marker2D" parent="EnemyMarkers" unique_id=1895895820]
+unique_name_in_owner = true
+position = Vector2(9097, -106)
+
+[node name="EnemyMarker2" type="Marker2D" parent="EnemyMarkers" unique_id=891090347]
+unique_name_in_owner = true
+position = Vector2(9176, -138)
+
+[node name="EnemyMarker3" type="Marker2D" parent="EnemyMarkers" unique_id=1585305561]
+unique_name_in_owner = true
+position = Vector2(9265, -123)
+
+[node name="EnemyMarker4" type="Marker2D" parent="EnemyMarkers" unique_id=1675633500]
+unique_name_in_owner = true
+position = Vector2(14548.649, -685.8146)
+
+[node name="EnemyMarker5" type="Marker2D" parent="EnemyMarkers" unique_id=1301632838]
+unique_name_in_owner = true
+position = Vector2(14557.9375, -702.5682)
+
+[node name="EnemyMarker6" type="Marker2D" parent="EnemyMarkers" unique_id=1335368562]
+unique_name_in_owner = true
+position = Vector2(14532, -712)
+
+[node name="EnemyMarker7" type="Marker2D" parent="EnemyMarkers" unique_id=907893006]
+unique_name_in_owner = true
+position = Vector2(14553.222, -676.63074)
+
+[node name="EnemiesContainer" type="Node2D" parent="." unique_id=573057191]
+unique_name_in_owner = true
+
+[node name="Spawner" type="Node2D" parent="." unique_id=621503398]
+script = ExtResource("44_mjijm")
+interval_fast = 1.0
+interval_medium = 1.0
+interval_slow = 1.0
 
 [editable path="rotating_wheel"]
 [editable path="rotating_wheel2"]

@@ -3,9 +3,17 @@ extends Node2D
 @onready var player: Player = $Player
 var latest_checkpoint_pos: Vector2
 
+# --- TileMap References ---
+@onready var tile_map_layer_dark: TileMapLayer = $TileMap/TileMapLayerDark
+@onready var tile_map_layer_light: TileMapLayer = $TileMap/TileMapLayerLight
+@onready var tile_map_layer_neutral: TileMapLayer = $TileMap/TileMapLayerNeutral
+
 func _ready() -> void:
 	# 0. Start with a black fade-in transition
 	_fade_from_black()
+	
+	# Initial visibility sync with PlayerManager
+	_update_tilemap_visibility()
 	
 	AudioManager.play_music("GameSceneMusic")
 	
@@ -20,10 +28,29 @@ func _ready() -> void:
 	if PlayerManager.has_signal("player_died"):
 		PlayerManager.player_died.connect(_on_player_respawn)
 
+func _input(event: InputEvent) -> void:
+	# Meticulous Input Check: Toggles world when skill1 is pressed
+	if event.is_action_pressed("skill1"):
+		PlayerManager.is_light = !PlayerManager.is_light
+		_update_tilemap_visibility()
+
+# --- World Logic Functions ---
+
+func _update_tilemap_visibility() -> void:
+	# Neutral is ALWAYS visible
+	tile_map_layer_neutral.visible = true
+	
+	# Light Layer: Visible only if is_light is true
+	tile_map_layer_light.visible = !PlayerManager.is_light
+	
+	# Dark Layer: Visible only if is_light is false
+	tile_map_layer_dark.visible = PlayerManager.is_light
+	
+	print(">>> WORLD: Swapped. Light is ", "ON" if PlayerManager.is_light else "OFF")
+
 # --- Transition Functions ---
 
 func _fade_from_black() -> void:
-	# 1. Create the temporary CanvasLayer and ColorRect
 	var canvas = CanvasLayer.new()
 	canvas.layer = 100 
 	add_child(canvas)
@@ -33,17 +60,9 @@ func _fade_from_black() -> void:
 	rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	rect.color = Color.BLACK
 	
-	# 2. Setup the Meticulous Tween Sequence
 	var tween = create_tween()
-	
-	# Hold the screen black for 2 seconds
 	tween.tween_interval(1.25)
-	
-	# SLOW FADE: Changed 1.0 to 3.0 for a slower transition
-	# (Alpha 1.0 -> 0.0 over 3.0 seconds)
 	tween.tween_property(rect, "modulate:a", 0.0, 3.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	
-	# Remove transition nodes once finished
 	tween.tween_callback(canvas.queue_free)
 
 # --- Checkpoint & Respawn Logic ---
@@ -65,5 +84,8 @@ func _move_player_to_checkpoint() -> void:
 	player.velocity = Vector2.ZERO
 	
 	player.state_machine.init(player)
+	
+	# Ensure visibility is correct after respawning
+	_update_tilemap_visibility()
 	
 	print(">>> LEVEL: Respawn sequence complete.")
