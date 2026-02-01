@@ -25,48 +25,37 @@ func process_physics(delta: float) -> State:
 	jump_hold_timer += delta
 	var current_gravity = parent.get_gravity()
 	
-	# 1. AIR ATTACK CHECK (Meticulous Addition)
+	# 1. Air Attack Check
 	if Input.is_action_just_pressed("attack"):
-		if parent.is_light and parent.ranged_cooldown_timer <= 0:
-			return shoot_state
-		else:
-			return attack_state
+		return shoot_state if (parent.is_light and parent.ranged_cooldown_timer <= 0) else attack_state
 
-	# 2. VARIABLE JUMP HEIGHT LOGIC
+	# 2. Physics & Jump Height
 	if Input.is_action_pressed("jump") and jump_hold_timer < max_jump_hold_time and parent.velocity.y < 0:
 		parent.velocity += current_gravity * hold_gravity_multiplier * delta
 	else:
 		parent.velocity += current_gravity * delta
 
-	# 3. JUMP CUT (Short Hop)
 	if Input.is_action_just_released("jump") and parent.velocity.y < 0:
 		parent.velocity.y *= jump_cut_multiplier
 		jump_hold_timer = max_jump_hold_time 
 
-	# 4. MOVEMENT
+	# 3. Movement
 	var dir = Input.get_axis("move_left", "move_right")
 	parent.velocity.x = dir * parent.get_speed()
-	
-	if dir != 0:
-		# Note: Your player.gd handle_flipping() is preferred, 
-		# but if you use this, ensure it matches your flip_h logic.
-		parent.animated_sprite.flip_h = dir < 0
-		
 	parent.move_and_slide()
 
-	# 5. DASH TRANSITION
-	if Input.is_action_just_pressed("dash") and parent.can_dash:
-		return dash_state
+	# 4. Gated Dash Transition
+	if Input.is_action_just_pressed("dash"):
+		if parent.dash_available and parent.dash_cooldown_timer <= 0:
+			return dash_state
 
-	# 6. DOUBLE JUMP CHECK
+	# 5. Gated Double Jump Check
 	if Input.is_action_just_pressed("jump") and not parent.is_on_floor():
-		return double_jump_state
+		if parent.can_double_jump: # Check the charge
+			return double_jump_state
 	
-	# 7. LANDING & BUFFERED JUMP CHECK
+	# 6. Landing
 	if parent.is_on_floor():
-		if parent.jump_buffer_timer > 0:
-			return self 
-		
 		return run_state if dir != 0 else idle_state
 		
 	return null

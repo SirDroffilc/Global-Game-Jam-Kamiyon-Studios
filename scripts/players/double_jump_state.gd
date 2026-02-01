@@ -2,44 +2,38 @@ extends State
 
 @export var idle_state: State
 @export var run_state: State
-@export var attack_state: State # Added for Dark Melee
-@export var shoot_state: State  # Added for Light Ranged
+@export var attack_state: State
+@export var shoot_state: State
 @export var dash_state: State
 
 @export var jump_multiplier: float = 0.7 
 
 func enter() -> void:
+	# Consume the charge immediately so it cannot be used again in the same air-time
+	parent.can_double_jump = false
 	parent.play_animation("jump") 
 	AudioManager.play_omni("PlayerJump")
-	parent.velocity.y = parent.get_jump_velocity() * jump_multiplier #
+	parent.velocity.y = parent.get_jump_velocity() * jump_multiplier
 
 func process_physics(delta: float) -> State:
-	# 1. AIR ATTACK CHECK
-	if Input.is_action_just_pressed("dash") and parent.can_dash:
-		return dash_state
+	# 1. Gated Dash Transition
+	if Input.is_action_just_pressed("dash"):
+		if parent.dash_available and parent.dash_cooldown_timer <= 0:
+			return dash_state
 		
+	# 2. Air Attack Check
 	if Input.is_action_just_pressed("attack"):
-		if parent.is_light and parent.ranged_cooldown_timer <= 0:
-			return shoot_state
-		else:
-			return attack_state
+		return shoot_state if (parent.is_light and parent.ranged_cooldown_timer <= 0) else attack_state
 
-	# 2. PHYSICS
+	# 3. Physics & Horizontal Movement
 	parent.velocity += parent.get_gravity() * delta
-	
 	var dir = Input.get_axis("move_left", "move_right")
 	parent.velocity.x = dir * parent.get_speed()
 	
-	if dir != 0:
-		parent.animated_sprite.flip_h = dir < 0
-		
 	parent.move_and_slide()
-	if Input.is_action_just_pressed("dash"):
-		return dash_state
-	# 3. TRANSITIONS
+
+	# 4. Transitions
 	if parent.is_on_floor():
-		if dir != 0:
-			return run_state
-		return idle_state
+		return run_state if dir != 0 else idle_state
 		
 	return null

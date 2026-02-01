@@ -17,8 +17,8 @@ func exit() -> void:
 	AudioManager.stop_omni("PlayerIdle")
 
 func process_physics(delta: float) -> State:
-	if Input.is_action_just_pressed("dash") and parent.can_dash:
-		if dash_state != null:
+	if Input.is_action_just_pressed("dash"):
+		if parent.dash_available and parent.dash_cooldown_timer <= 0:
 			return dash_state
 
 	# Inside your IdleState or RunState process_physics:
@@ -36,8 +36,7 @@ func process_physics(delta: float) -> State:
 	var dir = Input.get_axis("move_left", "move_right")
 	if dir != 0:
 		return run_state
-	if Input.is_action_just_pressed("dash"):
-		return dash_state
+
 	# 2. PHYSICS PROCESSING
 	# Maintain gravity so the player remains grounded during the idle state.
 	parent.velocity += parent.get_gravity() * delta

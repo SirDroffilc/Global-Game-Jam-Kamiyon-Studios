@@ -27,7 +27,8 @@ func process_physics(delta: float) -> State:
 	if Input.is_action_just_pressed("jump") and parent.is_on_floor():
 		return jump_state
 	
-	if Input.is_action_just_pressed("dash") and parent.can_dash:
+	if Input.is_action_just_pressed("dash"):
+		if parent.dash_available and parent.dash_cooldown_timer <= 0:
 			return dash_state
 		
 	# 2. MOVEMENT LOGIC
