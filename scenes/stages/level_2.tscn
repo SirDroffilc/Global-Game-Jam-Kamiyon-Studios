@@ -35,14 +35,14 @@
 [ext_resource type="Texture2D" uid="uid://cuww36vio3qwk" path="res://assets/User Interface/bg4c.png" id="32_pq2ya"]
 [ext_resource type="PackedScene" uid="uid://vtnqa4okpo1m" path="res://scenes/enemies/enemy_2.tscn" id="34_bgu0u"]
 [ext_resource type="PackedScene" uid="uid://cegd8vj1aui1w" path="res://scenes/stages/shard.tscn" id="36_pq2ya"]
-[ext_resource type="PackedScene" uid="uid://dpbje56fwkhil" path="res://assets/platforms/moving_blocks_3.tscn" id="37_2muur"]
-[ext_resource type="PackedScene" uid="uid://b7yvurdnn7aw1" path="res://assets/platforms/moving_blocks_2.tscn" id="38_2uf0s"]
-[ext_resource type="PackedScene" uid="uid://dkaxjkut8mhyh" path="res://assets/platforms/moving_blocks_1.tscn" id="39_cssca"]
+[ext_resource type="PackedScene" path="res://assets/platforms/moving_blocks_3.tscn" id="37_2muur"]
+[ext_resource type="PackedScene" path="res://assets/platforms/moving_blocks_2.tscn" id="38_2uf0s"]
+[ext_resource type="PackedScene" path="res://assets/platforms/moving_blocks_1.tscn" id="39_cssca"]
 [ext_resource type="PackedScene" uid="uid://m7hkqu6uj4qp" path="res://assets/platforms/rotating_platform_b.tscn" id="40_mjijm"]
 [ext_resource type="PackedScene" uid="uid://cdsds1b0pec7n" path="res://assets/platforms/rotating_platform_w.tscn" id="41_37g55"]
 [ext_resource type="PackedScene" uid="uid://bwusti61ooyo7" path="res://assets/platforms/blinking_platform_b.tscn" id="42_cssca"]
 [ext_resource type="PackedScene" uid="uid://4q7pxnx2hmbo" path="res://assets/platforms/blinking_platform_w.tscn" id="43_mjijm"]
-[ext_resource type="Script" uid="uid://c5ex0x7t4qr2t" path="res://scenes/stages/spawner_level2.gd" id="44_mjijm"]
+[ext_resource type="Script" path="res://scenes/stages/spawner_level2.gd" id="44_mjijm"]
 
 [sub_resource type="GDScript" id="GDScript_cssca"]
 
@@ -1379,7 +1379,7 @@ texture = SubResource("GradientTexture2D_bgu0u")
 
 [node name="Player" parent="." unique_id=782149273 instance=ExtResource("4_tdccu")]
 z_index = 10
-position = Vector2(612, -50)
+position = Vector2(606.4199, -50.512085)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1530708046]
 position = Vector2(55, -50)
