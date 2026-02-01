@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://dkaxjkut8mhyh"]
+
+[ext_resource type="Texture2D" uid="uid://ofk4suifvu13" path="res://assets/spritesheets/Dark.png" id="1_c2f3o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0v8u"]
+size = Vector2(35, 3)
+
+[sub_resource type="Animation" id="Animation_y7mb5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_4ung3"]
+resource_name = "moving_blocks_1"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5, 7.5, 10),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, false, true, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5, 7.5, 10),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 5, 10),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(50, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_byguv"]
+_data = {
+&"RESET": SubResource("Animation_y7mb5"),
+&"moving_blocks_1": SubResource("Animation_4ung3")
+}
+
+[node name="moving_blocks_1" type="Node2D" unique_id=32492466]
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="." unique_id=293416167]
+collision_layer = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D" unique_id=206840361]
+position = Vector2(-1, -1)
+texture = ExtResource("1_c2f3o")
+region_enabled = true
+region_rect = Rect2(62.97619, 0, 47.087013, 48.159405)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D" unique_id=639519737]
+position = Vector2(0.5, -22.5)
+shape = SubResource("RectangleShape2D_r0v8u")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatableBody2D" unique_id=852339805]
+libraries/ = SubResource("AnimationLibrary_byguv")
+autoplay = &"moving_blocks_1"
