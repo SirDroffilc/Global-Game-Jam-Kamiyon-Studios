@@ -29,6 +29,10 @@ var knockback_velocity: Vector2 = Vector2.ZERO
 @export var ghost_interval: float = 0.05 
 var ghost_timer: float = 0.0
 
+# --- Audio Attributes ---
+var step_timer: float = 0.0
+@export var step_interval: float = 0.35
+
 # --- Node References ---
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -64,6 +68,13 @@ func _physics_process(delta: float) -> void:
 		EnemyState.MOVING:
 			if animated_sprite.animation != "run":
 				animated_sprite.play("run")
+				
+			# Footsteps Logic
+			step_timer -= delta
+			if step_timer <= 0:
+				AudioManager.play_omni("EnemyWalk")
+				step_timer = step_interval
+				
 			_face_player()
 			if player:
 				var dist_x = player.global_position.x - global_position.x
@@ -103,6 +114,7 @@ func execute_pattern_step() -> void:
 		0, 1: 
 			current_state = EnemyState.ATTACKING
 			animated_sprite.stop() # Clean state for AnimationPlayer
+			AudioManager.play_omni("EnemySlash")
 			animation_player.play("attack1_sequence")
 			attack_step += 1
 			attack_timer.start(0.3 if attack_step == 1 else 1.0)
@@ -111,6 +123,7 @@ func execute_pattern_step() -> void:
 			current_state = EnemyState.ATTACKING
 			#spawn_attack_indicator() # Ethereal "Tell" indicator
 			animated_sprite.stop()
+			AudioManager.play_omni("EnemySlash")
 			animation_player.play("attack2_sequence")
 			attack_step = 0 
 			attack_timer.start(2.0)
@@ -118,6 +131,7 @@ func execute_pattern_step() -> void:
 # --- Animation Call Methods (From AnimationPlayer) ---
 
 func start_dash_attack() -> void:
+	AudioManager.play_omni("EnemyDash")
 	current_state = EnemyState.DASHING
 	ghost_timer = 0
 
@@ -185,6 +199,7 @@ func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
 	if is_dying: return
 	current_health -= amount
 	_flash_hurt()
+	AudioManager.play_omni("EnemyHurt")
 	
 	if attacker_pos != Vector2.ZERO:
 		var knockback_dir = (global_position - attacker_pos).normalized()
@@ -199,6 +214,7 @@ func die() -> void:
 	# Ensure AnimatedSprite is stopped so AnimationPlayer can play 'death' cleanly
 	animated_sprite.stop()
 	$Hurtbox.queue_free()
+	AudioManager.play_omni("EnemyDeath")
 	animated_sprite.play("death")
 	collision_layer = 0
 	collision_mask = 0
@@ -216,6 +232,8 @@ func _face_player() -> void:
 		attack2_hitbox.scale.x = 1 if not side else -1
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	if not is_active:
+		AudioManager.play_omni("BossGrowl") # Play aggro sound once
 	is_active = true
 	current_state = EnemyState.MOVING
 	attack_timer.start()
