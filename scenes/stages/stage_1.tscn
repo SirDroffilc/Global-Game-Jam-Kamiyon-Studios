@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://bd7lf8v6d8fm7" path="res://scripts/globals/hudcontroller.gd" id="9_mm8bn"]
 [ext_resource type="Texture2D" uid="uid://02iaflpad2an" path="res://assets/User Interface/Memory Shards.png" id="11_qm7fq"]
 [ext_resource type="Texture2D" uid="uid://b0hdtfkmgh1l4" path="res://assets/spritesheets/Health - Polygon.png" id="12_emlwg"]
+[ext_resource type="PackedScene" uid="uid://cegd8vj1aui1w" path="res://scenes/stages/shard.tscn" id="15_p4glm"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ncvry"]
 particle_flag_disable_z = true
@@ -315,7 +316,7 @@ unique_name_in_owner = true
 
 [node name="Player" parent="." unique_id=782149273 instance=ExtResource("2_8q8ih")]
 z_index = 10
-position = Vector2(215, -26)
+position = Vector2(52.022564, -58.81108)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1530708046]
 position = Vector2(0, -41)
@@ -379,6 +380,25 @@ grow_vertical = 2
 size_flags_horizontal = 4
 texture = ExtResource("12_emlwg")
 
+[node name="ShardsCount" type="Label" parent="UI" unique_id=1433268476]
+offset_left = 278.0
+offset_top = 147.0
+offset_right = 318.0
+offset_bottom = 170.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "0"
+
 [node name="AreaLabelTrigger" parent="." unique_id=407906546 instance=ExtResource("2_emlwg")]
 position = Vector2(-195, -51)
 scale = Vector2(5, 5)
+
+[node name="Shards" type="Node" parent="." unique_id=1362187564]
+
+[node name="Shard" parent="Shards" unique_id=1755890355 instance=ExtResource("15_p4glm")]
+position = Vector2(150, -13)
+
+[node name="Shard2" parent="Shards" unique_id=498015237 instance=ExtResource("15_p4glm")]
+position = Vector2(126, -13)
+
+[node name="Shard3" parent="Shards" unique_id=1498610690 instance=ExtResource("15_p4glm")]
+position = Vector2(108, -14)
