@@ -64,6 +64,7 @@ _data = {
 [node name="rotating_platform_b" type="Node2D" unique_id=142754377]
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="." unique_id=1190744536]
+collision_layer = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D" unique_id=489854497]
 texture = ExtResource("1_njy5m")

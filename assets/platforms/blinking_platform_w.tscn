@@ -250,6 +250,7 @@ _data = {
 [node name="blinking_platform_w" type="Node2D" unique_id=672246281]
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="." unique_id=371757912]
+collision_layer = 10
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D" unique_id=1981405583]
 texture = ExtResource("1_ii3v1")

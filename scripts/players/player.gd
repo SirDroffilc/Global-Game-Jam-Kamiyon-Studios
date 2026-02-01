@@ -125,7 +125,7 @@ func _on_melee_weapon_hitbox_area_entered(area: Area2D) -> void:
 	var target = area.get_parent()
 	if target.has_method("take_damage"):
 		apply_shake(0.2)
-		spawn_attack_slash() # RESTORED: Now triggers on hit
+		spawn_attack_slash() 
 		var slash_sfx_list = ["PlayerSlash1", "PlayerSlash2", "PlayerSlash3"]
 		AudioManager.play_omni(slash_sfx_list.pick_random())
 		target.take_damage(PlayerManager.get_damage(), global_position)
@@ -133,7 +133,6 @@ func _on_melee_weapon_hitbox_area_entered(area: Area2D) -> void:
 # --- Visual Helpers ---
 
 func spawn_attack_slash() -> void:
-	# RESTORED: Meticulous slash particle logic
 	var slash = CPUParticles2D.new()
 	get_tree().current_scene.add_child(slash)
 	var dir_mult = -1 if animated_sprite.flip_h else 1
@@ -148,7 +147,7 @@ func spawn_attack_slash() -> void:
 	slash.initial_velocity_min = 200.0
 	slash.initial_velocity_max = 400.0
 	slash.damping_min = 100.0
-	slash.color = Color(15, 15, 15, 1) # HDR Effect
+	slash.color = Color(15, 15, 15, 1) 
 	var curve = Curve.new()
 	curve.add_point(Vector2(0, 1))
 	curve.add_point(Vector2(1, 0))
@@ -259,7 +258,7 @@ func take_damage(amount: int) -> void:
 	AudioManager.play_omni("PlayerHurt")
 	flash_hurt()
 	apply_shake(0.4) 
-	spawn_hit_particles(global_position, Color.BLACK)
+	spawn_hit_particles(global_position, Color.BLACK) # THE BLACK PARTICLES ARE HERE
 
 func flash_hurt() -> void:
 	animated_sprite.modulate = Color(20, 20, 20, 1)

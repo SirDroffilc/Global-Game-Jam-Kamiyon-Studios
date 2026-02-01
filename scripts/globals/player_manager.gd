@@ -2,6 +2,7 @@ extends Node
 
 # --- Signals ---
 signal health_changed(new_health: int)
+@warning_ignore("unused_signal")
 signal shards_count_changed
 signal player_died
 
