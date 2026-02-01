@@ -1501,6 +1501,7 @@ texture = ExtResource("22_6amog")
 expand_mode = 1
 
 [node name="Fog Overlay3" type="TextureRect" parent="." unique_id=491420485]
+visible = false
 self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
 texture_filter = 2
 offset_left = 7512.0
@@ -1579,7 +1580,7 @@ texture = SubResource("GradientTexture2D_bgu0u")
 [node name="Player" parent="." unique_id=782149273 instance=ExtResource("4_tdccu")]
 process_mode = 3
 z_index = 10
-position = Vector2(606.4199, -50.512085)
+position = Vector2(11703.973, -265.92496)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1530708046]
 position = Vector2(55, -50)
