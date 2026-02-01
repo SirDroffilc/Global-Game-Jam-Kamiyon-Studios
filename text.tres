@@ -1,0 +1,7 @@
+[gd_resource type="Theme" format=3 uid="uid://dvltlpl0ud53m"]
+
+[ext_resource type="FontFile" uid="uid://dq5hf3t42mogi" path="res://assets/ferrum.otf" id="1_lgmnm"]
+
+[resource]
+Label/font_sizes/font_size = 64
+Label/fonts/font = ExtResource("1_lgmnm")

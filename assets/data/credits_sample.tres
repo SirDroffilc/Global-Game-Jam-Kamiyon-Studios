@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CreditsData" format=3 uid="uid://bgp2qc8k6c5qg"]
+
+[ext_resource type="Script" uid="uid://bj70rlwjbm6l5" path="res://scripts/ui/credits/credits_data.gd" id="1_data"]
+[ext_resource type="Script" uid="uid://dlullxy223wfr" path="res://scripts/ui/credits/credit_entry.gd" id="2_entry"]
+
+[sub_resource type="Resource" id="Resource_sfx1"]
+script = ExtResource("2_entry")
+name = "Explosion"
+owner = "SoundGuy"
+link = "https://example.com/soundguy"
+
+[resource]
+script = ExtResource("1_data")
+sound_effects = Array[ExtResource("2_entry")]([SubResource("Resource_sfx1")])
