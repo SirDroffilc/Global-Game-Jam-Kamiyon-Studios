@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://dv4gfj616liay"]
+
+[ext_resource type="Script" uid="uid://cgv7eq53sg7nq" path="res://scripts/ui/credits/credits_ui.gd" id="1_j8efc"]
+[ext_resource type="Resource" uid="uid://bgp2qc8k6c5qg" path="res://assets/data/credits_sample.tres" id="2_88n5w"]
+[ext_resource type="PackedScene" uid="uid://bdkg4omqajsiq" path="res://scenes/Credits/credits_header.tscn" id="3_1dyw1"]
+[ext_resource type="PackedScene" uid="uid://c8j7k3l2m2n5p" path="res://scenes/Credits/section_header.tscn" id="3_simple_header"]
+[ext_resource type="PackedScene" uid="uid://cvg13flpsu58j" path="res://scenes/Credits/credit_item.tscn" id="4_new_item"]
+
+[node name="CreditsScene" type="Control" unique_id=1378201270 node_paths=PackedStringArray("credits_panel", "content_parent", "back_button", "close_panel_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j8efc")
+credits_data = ExtResource("2_88n5w")
+scroll_speed = 200.0
+credits_panel = NodePath(".")
+content_parent = NodePath("ContentContainer/ScrollContent")
+back_button = NodePath("BackButton")
+close_panel_button = NodePath("CloseButton")
+header_scene = ExtResource("3_simple_header")
+item_scene = ExtResource("4_new_item")
+static_header_scene = ExtResource("3_1dyw1")
+
+[node name="Background" type="ColorRect" parent="." unique_id=2140700287]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.05, 0.05, 1)
+
+[node name="ContentContainer" type="Control" parent="." unique_id=1484625191]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContent" type="VBoxContainer" parent="ContentContainer" unique_id=1189281219]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 1080.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+theme_override_constants/separation = 200
+alignment = 1
+
+[node name="BackButton" type="Button" parent="." unique_id=703007535]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 150.0
+offset_bottom = 80.0
+text = "Back"
+
+[node name="CloseButton" type="Button" parent="." unique_id=104722170]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -150.0
+offset_top = 32.0
+offset_right = -32.0
+offset_bottom = 80.0
+grow_horizontal = 0
+text = "Close"

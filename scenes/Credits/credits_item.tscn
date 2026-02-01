@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://gi0nsrrs3qhl"]
+
+[ext_resource type="Script" uid="uid://dmbn6ut7yypqb" path="res://scripts/ui/credits/credits_item_ui.gd" id="1_script"]
+
+[node name="CreditItem" type="HBoxContainer" unique_id=478234679 node_paths=PackedStringArray("name_label", "owner_label", "link_button")]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 126.0
+grow_horizontal = 2
+alignment = 1
+script = ExtResource("1_script")
+name_label = NodePath("Name")
+owner_label = NodePath("Owner")
+link_button = NodePath("LinkButton")
+
+[node name="Owner" type="Label" parent="." unique_id=584258274]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+text = "Owner Name"
+horizontal_alignment = 2
+
+[node name="Separator" type="Label" parent="." unique_id=1803374109]
+layout_mode = 2
+text = "-"
+
+[node name="Name" type="RichTextLabel" parent="." unique_id=272175231]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[b]Asset Name[/b]"
+fit_content = true
+
+[node name="LinkButton" type="Button" parent="." unique_id=1176802934]
+layout_mode = 2
+text = "Link"
+flat = true

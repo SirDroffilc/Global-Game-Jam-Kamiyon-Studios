@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://c8j7k3l2m2n5p"]
+
+[node name="SectionHeader" type="Label"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.843137, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "CATEGORY HEADER"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
