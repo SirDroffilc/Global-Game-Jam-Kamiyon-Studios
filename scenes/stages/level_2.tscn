@@ -6,14 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://c3emj4ho0t73a" path="res://scenes/players/player.tscn" id="4_tdccu"]
 [ext_resource type="Script" uid="uid://dja4ji2408pv5" path="res://scripts/camera_2d.gd" id="5_pfres"]
 [ext_resource type="Texture2D" uid="uid://csd81ygyilmgx" path="res://assets/spritesheets/white.png" id="5_tdccu"]
-[ext_resource type="PackedScene" path="res://scenes/stages/fall_zone.tscn" id="6_85few"]
-[ext_resource type="PackedScene" path="res://scenes/stages/checkpoint.tscn" id="6_pfres"]
+[ext_resource type="PackedScene" uid="uid://dmh3uptk4uctc" path="res://scenes/stages/fall_zone.tscn" id="6_85few"]
+[ext_resource type="PackedScene" uid="uid://gaswrufkubp7" path="res://scenes/stages/checkpoint.tscn" id="6_pfres"]
 [ext_resource type="Script" uid="uid://bd7lf8v6d8fm7" path="res://scripts/globals/hudcontroller.gd" id="7_y2v03"]
 [ext_resource type="Texture2D" uid="uid://dqtf4avr6746c" path="res://assets/User Interface/Game HUD (Masked).png" id="8_lykdh"]
-[ext_resource type="Texture2D" uid="uid://02iaflpad2an" path="res://assets/User Interface/Memory Shards.png" id="9_mof2j"]
 [ext_resource type="Texture2D" uid="uid://b0hdtfkmgh1l4" path="res://assets/spritesheets/Health - Polygon.png" id="10_s6lcp"]
 [ext_resource type="PackedScene" uid="uid://cuh3f8k1pur5l" path="res://scenes/stages/area_label_trigger.tscn" id="11_mp37p"]
 [ext_resource type="FontFile" uid="uid://bphsesp23w8gl" path="res://assets/Font/ferrum.otf" id="12_jlg8c"]
+[ext_resource type="Texture2D" uid="uid://eshmj7gnx4hy" path="res://assets/User Interface/Memories.png" id="13_cssca"]
 [ext_resource type="PackedScene" uid="uid://lbk3m7juhs65" path="res://assets/platforms/rotating_wheel.tscn" id="14_tdccu"]
 [ext_resource type="PackedScene" uid="uid://bs3rud6rdy7ab" path="res://assets/platforms/movingv_platform.tscn" id="16_85few"]
 [ext_resource type="PackedScene" uid="uid://y3k3yido3fr2" path="res://assets/platforms/movingv_platform_w.tscn" id="17_y2v03"]
@@ -926,16 +926,6 @@ grow_vertical = 2
 texture = ExtResource("8_lykdh")
 metadata/_edit_use_anchors_ = true
 
-[node name="MemoryShards" type="TextureRect" parent="UI" unique_id=865937013]
-texture_filter = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("9_mof2j")
-metadata/_edit_use_anchors_ = true
-
 [node name="HealthPolygon" type="TextureRect" parent="UI" unique_id=302292620]
 texture_filter = 1
 anchors_preset = 15
@@ -947,18 +937,34 @@ size_flags_horizontal = 4
 texture = ExtResource("10_s6lcp")
 metadata/_edit_use_anchors_ = true
 
-[node name="ShardsCount" type="Label" parent="UI" unique_id=929452470]
-offset_left = 278.0
-offset_top = 108.0
-offset_right = 320.0
-offset_bottom = 174.0
+[node name="HBoxContainer" type="HBoxContainer" parent="UI" unique_id=1688060369]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 240.0
+offset_top = -405.0
+offset_right = 292.0
+offset_bottom = -365.0
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="MemoryShards" type="TextureRect" parent="UI/HBoxContainer" unique_id=865937013]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("13_cssca")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="ShardsCount" type="Label" parent="UI/HBoxContainer" unique_id=929452470]
+layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "0"
 label_settings = SubResource("LabelSettings_pq2ya")
+vertical_alignment = 1
 
 [node name="AreaLabelTrigger" parent="." unique_id=407906546 instance=ExtResource("11_mp37p")]
-position = Vector2(-223.99998, -55.000004)
+position = Vector2(720, -55)
 scale = Vector2(5, 5)
 
 [node name="rotating_wheel" parent="." unique_id=1585717802 instance=ExtResource("14_tdccu")]
@@ -1680,9 +1686,8 @@ energy = 8.18
 texture = SubResource("GradientTexture2D_bgu0u")
 
 [node name="Player" parent="." unique_id=782149273 instance=ExtResource("4_tdccu")]
-process_mode = 3
 z_index = 10
-position = Vector2(13221, -519)
+position = Vector2(562, -16)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1530708046]
 position = Vector2(55, -50)

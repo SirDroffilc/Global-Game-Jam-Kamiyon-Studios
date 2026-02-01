@@ -14,12 +14,14 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="Global Game Jam"
+config/name="Eclipse"
+config/description="Eclipse: High-speed 2D movement-platformer focused on dual-state world-swapping mechanics and gravity-defying combat. Version 1.0 (Game Jam Version)."
+config/version="1.0.0"
 run/main_scene="uid://cbrqg3p4k3s3n"
 config/features=PackedStringArray("4.6", "Forward Plus")
 boot_splash/show_image=false
 boot_splash/use_filter=false
-config/icon="res://icon.svg"
+config/icon="uid://mkc71tt8wq1x"
 
 [audio]
 
@@ -35,6 +37,7 @@ AudioManager="*uid://lcx5qln1yyao"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/mode=4
+mouse_cursor/custom_image="uid://b6tpcim7j1s3c"
 
 [global_group]
 

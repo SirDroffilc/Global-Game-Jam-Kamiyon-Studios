@@ -97,9 +97,18 @@ func _move_player_to_checkpoint() -> void:
 
 
 func toggle_pause() -> void:
-	if get_tree().paused: 
+	# If the game is already paused, we don't want to spawn another menu
+	if get_tree().paused:
 		return
-		
+	
+	# 1. Instantiate and add the menu to the scene
 	var pause_menu = pause_menu_scene.instantiate()
-	get_tree().root.add_child(pause_menu) 
+	# Using add_child(pause_menu) on the current scene is usually safer 
+	# than get_tree().root to keep it within the scene's coordinate space
+	add_child(pause_menu) 
+	
+	# 2. Tell the engine to STOP everything
 	get_tree().paused = true
+	
+	# 3. Ensure the mouse is visible so the player can click buttons
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
