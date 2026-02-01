@@ -14,7 +14,7 @@ var is_light: bool = false
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var arrow_start_position: Marker2D = $AnimatedSprite/ArrowStartPosition
 
-# --- Dash Logic ---
+# --- Dash & Jump Logic ---
 @onready var dash_state: State = $StateMachine/DashState
 @export var dash_available: bool = true # Ground-reset charge
 @export_group("Dash Settings")
@@ -55,6 +55,7 @@ var dust_spawn_timer: float = 0.0
 @export var dust_interval: float = 0.35
 
 # --- Lifecycle ---
+
 func _ready() -> void:
 	state_machine.init(self)
 	update_physics_layers()
@@ -87,7 +88,7 @@ func _physics_process(delta: float) -> void:
 	# 2. Ground Logic
 	if is_on_floor():
 		dash_available = true
-		can_double_jump = true # Reset the double jump charge on landing
+		can_double_jump = true 
 		if not was_on_floor:
 			spawn_dust_particles(8, 1.0, 150.0)
 			AudioManager.play_omni("PlayerLand")
@@ -97,13 +98,14 @@ func _physics_process(delta: float) -> void:
 		if dash_available and dash_cooldown_timer <= 0:
 			state_machine.change_state(dash_state)
 	
-	# 4. Jump & Movement Juice
+	# 4. Jump Logic
 	if Input.is_action_just_pressed("jump"):
 		jump_buffer_timer = jump_buffer_time
 		if is_on_floor(): 
 			spawn_dust_particles(5, 0.5, 80.0)
 			AudioManager.play_omni("PlayerJump")
 
+	# 5. Run Particles
 	if is_on_floor() and abs(velocity.x) > 10.0:
 		dust_spawn_timer += delta
 		if dust_spawn_timer >= dust_interval:
@@ -117,69 +119,42 @@ func _physics_process(delta: float) -> void:
 	handle_flipping()
 	state_machine.process_physics(delta)
 
-# --- Visual & Combat Functions (Condensed) ---
-
-func apply_shake(amount: float) -> void:
-	shake_trauma = clamp(shake_trauma + amount, 0.0, max_shake_trauma)
-
-func _execute_shake() -> void:
-	var amount = pow(shake_trauma, 2)
-	camera.offset.x = max_shake_offset.x * amount * randf_range(-1, 1)
-	camera.offset.y = max_shake_offset.y * amount * randf_range(-1, 1)
+# --- Signal Handlers ---
 
 func _on_melee_weapon_hitbox_area_entered(area: Area2D) -> void:
 	var target = area.get_parent()
 	if target.has_method("take_damage"):
 		apply_shake(0.2)
+		spawn_attack_slash() # RESTORED: Now triggers on hit
 		var slash_sfx_list = ["PlayerSlash1", "PlayerSlash2", "PlayerSlash3"]
 		AudioManager.play_omni(slash_sfx_list.pick_random())
 		target.take_damage(PlayerManager.get_damage(), global_position)
 
-func shoot_arrow() -> void:
-	if arrow_scene:
-		var mouse_pos = get_global_mouse_position()
-		var side_flipped = mouse_pos.x < global_position.x
-		if animated_sprite.flip_h != side_flipped:
-			animated_sprite.flip_h = side_flipped
-			_update_child_positions(side_flipped)
-		
-		ranged_cooldown_timer = ranged_cooldown
-		apply_shake(0.15) 
-		AudioManager.play_omni("PlayerShoot")
-		spawn_shoot_smoke()
-		var arrow_instance = arrow_scene.instantiate()
-		arrow_instance.global_position = arrow_start_position.global_position
-		var shoot_dir = (mouse_pos - arrow_instance.global_position).normalized()
-		arrow_instance.direction = shoot_dir
-		arrow_instance.rotation = shoot_dir.angle()
-		get_tree().current_scene.add_child(arrow_instance)
-		_apply_recoil(shoot_dir)
-
-func _apply_recoil(direction: Vector2) -> void:
-	recoil_physics_velocity = -direction * recoil_physics_strength
-	var recoil_tween = create_tween()
-	animated_sprite.offset = -direction * recoil_sprite_strength
-	recoil_tween.tween_property(animated_sprite, "offset", Vector2.ZERO, recoil_duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+# --- Visual Helpers ---
 
 func spawn_attack_slash() -> void:
-	# Placeholder for slash visual effect
-	# If we find a visual resource later, we can instantiate it here.
-	# For now, this prevents the crash.
-	# We could also spawn particles or play a specific effect if available.
-	pass
-
-func take_damage(amount: int) -> void:
-	PlayerManager.subtract_health(amount)
-	AudioManager.play_omni("PlayerHurt")
-	flash_hurt()
-	apply_shake(0.4) 
-	spawn_hit_particles(global_position, Color.BLACK)
-
-func flash_hurt() -> void:
-	animated_sprite.modulate = Color(20, 20, 20, 1)
-	create_tween().tween_property(animated_sprite, "modulate", Color.WHITE, 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-
-# --- Visual Helpers ---
+	# RESTORED: Meticulous slash particle logic
+	var slash = CPUParticles2D.new()
+	get_tree().current_scene.add_child(slash)
+	var dir_mult = -1 if animated_sprite.flip_h else 1
+	slash.global_position = global_position + Vector2(25 * dir_mult, -5)
+	slash.amount = 8
+	slash.explosiveness = 1.0
+	slash.one_shot = true
+	slash.lifetime = 0.4
+	slash.direction = Vector2(dir_mult, 0)
+	slash.spread = 20.0
+	slash.gravity = Vector2.ZERO
+	slash.initial_velocity_min = 200.0
+	slash.initial_velocity_max = 400.0
+	slash.damping_min = 100.0
+	slash.color = Color(15, 15, 15, 1) # HDR Effect
+	var curve = Curve.new()
+	curve.add_point(Vector2(0, 1))
+	curve.add_point(Vector2(1, 0))
+	slash.scale_amount_curve = curve
+	slash.emitting = true
+	slash.finished.connect(slash.queue_free)
 
 func spawn_dust_particles(amount: int, explosiveness: float, speed: float) -> void:
 	var particles = CPUParticles2D.new()
@@ -228,7 +203,9 @@ func spawn_ghost() -> void:
 	ghost.flip_h = animated_sprite.flip_h
 	ghost.scale = animated_sprite.scale
 	ghost.modulate = Color(15, 15, 15, 0.7)
-	create_tween().tween_property(ghost, "modulate", Color(1, 1, 1, 0), 0.35).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT).finished.connect(ghost.queue_free)
+	var tween = create_tween()
+	tween.tween_property(ghost, "modulate", Color(1, 1, 1, 0), 0.35).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.finished.connect(ghost.queue_free)
 
 func spawn_shoot_smoke() -> void:
 	var smoke = CPUParticles2D.new()
@@ -248,6 +225,45 @@ func spawn_shoot_smoke() -> void:
 	smoke.scale_amount_curve = curve
 	smoke.emitting = true
 	smoke.finished.connect(smoke.queue_free)
+
+# --- Combat Actions ---
+
+func shoot_arrow() -> void:
+	if arrow_scene:
+		var mouse_pos = get_global_mouse_position()
+		var side_flipped = mouse_pos.x < global_position.x
+		if animated_sprite.flip_h != side_flipped:
+			animated_sprite.flip_h = side_flipped
+			_update_child_positions(side_flipped)
+		
+		ranged_cooldown_timer = ranged_cooldown
+		apply_shake(0.15) 
+		AudioManager.play_omni("PlayerShoot")
+		spawn_shoot_smoke()
+		var arrow_instance = arrow_scene.instantiate()
+		arrow_instance.global_position = arrow_start_position.global_position
+		var shoot_dir = (mouse_pos - arrow_instance.global_position).normalized()
+		arrow_instance.direction = shoot_dir
+		arrow_instance.rotation = shoot_dir.angle()
+		get_tree().current_scene.add_child(arrow_instance)
+		_apply_recoil(shoot_dir)
+
+func _apply_recoil(direction: Vector2) -> void:
+	recoil_physics_velocity = -direction * recoil_physics_strength
+	var recoil_tween = create_tween()
+	animated_sprite.offset = -direction * recoil_sprite_strength
+	recoil_tween.tween_property(animated_sprite, "offset", Vector2.ZERO, recoil_duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+
+func take_damage(amount: int) -> void:
+	PlayerManager.subtract_health(amount)
+	AudioManager.play_omni("PlayerHurt")
+	flash_hurt()
+	apply_shake(0.4) 
+	spawn_hit_particles(global_position, Color.BLACK)
+
+func flash_hurt() -> void:
+	animated_sprite.modulate = Color(20, 20, 20, 1)
+	create_tween().tween_property(animated_sprite, "modulate", Color.WHITE, 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 # --- State Helpers ---
 
@@ -317,6 +333,16 @@ func _spawn_toggle_burst(is_light_state: bool) -> void:
 	particles.color = Color(2, 2, 1.5, 0.8) if is_light_state else Color(0, 0, 0, 0.65)
 	var curve = Curve.new(); curve.add_point(Vector2(0, 1)); curve.add_point(Vector2(1, 0))
 	particles.scale_amount_curve = curve; particles.emitting = true; particles.finished.connect(particles.queue_free)
+
+# --- Shake Logic ---
+
+func apply_shake(amount: float) -> void:
+	shake_trauma = clamp(shake_trauma + amount, 0.0, max_shake_trauma)
+
+func _execute_shake() -> void:
+	var amount = pow(shake_trauma, 2)
+	camera.offset.x = max_shake_offset.x * amount * randf_range(-1, 1)
+	camera.offset.y = max_shake_offset.y * amount * randf_range(-1, 1)
 
 func _on_death() -> void:
 	if state_machine.current_state and state_machine.current_state.name != "DeathState":

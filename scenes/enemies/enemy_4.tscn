@@ -500,7 +500,6 @@ size = Vector2(149, 87)
 collision_layer = 64
 collision_mask = 28
 script = ExtResource("1_o3t5y")
-base_health = 10
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1126055618]
 position = Vector2(-50, -64)
