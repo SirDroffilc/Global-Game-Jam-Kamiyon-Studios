@@ -60,6 +60,7 @@ gradient = SubResource("Gradient_2nypq")
 use_hdr = true
 fill = 1
 fill_from = Vector2(0.51794875, 0.4905983)
+fill_to = Vector2(0.808547, 0.16581197)
 
 [sub_resource type="Animation" id="Animation_ow34m"]
 length = 0.001
@@ -426,7 +427,7 @@ grow_vertical = 2
 texture = SubResource("GradientTexture2D_2nypq")
 
 [node name="PointLight2D" type="PointLight2D" parent="Light2" unique_id=773104262]
-position = Vector2(1186.5002, 768.25)
+position = Vector2(1257, 732)
 scale = Vector2(29.890629, 18.726563)
 energy = 3.04
 texture = SubResource("GradientTexture2D_bky6r")

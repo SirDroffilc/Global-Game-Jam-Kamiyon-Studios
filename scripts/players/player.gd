@@ -161,6 +161,13 @@ func _apply_recoil(direction: Vector2) -> void:
 	animated_sprite.offset = -direction * recoil_sprite_strength
 	recoil_tween.tween_property(animated_sprite, "offset", Vector2.ZERO, recoil_duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
+func spawn_attack_slash() -> void:
+	# Placeholder for slash visual effect
+	# If we find a visual resource later, we can instantiate it here.
+	# For now, this prevents the crash.
+	# We could also spawn particles or play a specific effect if available.
+	pass
+
 func take_damage(amount: int) -> void:
 	PlayerManager.subtract_health(amount)
 	AudioManager.play_omni("PlayerHurt")
