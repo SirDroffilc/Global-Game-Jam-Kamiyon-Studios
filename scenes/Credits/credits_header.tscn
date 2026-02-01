@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://bdkg4omqajsiq"]
+
+[ext_resource type="Texture2D" uid="uid://d0sfwjtn7ll28" path="res://assets/User Interface/Credits/Header.png" id="1_wsqku"]
+[ext_resource type="Theme" uid="uid://dvltlpl0ud53m" path="res://text.tres" id="2_nfw6m"]
+
+[node name="CreditsHeader" type="Control" unique_id=2058045201]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=16866076]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -871.0
+offset_top = -338.5
+offset_right = 871.0
+offset_bottom = 338.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 80
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer" unique_id=938929258]
+layout_mode = 2
+texture = ExtResource("1_wsqku")
+stretch_mode = 5
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer" unique_id=2120472121]
+layout_mode = 2
+theme_override_constants/h_separation = 240
+theme_override_constants/v_separation = 80
+columns = 3
+
+[node name="Person1" type="VBoxContainer" parent="VBoxContainer/GridContainer" unique_id=970834336]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="VBoxContainer/GridContainer/Person1" unique_id=1918607145]
+layout_mode = 2
+theme = ExtResource("2_nfw6m")
+text = "Kien Serapio"
+horizontal_alignment = 1
+
+[node name="Role" type="Label" parent="VBoxContainer/GridContainer/Person1" unique_id=283046987]
+layout_mode = 2
+theme = ExtResource("2_nfw6m")
+theme_override_font_sizes/font_size = 32
+text = "Lead game designer"
+horizontal_alignment = 1
+
+[node name="Person2" type="VBoxContainer" parent="VBoxContainer/GridContainer" unique_id=1485979612]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="VBoxContainer/GridContainer/Person2" unique_id=263313917]
+layout_mode = 2
+theme = ExtResource("2_nfw6m")
+text = "Xandrew Liquigan"
+horizontal_alignment = 1
+
+[node name="Role" type="Label" parent="VBoxContainer/GridContainer/Person2" unique_id=818390674]
+layout_mode = 2
+theme = ExtResource("2_nfw6m")
+theme_override_font_sizes/font_size = 32
+text = "game artist"
+horizontal_alignment = 1
+
+[node name="Person3" type="VBoxContainer" parent="VBoxContainer/GridContainer" unique_id=1406359697]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="VBoxContainer/GridContainer/Person3" unique_id=641740805]
+layout_mode = 2
+theme = ExtResource("2_nfw6m")
+text = "Sherwin Limosnero"
+horizontal_alignment = 1
+
+[node name="Role" type="Label" parent="VBoxContainer/GridContainer/Person3" unique_id=1656389006]
+layout_mode = 2
+theme = ExtResource("2_nfw6m")
+theme_override_font_sizes/font_size = 32
+text = "sound designer "
+horizontal_alignment = 1
+
+[node name="Person4" type="VBoxContainer" parent="VBoxContainer/GridContainer" unique_id=1183183125]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="VBoxContainer/GridContainer/Person4" unique_id=2088955708]
+layout_mode = 2
+theme = ExtResource("2_nfw6m")
+text = "Clifford Torion"
+horizontal_alignment = 1
+
+[node name="Role" type="Label" parent="VBoxContainer/GridContainer/Person4" unique_id=578090764]
+layout_mode = 2
+theme = ExtResource("2_nfw6m")
+theme_override_font_sizes/font_size = 32
+text = "game developer"
+horizontal_alignment = 1
+
+[node name="Person5" type="VBoxContainer" parent="VBoxContainer/GridContainer" unique_id=620576310]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="VBoxContainer/GridContainer/Person5" unique_id=1860308006]
+layout_mode = 2
+theme = ExtResource("2_nfw6m")
+text = "Nicholas Alcantara"
+horizontal_alignment = 1
+
+[node name="Role" type="Label" parent="VBoxContainer/GridContainer/Person5" unique_id=1069895670]
+layout_mode = 2
+theme = ExtResource("2_nfw6m")
+theme_override_font_sizes/font_size = 32
+text = "game developer"
+horizontal_alignment = 1
+
+[node name="Person6" type="VBoxContainer" parent="VBoxContainer/GridContainer" unique_id=654978739]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="VBoxContainer/GridContainer/Person6" unique_id=382659745]
+layout_mode = 2
+theme = ExtResource("2_nfw6m")
+text = "Sharmaine Valenzuela"
+horizontal_alignment = 1
+
+[node name="Role" type="Label" parent="VBoxContainer/GridContainer/Person6" unique_id=1275685963]
+layout_mode = 2
+theme = ExtResource("2_nfw6m")
+theme_override_font_sizes/font_size = 32
+text = "level designer"
+horizontal_alignment = 1
