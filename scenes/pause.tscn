@@ -31,7 +31,7 @@ glow_bloom = 0.7
 
 [node name="CanvasLayer" type="CanvasLayer" unique_id=340572936]
 process_mode = 3
-layer = 10
+layer = 500
 
 [node name="Pause" type="Control" parent="." unique_id=1742893753]
 layout_mode = 3

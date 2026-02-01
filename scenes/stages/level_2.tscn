@@ -1378,6 +1378,7 @@ energy = 8.18
 texture = SubResource("GradientTexture2D_bgu0u")
 
 [node name="Player" parent="." unique_id=782149273 instance=ExtResource("4_tdccu")]
+process_mode = 3
 z_index = 10
 position = Vector2(606.4199, -50.512085)
 

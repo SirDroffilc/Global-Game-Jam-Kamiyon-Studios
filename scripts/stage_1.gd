@@ -3,6 +3,8 @@ extends Node2D
 @onready var player: Player = $Player
 var latest_checkpoint_pos: Vector2
 
+@export var pause_menu_scene: PackedScene = preload("res://scenes/pause.tscn")
+
 # --- TileMap References ---
 @onready var tile_map_layer_dark: TileMapLayer = $TileMap/TileMapLayerDark
 @onready var tile_map_layer_light: TileMapLayer = $TileMap/TileMapLayerLight
@@ -33,6 +35,9 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("skill1"):
 		PlayerManager.is_light = !PlayerManager.is_light
 		_update_tilemap_visibility()
+		
+	if event.is_action_pressed("ui_cancel"): 
+		toggle_pause()
 
 # --- World Logic Functions ---
 
@@ -89,3 +94,12 @@ func _move_player_to_checkpoint() -> void:
 	_update_tilemap_visibility()
 	
 	print(">>> LEVEL: Respawn sequence complete.")
+
+
+func toggle_pause() -> void:
+	if get_tree().paused: 
+		return
+		
+	var pause_menu = pause_menu_scene.instantiate()
+	get_tree().root.add_child(pause_menu) 
+	get_tree().paused = true
