@@ -1,0 +1,175 @@
+[gd_scene format=3 uid="uid://dmqb07mif23tf"]
+
+[ext_resource type="Texture2D" uid="uid://c3flmsb3wbboq" path="res://assets/User Interface/bg2.png" id="1_vvh4j"]
+[ext_resource type="Texture2D" uid="uid://bw5cuh6y35goy" path="res://assets/User Interface/bg1.png" id="2_rah7h"]
+
+[node name="Background" type="Control" unique_id=498364282]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BG16" type="TextureRect" parent="." unique_id=1520300427]
+modulate = Color(1, 1, 1, 0.8)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+layout_mode = 0
+offset_left = 4109.0
+offset_top = -85.0
+offset_right = 4500.1113
+offset_bottom = 135.0
+texture = ExtResource("1_vvh4j")
+expand_mode = 1
+
+[node name="BG13" type="TextureRect" parent="." unique_id=2012566065]
+modulate = Color(1, 1, 1, 0.68235296)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+layout_mode = 0
+offset_left = 3662.0
+offset_top = -132.0
+offset_right = 4053.1113
+offset_bottom = 88.0
+texture = ExtResource("2_rah7h")
+expand_mode = 1
+
+[node name="BG14" type="TextureRect" parent="." unique_id=1968729815]
+modulate = Color(1, 1, 1, 0.68235296)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+layout_mode = 0
+offset_left = 4610.0
+offset_top = -128.0
+offset_right = 5001.1113
+offset_bottom = 92.0
+texture = ExtResource("2_rah7h")
+expand_mode = 1
+flip_h = true
+
+[node name="BG15" type="TextureRect" parent="." unique_id=812666039]
+modulate = Color(1, 1, 1, 0.68235296)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+layout_mode = 0
+offset_left = 5173.0
+offset_top = -121.0
+offset_right = 5564.1113
+offset_bottom = 99.0
+texture = ExtResource("2_rah7h")
+expand_mode = 1
+
+[node name="BG12" type="TextureRect" parent="." unique_id=345363650]
+modulate = Color(1, 1, 1, 0.8)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+layout_mode = 0
+offset_left = 3209.0
+offset_top = -78.0
+offset_right = 3600.111
+offset_bottom = 142.0
+texture = ExtResource("1_vvh4j")
+expand_mode = 1
+
+[node name="BG10" type="TextureRect" parent="." unique_id=1786846934]
+modulate = Color(1, 1, 1, 0.8)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+layout_mode = 0
+offset_left = 1926.0
+offset_top = -111.0
+offset_right = 2317.111
+offset_bottom = 109.0
+texture = ExtResource("1_vvh4j")
+expand_mode = 1
+
+[node name="BG11" type="TextureRect" parent="." unique_id=1228781238]
+modulate = Color(1, 1, 1, 0.8)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+layout_mode = 0
+offset_left = 2323.0
+offset_top = -109.0
+offset_right = 2714.111
+offset_bottom = 111.0
+texture = ExtResource("1_vvh4j")
+expand_mode = 1
+flip_h = true
+
+[node name="BG6" type="TextureRect" parent="." unique_id=619339379]
+modulate = Color(1, 1, 1, 0.58431375)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+layout_mode = 0
+offset_left = 597.0
+offset_top = -128.0
+offset_right = 851.22217
+offset_bottom = 15.0
+texture = ExtResource("1_vvh4j")
+expand_mode = 1
+
+[node name="BG7" type="TextureRect" parent="." unique_id=1076566694]
+modulate = Color(1, 1, 1, 0.58431375)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+layout_mode = 0
+offset_left = 830.0
+offset_top = -123.0
+offset_right = 1084.2222
+offset_bottom = 20.0
+texture = ExtResource("1_vvh4j")
+expand_mode = 1
+
+[node name="BG9" type="TextureRect" parent="." unique_id=268731648]
+modulate = Color(1, 1, 1, 0.58431375)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+layout_mode = 0
+offset_left = 1283.0
+offset_top = -121.0
+offset_right = 1537.2222
+offset_bottom = 22.0
+texture = ExtResource("1_vvh4j")
+expand_mode = 1
+
+[node name="BG8" type="TextureRect" parent="." unique_id=1628840778]
+modulate = Color(1, 1, 1, 0.58431375)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+layout_mode = 0
+offset_left = 1053.0
+offset_top = -94.0
+offset_right = 1307.2222
+offset_bottom = 49.0
+texture = ExtResource("1_vvh4j")
+expand_mode = 1
+
+[node name="BG1" type="TextureRect" parent="." unique_id=1616154070]
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+layout_mode = 0
+offset_left = 522.0
+offset_top = -180.0
+offset_right = 913.1111
+offset_bottom = 40.0
+texture = ExtResource("2_rah7h")
+expand_mode = 1
+
+[node name="BG3" type="TextureRect" parent="." unique_id=1808305034]
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+layout_mode = 0
+offset_left = 882.0
+offset_top = -153.0
+offset_right = 1273.1111
+offset_bottom = 67.0
+texture = ExtResource("2_rah7h")
+expand_mode = 1
+flip_h = true
+
+[node name="BG5" type="TextureRect" parent="." unique_id=1891359899]
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+layout_mode = 0
+offset_left = 1248.0
+offset_top = -196.0
+offset_right = 1639.1111
+offset_bottom = 24.0
+texture = ExtResource("2_rah7h")
+expand_mode = 1
+
+[node name="BG2" type="TextureRect" parent="." unique_id=1693424473]
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+layout_mode = 0
+offset_left = 160.0
+offset_top = -137.0
+offset_right = 551.1111
+offset_bottom = 83.0
+texture = ExtResource("2_rah7h")
+expand_mode = 1
+flip_h = true

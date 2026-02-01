@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://c3emj4ho0t73a" path="res://scenes/players/player.tscn" id="4_tdccu"]
 [ext_resource type="Script" uid="uid://dja4ji2408pv5" path="res://scripts/camera_2d.gd" id="5_pfres"]
 [ext_resource type="Texture2D" uid="uid://csd81ygyilmgx" path="res://assets/spritesheets/white.png" id="5_tdccu"]
-[ext_resource type="PackedScene" uid="uid://dmh3uptk4uctc" path="res://scenes/stages/fall_zone.tscn" id="6_85few"]
-[ext_resource type="PackedScene" uid="uid://gaswrufkubp7" path="res://scenes/stages/checkpoint.tscn" id="6_pfres"]
+[ext_resource type="PackedScene" path="res://scenes/stages/fall_zone.tscn" id="6_85few"]
+[ext_resource type="PackedScene" path="res://scenes/stages/checkpoint.tscn" id="6_pfres"]
 [ext_resource type="Script" uid="uid://bd7lf8v6d8fm7" path="res://scripts/globals/hudcontroller.gd" id="7_y2v03"]
 [ext_resource type="Texture2D" uid="uid://dqtf4avr6746c" path="res://assets/User Interface/Game HUD (Masked).png" id="8_lykdh"]
 [ext_resource type="Texture2D" uid="uid://02iaflpad2an" path="res://assets/User Interface/Memory Shards.png" id="9_mof2j"]
@@ -1098,6 +1098,22 @@ offset_bottom = 40.0
 texture = ExtResource("20_s6lcp")
 expand_mode = 1
 
+[node name="Tutorial6" type="TextureRect" parent="." unique_id=275575250]
+offset_left = 500.0
+offset_top = -203.0
+offset_right = 932.0
+offset_bottom = 40.0
+texture = ExtResource("20_s6lcp")
+expand_mode = 1
+
+[node name="Tutorial7" type="TextureRect" parent="." unique_id=1009178780]
+offset_left = 500.0
+offset_top = -203.0
+offset_right = 932.0
+offset_bottom = 40.0
+texture = ExtResource("20_s6lcp")
+expand_mode = 1
+
 [node name="BG16" type="TextureRect" parent="." unique_id=1030899731]
 modulate = Color(1, 1, 1, 0.8)
 self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
@@ -1266,7 +1282,39 @@ offset_bottom = 40.0
 texture = ExtResource("21_mp37p")
 expand_mode = 1
 
+[node name="Tutorial8" type="TextureRect" parent="." unique_id=638413926]
+offset_left = 1296.0
+offset_top = -203.0
+offset_right = 1728.0
+offset_bottom = 40.0
+texture = ExtResource("21_mp37p")
+expand_mode = 1
+
+[node name="Tutorial9" type="TextureRect" parent="." unique_id=1762527730]
+offset_left = 1296.0
+offset_top = -203.0
+offset_right = 1728.0
+offset_bottom = 40.0
+texture = ExtResource("21_mp37p")
+expand_mode = 1
+
 [node name="Tutorial3" type="TextureRect" parent="." unique_id=1522680479]
+offset_left = 1653.0
+offset_top = -134.0
+offset_right = 2085.0
+offset_bottom = 109.0
+texture = ExtResource("22_66lkl")
+expand_mode = 1
+
+[node name="Tutorial10" type="TextureRect" parent="." unique_id=1438686310]
+offset_left = 1653.0
+offset_top = -134.0
+offset_right = 2085.0
+offset_bottom = 109.0
+texture = ExtResource("22_66lkl")
+expand_mode = 1
+
+[node name="Tutorial11" type="TextureRect" parent="." unique_id=1317423070]
 offset_left = 1653.0
 offset_top = -134.0
 offset_right = 2085.0
@@ -1282,11 +1330,43 @@ offset_bottom = 55.0
 texture = ExtResource("23_f0hf6")
 expand_mode = 1
 
-[node name="Tutorial5" type="TextureRect" parent="." unique_id=1883756474]
-offset_left = 2980.0
-offset_top = -149.0
-offset_right = 3412.0
-offset_bottom = 94.0
+[node name="Tutorial12" type="TextureRect" parent="." unique_id=1901445311]
+offset_left = 2361.0
+offset_top = -188.0
+offset_right = 2793.0
+offset_bottom = 55.0
+texture = ExtResource("23_f0hf6")
+expand_mode = 1
+
+[node name="Tutorial13" type="TextureRect" parent="." unique_id=1084753815]
+offset_left = 2361.0
+offset_top = -188.0
+offset_right = 2793.0
+offset_bottom = 55.0
+texture = ExtResource("23_f0hf6")
+expand_mode = 1
+
+[node name="Tutorial15" type="TextureRect" parent="." unique_id=1572611676]
+offset_left = 2658.0
+offset_top = -117.0
+offset_right = 3090.0
+offset_bottom = 126.0
+texture = ExtResource("24_88vjm")
+expand_mode = 1
+
+[node name="Tutorial16" type="TextureRect" parent="." unique_id=441881084]
+offset_left = 2658.0
+offset_top = -117.0
+offset_right = 3090.0
+offset_bottom = 126.0
+texture = ExtResource("24_88vjm")
+expand_mode = 1
+
+[node name="Tutorial17" type="TextureRect" parent="." unique_id=964424393]
+offset_left = 2658.0
+offset_top = -117.0
+offset_right = 3090.0
+offset_bottom = 126.0
 texture = ExtResource("24_88vjm")
 expand_mode = 1
 
