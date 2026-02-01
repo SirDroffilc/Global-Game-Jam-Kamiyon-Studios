@@ -3,12 +3,55 @@
 [ext_resource type="Script" uid="uid://bj70rlwjbm6l5" path="res://scripts/ui/credits/credits_data.gd" id="1_data"]
 [ext_resource type="Script" uid="uid://dlullxy223wfr" path="res://scripts/ui/credits/credit_entry.gd" id="2_entry"]
 
+[sub_resource type="Resource" id="Resource_7a03v"]
+script = ExtResource("2_entry")
+name = "Defnitely Check me out"
+owner = "Sherwin Limosnero "
+link = "https://soundcloud.com/aquyon"
+metadata/_custom_type_script = "uid://dlullxy223wfr"
+
+[sub_resource type="Resource" id="Resource_p31hp"]
+script = ExtResource("2_entry")
+name = "Midnight Circle"
+owner = "u_wb2932wt65"
+link = "https://pixabay.com/music/horror-scene-midnight-circle-476078/"
+metadata/_custom_type_script = "uid://dlullxy223wfr"
+
+[sub_resource type="Resource" id="Resource_xo8ut"]
+script = ExtResource("2_entry")
+name = "Caves of Dawn "
+owner = "GuilhermeBernardes"
+link = "https://pixabay.com/music/ambient-caves-of-dawn-10376/"
+metadata/_custom_type_script = "uid://dlullxy223wfr"
+
 [sub_resource type="Resource" id="Resource_sfx1"]
 script = ExtResource("2_entry")
-name = "Explosion"
-owner = "SoundGuy"
-link = "https://example.com/soundguy"
+name = "Sword Slash and Swing"
+owner = "DavidDumaisAudio"
+link = "https://pixabay.com/sound-effects/film-special-effects-sword-slash-and-swing-185432/"
+
+[sub_resource type="Resource" id="Resource_irw5y"]
+script = ExtResource("2_entry")
+name = "slashkut"
+owner = "Abyssmal (Freesound)"
+link = "https://pixabay.com/sound-effects/film-special-effects-slashkut-108175/"
+metadata/_custom_type_script = "uid://dlullxy223wfr"
+
+[sub_resource type="Resource" id="Resource_wywdi"]
+script = ExtResource("2_entry")
+name = "Sword Blade Slicing Flesh "
+owner = "Universfield"
+link = "https://pixabay.com/sound-effects/film-special-effects-sword-blade-slicing-flesh-352708/"
+metadata/_custom_type_script = "uid://dlullxy223wfr"
+
+[sub_resource type="Resource" id="Resource_v663x"]
+script = ExtResource("2_entry")
+name = "Winter Wind "
+owner = "DRAGON-STUDIO"
+link = "https://pixabay.com/sound-effects/nature-winter-wind-402331/"
+metadata/_custom_type_script = "uid://dlullxy223wfr"
 
 [resource]
 script = ExtResource("1_data")
-sound_effects = Array[ExtResource("2_entry")]([SubResource("Resource_sfx1")])
+sound_effects = Array[ExtResource("2_entry")]([SubResource("Resource_sfx1"), SubResource("Resource_irw5y"), SubResource("Resource_wywdi"), SubResource("Resource_v663x")])
+music = Array[ExtResource("2_entry")]([SubResource("Resource_7a03v"), SubResource("Resource_p31hp"), SubResource("Resource_xo8ut")])
