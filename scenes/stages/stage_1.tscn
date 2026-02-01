@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://bd7lf8v6d8fm7" path="res://scripts/globals/hudcontroller.gd" id="9_mm8bn"]
 [ext_resource type="Texture2D" uid="uid://02iaflpad2an" path="res://assets/User Interface/Memory Shards.png" id="11_qm7fq"]
 [ext_resource type="Texture2D" uid="uid://b0hdtfkmgh1l4" path="res://assets/spritesheets/Health - Polygon.png" id="12_emlwg"]
+[ext_resource type="FontFile" uid="uid://bphsesp23w8gl" path="res://assets/Font/ferrum.otf" id="14_twvrt"]
 [ext_resource type="PackedScene" uid="uid://cegd8vj1aui1w" path="res://scenes/stages/shard.tscn" id="15_p4glm"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ncvry"]
@@ -243,6 +244,12 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
+[sub_resource type="LabelSettings" id="LabelSettings_74ofu"]
+font = ExtResource("14_twvrt")
+font_size = 32
+outline_size = 5
+outline_color = Color(0.033853278, 0.033853278, 0.033853274, 1)
+
 [node name="Stage1" type="Node2D" unique_id=1551565052]
 script = ExtResource("1_bjuw2")
 
@@ -316,7 +323,7 @@ unique_name_in_owner = true
 
 [node name="Player" parent="." unique_id=782149273 instance=ExtResource("2_8q8ih")]
 z_index = 10
-position = Vector2(52.022564, -58.81108)
+position = Vector2(246, -39)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1530708046]
 position = Vector2(0, -41)
@@ -382,11 +389,13 @@ texture = ExtResource("12_emlwg")
 
 [node name="ShardsCount" type="Label" parent="UI" unique_id=1433268476]
 offset_left = 278.0
-offset_top = 147.0
-offset_right = 318.0
-offset_bottom = 170.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+offset_top = 108.0
+offset_right = 320.0
+offset_bottom = 174.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "0"
+label_settings = SubResource("LabelSettings_74ofu")
 
 [node name="AreaLabelTrigger" parent="." unique_id=407906546 instance=ExtResource("2_emlwg")]
 position = Vector2(-195, -51)
