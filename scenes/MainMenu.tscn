@@ -536,7 +536,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_l72w3")
 theme_override_styles/hover = SubResource("StyleBoxFlat_826wr")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_ucygd")
 theme_override_styles/focus = SubResource("StyleBoxFlat_mipys")
-text = "Settings"
+text = "Survival Mode"
 alignment = 0
 
 [node name="Credits" type="Button" parent="VBoxContainer" unique_id=1918127244]

@@ -1,0 +1,128 @@
+[gd_scene format=3 uid="uid://df8oe40hx4e4n"]
+
+[ext_resource type="Script" uid="uid://2da8gttepkcl" path="res://scenes/pause.gd" id="2_jn4bt"]
+[ext_resource type="Texture2D" uid="uid://ci4rauwpsl622" path="res://assets/User Interface/Pause Logo.png" id="3_r1fnm"]
+[ext_resource type="FontFile" uid="uid://dq5hf3t42mogi" path="res://assets/ferrum.otf" id="4_wen6a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cml1b"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xtef"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xmhi0"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xw83q"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0akjr"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="Environment" id="Environment_capb0"]
+background_mode = 3
+glow_enabled = true
+glow_strength = 1.06
+glow_bloom = 0.7
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_gcmcy"]
+
+[sub_resource type="Compositor" id="Compositor_jl8xs"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=340572936]
+process_mode = 3
+layer = 10
+
+[node name="Pause" type="Control" parent="." unique_id=1742893753]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_jn4bt")
+
+[node name="ColorRect2" type="ColorRect" parent="Pause" unique_id=210638631]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1905.0
+offset_bottom = 1091.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6745098)
+
+[node name="TextureRect" type="TextureRect" parent="Pause/ColorRect2" unique_id=1959551732]
+layout_mode = 0
+offset_left = 796.0
+offset_top = 264.0
+offset_right = 1150.3264
+offset_bottom = 461.0
+texture = ExtResource("3_r1fnm")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Pause/ColorRect2" unique_id=2108470509]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -219.0
+offset_top = -208.5
+offset_right = 211.0
+offset_bottom = 221.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="Resume" type="Button" parent="Pause/ColorRect2/VBoxContainer" unique_id=189239737]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8625217, 0.86252177, 0.8625217, 1)
+theme_override_colors/font_pressed_color = Color(0.61948895, 0.6194886, 0.6194887, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_wen6a")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_cml1b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1xtef")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xmhi0")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_xw83q")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0akjr")
+text = "Resume"
+
+[node name="Settings" type="Button" parent="Pause/ColorRect2/VBoxContainer" unique_id=448554995]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8625217, 0.86252177, 0.8625217, 1)
+theme_override_colors/font_pressed_color = Color(0.61948895, 0.6194886, 0.6194887, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_wen6a")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_cml1b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1xtef")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xmhi0")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_xw83q")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0akjr")
+text = "Settings"
+
+[node name="Quit" type="Button" parent="Pause/ColorRect2/VBoxContainer" unique_id=851734387]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8625217, 0.86252177, 0.8625217, 1)
+theme_override_colors/font_pressed_color = Color(0.61948895, 0.6194886, 0.6194887, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_wen6a")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_cml1b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1xtef")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xmhi0")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_xw83q")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0akjr")
+text = "Quit"
+
+[node name="WorldEnvironment2" type="WorldEnvironment" parent="Pause" unique_id=1751345482]
+environment = SubResource("Environment_capb0")
+camera_attributes = SubResource("CameraAttributesPractical_gcmcy")
+compositor = SubResource("Compositor_jl8xs")
+
+[connection signal="pressed" from="Pause/ColorRect2/VBoxContainer/Resume" to="Pause" method="_on_resume_pressed"]
+[connection signal="pressed" from="Pause/ColorRect2/VBoxContainer/Settings" to="Pause" method="_on_settings_pressed"]
+[connection signal="pressed" from="Pause/ColorRect2/VBoxContainer/Quit" to="Pause" method="_on_quit_pressed"]

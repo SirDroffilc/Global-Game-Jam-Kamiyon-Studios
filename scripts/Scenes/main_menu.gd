@@ -45,7 +45,12 @@ func _on_start_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/opening_scene.tscn")
 	
 func _on_settings_pressed() -> void:
-	pass
+	AudioManager.play_omni("StartGame")
+	AudioManager.stop_music(1.0)
+	
+	anim_player.play("fade_to_black")
+	await anim_player.animation_finished
+	get_tree().change_scene_to_file("res://survival.tscn")
 
 func _on_credits_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/Credits/Credits.tscn")

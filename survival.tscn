@@ -103,6 +103,75 @@ font_size = 32
 outline_size = 5
 outline_color = Color(0.033853278, 0.033853278, 0.033853274, 1)
 
+[sub_resource type="Gradient" id="Gradient_2nypq"]
+colors = PackedColorArray(6.2861433, 6.2861433, 6.2861433, 0.61960787, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gjf0t"]
+gradient = SubResource("Gradient_2nypq")
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.51794875, 0.4905983)
+fill_to = Vector2(0.808547, 0.16581197)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cdm3r"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(500, 200, 1)
+spread = 86.351
+initial_velocity_min = 20.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 20, 0)
+
+[sub_resource type="Gradient" id="Gradient_7la6k"]
+offsets = PackedFloat32Array(0.15148515, 0.47623762, 0.6465347, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0, 4.9172873, 4.9172873, 4.9172873, 0.023529412, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rwvoj"]
+gradient = SubResource("Gradient_7la6k")
+width = 80
+height = 160
+use_hdr = true
+fill_from = Vector2(0.4905983, 0.33333334)
+fill_to = Vector2(0.8871795, 0.50769234)
+
+[sub_resource type="Animation" id="Animation_gjf0t"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BG3:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(581, -354)]
+}
+
+[sub_resource type="Animation" id="Animation_cdm3r"]
+resource_name = "floating"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BG3:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.8333334, 3.8),
+"transitions": PackedFloat32Array(3.1383355, 0.7578581, 2.143547),
+"update": 0,
+"values": [Vector2(581, -354), Vector2(581, -380), Vector2(581, -354)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rwvoj"]
+_data = {
+&"RESET": SubResource("Animation_gjf0t"),
+&"floating": SubResource("Animation_cdm3r")
+}
+
 [node name="Survival" type="Node2D" unique_id=1022620126]
 script = ExtResource("1_b1jyj")
 
@@ -120,8 +189,19 @@ offset_right = 4027.0
 offset_bottom = 1314.0
 color = Color(0.9297146, 0.9297147, 0.9297146, 1)
 
+[node name="BG10" type="TextureRect" parent="." unique_id=1707766948]
+modulate = Color(0.79607844, 0.79607844, 0.79607844, 0.5058824)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+z_index = -5
+offset_left = 374.0
+offset_top = -249.0
+offset_right = 942.0
+offset_bottom = 39.0
+texture = ExtResource("3_6d2l4")
+expand_mode = 1
+
 [node name="BG8" type="TextureRect" parent="." unique_id=1952273136]
-modulate = Color(0.796243, 0.796243, 0.796243, 0.93333334)
+modulate = Color(0.79607844, 0.79607844, 0.79607844, 1)
 self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
 z_index = -5
 offset_left = 1380.0
@@ -129,6 +209,18 @@ offset_top = -249.0
 offset_right = 1948.0
 offset_bottom = 39.0
 texture = ExtResource("3_6d2l4")
+expand_mode = 1
+flip_h = true
+
+[node name="BG3" type="TextureRect" parent="." unique_id=1302629521]
+modulate = Color(0.8175213, 0.8175213, 0.81752115, 1)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+z_index = -1
+offset_left = 581.0
+offset_top = -354.0
+offset_right = 1338.0
+offset_bottom = 49.0
+texture = ExtResource("4_xbx4m")
 expand_mode = 1
 flip_h = true
 
@@ -142,19 +234,6 @@ offset_right = 454.0
 offset_bottom = 46.0
 texture = ExtResource("3_6d2l4")
 expand_mode = 1
-
-[node name="BG2" type="TextureRect" parent="BG9" unique_id=1302629521]
-modulate = Color(0.8175213, 0.8175213, 0.81752115, 1)
-self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
-z_index = -1
-layout_mode = 0
-offset_left = 523.0
-offset_top = -147.0
-offset_right = 1280.0
-offset_bottom = 256.0
-texture = ExtResource("4_xbx4m")
-expand_mode = 1
-flip_h = true
 
 [node name="Fog Overlay" type="TextureRect" parent="." unique_id=2103446993]
 modulate = Color(1, 1, 1, 0.6117647)
@@ -192,6 +271,18 @@ offset_bottom = 342.0
 texture = ExtResource("6_gn857")
 expand_mode = 1
 
+[node name="BG4" type="TextureRect" parent="." unique_id=1921161468]
+modulate = Color(0.78431374, 0.78431374, 0.78431374, 0.4862745)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+z_index = -5
+offset_left = 1325.0
+offset_top = -328.0
+offset_right = 2136.0
+offset_bottom = 157.0
+texture = ExtResource("4_xbx4m")
+expand_mode = 1
+flip_h = true
+
 [node name="BG2" type="TextureRect" parent="." unique_id=1227873649]
 modulate = Color(0.7162962, 0.7162962, 0.7162962, 1)
 self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
@@ -200,19 +291,6 @@ offset_left = -244.0
 offset_top = -366.0
 offset_right = 769.0
 offset_bottom = 165.0
-texture = ExtResource("4_xbx4m")
-expand_mode = 1
-flip_h = true
-
-[node name="BG2" type="TextureRect" parent="BG2" unique_id=1921161468]
-modulate = Color(0.78352344, 0.78352344, 0.78352326, 1)
-self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
-z_index = -5
-layout_mode = 0
-offset_left = 1569.0
-offset_top = 38.0
-offset_right = 2380.0
-offset_bottom = 523.0
 texture = ExtResource("4_xbx4m")
 expand_mode = 1
 flip_h = true
@@ -235,6 +313,7 @@ drag_vertical_enabled = true
 script = ExtResource("8_cdm3r")
 
 [node name="Spawner" type="Node2D" parent="." unique_id=2018670335]
+process_mode = 3
 script = ExtResource("9_b1jyj")
 
 [node name="EnemyMarkers" type="Node2D" parent="." unique_id=973450453]
@@ -298,7 +377,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("12_rwvoj")
-metadata/_edit_use_anchors_ = true
 
 [node name="HealthPolygon" type="TextureRect" parent="UI" unique_id=40520777]
 texture_filter = 1
@@ -312,6 +390,7 @@ texture = ExtResource("13_qbdmv")
 metadata/_edit_use_anchors_ = true
 
 [node name="ShardsCount" type="Label" parent="UI" unique_id=846590485]
+visible = false
 offset_left = 278.0
 offset_top = 108.0
 offset_right = 320.0
@@ -320,3 +399,79 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "0"
 label_settings = SubResource("LabelSettings_4dr2m")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1788542582]
+visible = false
+position = Vector2(902, 462.00006)
+scale = Vector2(29.890629, 18.726563)
+energy = 3.04
+texture = SubResource("GradientTexture2D_gjf0t")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1293743599]
+position = Vector2(870, 534)
+scale = Vector2(4, 4)
+amount = 200
+visibility_rect = Rect2(-150, -100, 400, 200)
+process_material = SubResource("ParticleProcessMaterial_cdm3r")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="." unique_id=1217150807]
+position = Vector2(870, 534)
+scale = Vector2(4, 4)
+amount = 200
+visibility_rect = Rect2(-150, -100, 400, 200)
+process_material = SubResource("ParticleProcessMaterial_cdm3r")
+
+[node name="Light" type="TextureRect" parent="." unique_id=354899074]
+texture_filter = 2
+offset_left = 604.0
+offset_top = -443.0
+offset_right = 1589.0
+offset_bottom = 38.0
+texture = SubResource("GradientTexture2D_rwvoj")
+
+[node name="Light2" type="TextureRect" parent="." unique_id=215906320]
+texture_filter = 2
+offset_left = 668.0
+offset_top = -427.0
+offset_right = 1874.0
+offset_bottom = 54.0
+texture = SubResource("GradientTexture2D_rwvoj")
+
+[node name="Light5" type="TextureRect" parent="." unique_id=497613475]
+texture_filter = 2
+offset_left = -344.0
+offset_top = -455.0
+offset_right = 862.0
+offset_bottom = 26.0
+texture = SubResource("GradientTexture2D_rwvoj")
+
+[node name="Light3" type="TextureRect" parent="." unique_id=2133649715]
+texture_filter = 2
+offset_left = -153.0
+offset_top = -418.0
+offset_right = 1053.0
+offset_bottom = 63.0
+texture = SubResource("GradientTexture2D_rwvoj")
+
+[node name="Light4" type="TextureRect" parent="." unique_id=1849890219]
+texture_filter = 2
+offset_left = -314.0
+offset_top = -430.0
+offset_right = 892.0
+offset_bottom = 51.0
+texture = SubResource("GradientTexture2D_rwvoj")
+
+[node name="Fog Overlay2" type="TextureRect" parent="." unique_id=933561418]
+modulate = Color(1, 1, 1, 0.6117647)
+self_modulate = Color(1.6852883, 1.6852883, 1.6852883, 1)
+texture_filter = 2
+offset_left = -1335.0
+offset_top = -88.0
+offset_right = 5647.0
+offset_bottom = 967.0
+texture = ExtResource("5_f657g")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=284165596]
+libraries/ = SubResource("AnimationLibrary_rwvoj")
+autoplay = &"floating"
