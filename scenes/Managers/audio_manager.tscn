@@ -28,7 +28,7 @@
 [ext_resource type="Resource" uid="uid://b8x1sex2rjre2" path="res://PlayerDash.res" id="28_uu4x8_new"]
 [ext_resource type="Resource" uid="uid://startgame456" path="res://StartGame.tres" id="30_start_new"]
 [ext_resource type="Resource" uid="uid://p4ieotdhxshe" path="res://ButtonHover.tres" id="31_hover_new"]
-[ext_resource type="Resource" path="res://TitleScreenMusic.tres" id="32_music_title"]
+[ext_resource type="Resource" uid="uid://c05xngt05y0br" path="res://TitleScreenMusic.tres" id="32_music_title"]
 [ext_resource type="Resource" uid="uid://53bibyv7qy22" path="res://CutSceneMusic.tres" id="33_music_cutscene"]
 [ext_resource type="Resource" uid="uid://dkje363gswu6c" path="res://GameSceneMusic.tres" id="34_music_game"]
 

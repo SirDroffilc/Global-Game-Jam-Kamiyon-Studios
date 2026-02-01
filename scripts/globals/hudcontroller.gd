@@ -3,7 +3,7 @@ extends CanvasLayer
 # --- UI References ---
 @onready var mask_hud: TextureRect = $MaskHUD
 @onready var health_bar: ProgressBar = $HealthBar # Ensure this name matches your scene node
-@onready var shards_count: Label = $ShardsCount
+var shards_count: Label
 
 # --- Textures ---
 @export var unmasked_hud_tex: Texture = preload("res://assets/User Interface/Game HUD (Masked).png")
@@ -13,6 +13,8 @@ extends CanvasLayer
 var health_tween: Tween
 
 func _ready() -> void:
+	shards_count = get_node_or_null("ShardsCount")
+
 	# 1. Initialize Health Bar to match PlayerManager data immediately
 	if health_bar:
 		health_bar.max_value = PlayerManager.base_health
@@ -40,7 +42,8 @@ func _ready() -> void:
 	
 
 func _on_shards_count_changed():
-	shards_count.text = str(PlayerManager.shards_count)
+	if shards_count:
+		shards_count.text = str(PlayerManager.shards_count)
 
 func _on_player_element_toggled(is_light: bool) -> void:
 	if mask_hud:

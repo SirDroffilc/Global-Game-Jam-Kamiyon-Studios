@@ -21,4 +21,5 @@ func _start_game():
 # Keep the skip functionality just in case the player is impatient!
 func _input(event):
 	if event.is_action_pressed("ui_accept"): 
+		AudioManager.play_omni("StartGame")
 		_start_game()

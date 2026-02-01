@@ -8,5 +8,6 @@ data = PackedByteArray("SUQzAwAAAAAALlRZRVIAAAAFAAAAMjAyNlRFTkMAAAAVAAAATEFNRSBp
 [resource]
 script = ExtResource("1_2prdk")
 stream = SubResource("AudioStreamMP3_2prdk")
+volume_db = -1.5
 playing = true
 metadata/_custom_type_script = "uid://bh17acw8bebir"
