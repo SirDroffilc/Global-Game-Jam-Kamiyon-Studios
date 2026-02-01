@@ -5,6 +5,16 @@
 [ext_resource type="PackedScene" uid="uid://bdkg4omqajsiq" path="res://scenes/Credits/credits_header.tscn" id="3_1dyw1"]
 [ext_resource type="PackedScene" uid="uid://c8j7k3l2m2n5p" path="res://scenes/Credits/section_header.tscn" id="3_simple_header"]
 [ext_resource type="PackedScene" uid="uid://cvg13flpsu58j" path="res://scenes/Credits/credit_item.tscn" id="4_new_item"]
+[ext_resource type="FontFile" uid="uid://bphsesp23w8gl" path="res://assets/Font/ferrum.otf" id="6_1dyw1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hvysr"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1dyw1"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fnqbh"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="CreditsScene" type="Control" unique_id=1378201270 node_paths=PackedStringArray("credits_panel", "content_parent", "back_button", "close_panel_button")]
 layout_mode = 3
@@ -57,6 +67,14 @@ offset_left = 32.0
 offset_top = 32.0
 offset_right = 150.0
 offset_bottom = 80.0
+theme_override_colors/font_pressed_color = Color(0.39232534, 0.39232537, 0.39232534, 1)
+theme_override_colors/font_hover_color = Color(0.7046395, 0.7046392, 0.7046389, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.74474084, 0.74474084, 0.74474084, 1)
+theme_override_fonts/font = ExtResource("6_1dyw1")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_hvysr")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1dyw1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fnqbh")
 text = "Back"
 
 [node name="CloseButton" type="Button" parent="." unique_id=104722170]
