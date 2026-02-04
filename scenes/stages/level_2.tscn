@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://c3emj4ho0t73a" path="res://scenes/players/player.tscn" id="4_tdccu"]
 [ext_resource type="Script" uid="uid://dja4ji2408pv5" path="res://scripts/camera_2d.gd" id="5_pfres"]
 [ext_resource type="Texture2D" uid="uid://csd81ygyilmgx" path="res://assets/spritesheets/white.png" id="5_tdccu"]
-[ext_resource type="PackedScene" path="res://scenes/stages/fall_zone.tscn" id="6_85few"]
-[ext_resource type="PackedScene" path="res://scenes/stages/checkpoint.tscn" id="6_pfres"]
+[ext_resource type="PackedScene" uid="uid://dmh3uptk4uctc" path="res://scenes/stages/fall_zone.tscn" id="6_85few"]
+[ext_resource type="PackedScene" uid="uid://gaswrufkubp7" path="res://scenes/stages/checkpoint.tscn" id="6_pfres"]
 [ext_resource type="Script" uid="uid://bd7lf8v6d8fm7" path="res://scripts/globals/hudcontroller.gd" id="7_y2v03"]
 [ext_resource type="Texture2D" uid="uid://dqtf4avr6746c" path="res://assets/User Interface/Game HUD (Masked).png" id="8_lykdh"]
 [ext_resource type="Texture2D" uid="uid://02iaflpad2an" path="res://assets/User Interface/Memory Shards.png" id="9_mof2j"]
@@ -1682,7 +1682,7 @@ texture = SubResource("GradientTexture2D_bgu0u")
 [node name="Player" parent="." unique_id=782149273 instance=ExtResource("4_tdccu")]
 process_mode = 3
 z_index = 10
-position = Vector2(13221, -519)
+position = Vector2(14361.398, -652.73145)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1530708046]
 position = Vector2(55, -50)
