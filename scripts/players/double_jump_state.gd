@@ -22,8 +22,14 @@ func process_physics(delta: float) -> State:
 			return dash_state
 		
 	# 2. Air Attack Check
-	if Input.is_action_just_pressed("attack"):
-		return shoot_state if (parent.is_light and parent.ranged_cooldown_timer <= 0) else attack_state
+	if Input.is_action_just_pressed("attack"): 
+		if parent.is_light:
+			if parent.ranged_cooldown_timer <= 0:
+				return shoot_state
+			else:
+				return null # Ignore the input if cooling down
+		else:
+			return attack_state
 
 	# 3. Physics & Horizontal Movement
 	parent.velocity += parent.get_gravity() * delta

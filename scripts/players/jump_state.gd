@@ -26,8 +26,14 @@ func process_physics(delta: float) -> State:
 	var current_gravity = parent.get_gravity()
 	
 	# 1. Air Attack Check
-	if Input.is_action_just_pressed("attack"):
-		return shoot_state if (parent.is_light and parent.ranged_cooldown_timer <= 0) else attack_state
+	if Input.is_action_just_pressed("attack"): 
+		if parent.is_light:
+			if parent.ranged_cooldown_timer <= 0:
+				return shoot_state
+			else:
+				return null # Ignore the input if cooling down
+		else:
+			return attack_state
 
 	# 2. Physics & Jump Height
 	if Input.is_action_pressed("jump") and jump_hold_timer < max_jump_hold_time and parent.velocity.y < 0:

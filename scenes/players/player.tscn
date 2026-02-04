@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://n80882fu15ah" path="res://scripts/players/shoot_state.gd" id="10_es4m5"]
 [ext_resource type="Script" uid="uid://dmlwh5v5e23dq" path="res://scenes/players/dash_state.gd" id="15_vjh8g"]
 [ext_resource type="Script" uid="uid://0b3acg44ji2a" path="res://scenes/players/death_state.gd" id="16_f1232"]
+[ext_resource type="Script" uid="uid://b0crpbyqwpuge" path="res://scenes/players/fall_state.gd" id="17_v7vuu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dajw2"]
 atlas = ExtResource("2_vjh8g")
@@ -1033,7 +1034,7 @@ tracks/3/path = NodePath(".")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.35, 0.5),
+"times": PackedFloat32Array(0.33333334, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [&"can_combo", true],
@@ -1187,17 +1188,17 @@ shoot_state = NodePath("../ShootState")
 dash_state = NodePath("../DashState")
 animation_name = "jump"
 
-[node name="DashState" type="Node" parent="StateMachine" unique_id=232494158 node_paths=PackedStringArray("idle_state", "run_state", "jump_state")]
+[node name="DashState" type="Node" parent="StateMachine" unique_id=232494158 node_paths=PackedStringArray("idle_state", "run_state", "jump_state", "fall_state")]
 script = ExtResource("15_vjh8g")
 idle_state = NodePath("../IdleState")
 run_state = NodePath("../RunState")
 jump_state = NodePath("../JumpState")
+fall_state = NodePath("../FallState")
 animation_name = "dash"
 
 [node name="AttackState" type="Node" parent="StateMachine" unique_id=1560325941 node_paths=PackedStringArray("idle_state")]
 script = ExtResource("9_yl2j2")
 idle_state = NodePath("../IdleState")
-animation_name = "attack"
 
 [node name="ShootState" type="Node" parent="StateMachine" unique_id=1380287972 node_paths=PackedStringArray("idle_state", "run_state")]
 script = ExtResource("10_es4m5")
@@ -1207,5 +1208,17 @@ animation_name = "shoot"
 
 [node name="DeathState" type="Node" parent="StateMachine" unique_id=482105472]
 script = ExtResource("16_f1232")
+animation_name = "death"
+
+[node name="FallState" type="Node" parent="StateMachine" unique_id=682980864 node_paths=PackedStringArray("idle_state", "run_state", "jump_state", "double_jump_state", "attack_state", "shoot_state", "dash_state")]
+script = ExtResource("17_v7vuu")
+idle_state = NodePath("../IdleState")
+run_state = NodePath("../RunState")
+jump_state = NodePath("../JumpState")
+double_jump_state = NodePath("../DoubleJumpState")
+attack_state = NodePath("../AttackState")
+shoot_state = NodePath("../ShootState")
+dash_state = NodePath("../DashState")
+animation_name = "jump"
 
 [connection signal="area_entered" from="AnimatedSprite/MeleeWeaponHitbox" to="." method="_on_melee_weapon_hitbox_area_entered"]

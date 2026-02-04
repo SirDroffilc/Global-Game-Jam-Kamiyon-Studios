@@ -18,6 +18,7 @@ func enter() -> void:
 		AudioManager.play_omni(sfx_key)
 	else:
 		AudioManager.play_omni("PlayerSlash") # Fallback to generic
+	
 	parent.spawn_attack_slash()
 	parent.play_animation("attack")
 	
@@ -25,7 +26,7 @@ func enter() -> void:
 		parent.animation_player.animation_finished.connect(_on_animation_finished)
 
 func exit() -> void:
-	# Ensure the hitbox is turned off so you don't deal damage while walking
+	# Ensure the hitbox is turned off immediately
 	parent.hitbox_shape.set_deferred("disabled", true)
 	
 	if parent.animation_player.animation_finished.is_connected(_on_animation_finished):
@@ -54,6 +55,10 @@ func process_physics(delta: float) -> State:
 	
 	return null
 
+# attack_state.gd
+
 func _on_animation_finished(_anim_name: String) -> void:
-	parent.combo_count = 0
-	parent.state_machine.change_state(idle_state)
+	if parent.state_machine.current_state == self:
+		parent.combo_count = 0 # RESET HERE: The sequence is officially over
+		if idle_state:
+			parent.state_machine.change_state(idle_state)

@@ -392,17 +392,39 @@ func animate_collision_snap(offset: Vector2) -> void:
 
 func play_animation(anim_base_name: String) -> void:
 	var final_base_name = anim_base_name
+	
 	if anim_base_name == "attack":
+		# Logic check:
+		# If is_light: "shoot"
+		# If !is_light: "attack" + "1" -> "attack1"
 		final_base_name = "shoot" if is_light else "attack" + str(combo_count)
 		if not is_light: apply_shake(0.2)
+		
+	# Suffix adds the underscore: "_dark" or "_light"
 	var suffix = "_light" if is_light else "_dark"
 	var anim_to_play = final_base_name + suffix
-	if not animated_sprite.sprite_frames.has_animation(anim_to_play): anim_to_play = final_base_name
-	if not is_light and anim_base_name == "attack": animation_player.play(anim_to_play)
+	
+	# Final string check: "attack1" + "_dark" = "attack1_dark"
+	
+	# Safety check for AnimatedSprite (fallback)
+	if not animated_sprite.sprite_frames.has_animation(anim_to_play): 
+		anim_to_play = final_base_name
+		
+	# Meticulous routing:
+	# Use AnimationPlayer for Melee (Dark Attack)
+	if not is_light and anim_base_name == "attack": 
+		if animation_player.has_animation(anim_to_play):
+			animation_player.play(anim_to_play)
+			print("animation_player playing ", anim_to_play)
+		else:
+			push_error("AnimationPlayer missing: " + anim_to_play)
 	else:
+		# Use AnimatedSprite for everything else
 		animation_player.stop()
-		if anim_base_name != "attack": hitbox_shape.set_deferred("disabled", true)
-		if animated_sprite.sprite_frames.has_animation(anim_to_play): animated_sprite.play(anim_to_play)
+		if anim_base_name != "attack": 
+			hitbox_shape.set_deferred("disabled", true)
+		if animated_sprite.sprite_frames.has_animation(anim_to_play): 
+			animated_sprite.play(anim_to_play)
 
 func toggle_element_state() -> void:	
 	is_light = !is_light
@@ -413,7 +435,15 @@ func toggle_element_state() -> void:
 	AudioManager.play_omni("switch_element")
 	apply_shake(0.2) 
 	element_toggled.emit(is_light)
-	if state_machine.current_state: play_animation(state_machine.current_state.animation_name)
+
+	# Check if we are in an attack/shoot state
+	var current = state_machine.current_state.name
+	if current.contains("Attack") or current.contains("Shoot"):
+		combo_count = 0
+		state_machine.change_state(state_machine.initial_state)
+	else:
+		if state_machine.current_state: 
+			play_animation(state_machine.current_state.animation_name)
 
 func _trigger_element_flash(is_light_state: bool) -> void:
 	var canvas = CanvasLayer.new(); add_child(canvas)

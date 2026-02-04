@@ -14,6 +14,7 @@ var ghost_timer: float = 0.0
 @export var idle_state: State
 @export var run_state: State
 @export var jump_state: State 
+@export var fall_state: State
 
 func enter() -> void:
 	super()
@@ -60,7 +61,7 @@ func exit() -> void:
 func _choose_next_state() -> State:
 	# Recovery logic: ensure gravity is enabled if ending in air
 	if not parent.is_on_floor():
-		return jump_state 
+		return fall_state
 		
 	var dir = Input.get_axis("move_left", "move_right")
 	return run_state if dir != 0 else idle_state
