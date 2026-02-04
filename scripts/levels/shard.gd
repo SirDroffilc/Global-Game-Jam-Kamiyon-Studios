@@ -30,5 +30,5 @@ func _on_body_entered(body: Node2D) -> void:
 		PlayerManager.emit_signal("shards_count_changed")
 		print(PlayerManager.shards_count, " shards")
 		
-		# Optional: Play a sound or spawn particles here before freeing
+		AudioManager.play_omni("ShardAbsorb")
 		queue_free()

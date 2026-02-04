@@ -90,7 +90,6 @@ func _physics_process(delta: float) -> void:
 		dash_available = true
 		can_double_jump = true 
 		if not was_on_floor:
-			spawn_dust_particles(8, 1.0, 150.0)
 			AudioManager.play_omni("PlayerLand")
 	
 	# 3. Dash Gatekeeper
@@ -102,14 +101,12 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump"):
 		jump_buffer_timer = jump_buffer_time
 		if is_on_floor(): 
-			spawn_dust_particles(5, 0.5, 80.0)
 			AudioManager.play_omni("PlayerJump")
 
 	# 5. Run Particles
 	if is_on_floor() and abs(velocity.x) > 10.0:
 		dust_spawn_timer += delta
 		if dust_spawn_timer >= dust_interval:
-			spawn_dust_particles(2, 0.2, 40.0)
 			AudioManager.play_omni("PlayerRun")
 			dust_spawn_timer = 0
 	else:
@@ -155,42 +152,73 @@ func spawn_attack_slash() -> void:
 	slash.emitting = true
 	slash.finished.connect(slash.queue_free)
 
-func spawn_dust_particles(amount: int, explosiveness: float, speed: float) -> void:
-	var particles = CPUParticles2D.new()
-	get_tree().current_scene.add_child(particles)
-	particles.global_position = global_position + Vector2(0, 10) 
-	particles.amount = amount
-	particles.explosiveness = explosiveness
-	particles.one_shot = true
-	particles.lifetime = 0.4
-	particles.direction = Vector2(0, -1)
-	particles.initial_velocity_min = speed * 0.5
-	particles.initial_velocity_max = speed
-	particles.color = Color(1, 1, 1, 0.6)
-	var curve = Curve.new()
-	curve.add_point(Vector2(0, 1))
-	curve.add_point(Vector2(1, 0))
-	particles.scale_amount_curve = curve
-	particles.emitting = true
-	particles.finished.connect(particles.queue_free)
-
 func spawn_hit_particles(pos: Vector2, color: Color = Color.WHITE) -> void:
 	var particles = CPUParticles2D.new()
 	get_tree().current_scene.add_child(particles)
 	particles.global_position = pos
+	
+	# Look: Large, explosive circles
 	particles.amount = 8
 	particles.explosiveness = 1.0
 	particles.one_shot = true
-	particles.lifetime = 0.5
-	particles.spread = 180.0
-	particles.gravity = Vector2(0, 400)
-	particles.initial_velocity_min = 100.0
-	particles.initial_velocity_max = 200.0
+	particles.lifetime = 0.4 # Quick and snappy
+	
+	# Motion: High initial burst, then slows down
+	particles.spread = 120.0
+	particles.gravity = Vector2(0, 500) # Heavy gravity
+	particles.initial_velocity_min = 250.0 # Faster burst
+	particles.initial_velocity_max = 400.0
+	particles.damping_min = 50.0 # Air resistance
+	particles.damping_max = 100.0
+	
+	# Shape: Growing then shrinking
+	particles.scale_amount_min = 4.0 # Much larger
+	particles.scale_amount_max = 8.0
+	
 	var curve = Curve.new()
-	curve.add_point(Vector2(0, 1))
-	curve.add_point(Vector2(1, 0))
+	curve.add_point(Vector2(0, 0.2)) # Start small
+	curve.add_point(Vector2(0.2, 1.0)) # Snap to large quickly
+	curve.add_point(Vector2(1, 0)) # Fade out to nothing
 	particles.scale_amount_curve = curve
+	
 	particles.color = color
+	particles.emitting = true
+	particles.finished.connect(particles.queue_free)
+
+func spawn_dust_particles() -> void:
+	# Use this for jumping/walking
+	var particles = CPUParticles2D.new()
+	get_tree().current_scene.add_child(particles)
+	particles.global_position = global_position + Vector2(0, 10) # Position at feet
+	
+	particles.amount = 6
+	particles.lifetime = 0.6
+	particles.one_shot = true
+	particles.explosiveness = 0.8
+	
+	# Motion: Smoke-like drift
+	particles.direction = Vector2(0, -1) # Upwards
+	particles.spread = 45.0
+	particles.gravity = Vector2(0, -20) # Slight floaty lift
+	particles.initial_velocity_min = 20.0
+	particles.initial_velocity_max = 50.0
+	
+	# Look: Large soft "smoke" circles
+	particles.scale_amount_min = 4.0
+	particles.scale_amount_max = 8.0
+	
+	# Smoke Alpha Curve (Fades out)
+	var gradient = Gradient.new()
+	gradient.add_point(0.0, Color(1, 1, 1, 0.8)) # Start visible
+	gradient.add_point(1.0, Color(1, 1, 1, 0))   # Fade to transparent
+	particles.color_ramp = gradient
+	
+	# Scale Curve (Expands like real smoke)
+	var curve = Curve.new()
+	curve.add_point(Vector2(0, 0.5))
+	curve.add_point(Vector2(1, 1.5)) # Gets bigger as it disappears
+	particles.scale_amount_curve = curve
+	
 	particles.emitting = true
 	particles.finished.connect(particles.queue_free)
 
@@ -261,8 +289,11 @@ func take_damage(amount: int) -> void:
 	spawn_hit_particles(global_position, Color.BLACK) # THE BLACK PARTICLES ARE HERE
 
 func flash_hurt() -> void:
-	animated_sprite.modulate = Color(20, 20, 20, 1)
-	create_tween().tween_property(animated_sprite, "modulate", Color.WHITE, 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	var tween = create_tween()
+	# Using RAW values above 1.0 creates a bright "White Flash" even with bloom
+	# We use self_modulate to avoid affecting the health bar or other children
+	animated_sprite.self_modulate = Color(0.311, 0.311, 0.311, 1.0) 
+	tween.tween_property(animated_sprite, "self_modulate", Color.WHITE, 0.15).set_trans(Tween.TRANS_SINE)
 
 # --- State Helpers ---
 
