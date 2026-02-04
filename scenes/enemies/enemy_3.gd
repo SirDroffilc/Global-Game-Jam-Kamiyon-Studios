@@ -1,23 +1,22 @@
 extends CharacterBody2D
 
 # --- Attributes ---
-@export var base_health: int = 200
+@export var base_health: int = 100
 @export var damage: int = 15
-@export var dash_speed: float = 900.0 
-@export var retreat_speed: float = 300.0 
+@export var walk_speed: float = 100.0 # Speed for the new chase behavior
+@export var dash_speed: float = 800.0 
+@export var retreat_speed: float = 100.0 
+@export var stopping_distance: float = 150.0 # Distance to stop walking and wait for dash
 @export var dash_stop_distance: float = 10.0 
 @onready var current_health: int = base_health
 
 # --- Visual Effects Attributes ---
 @export_group("Dash Visuals")
-@export var ghost_interval: float = 0.05 # Time between afterimages
+@export var ghost_interval: float = 0.05 
 var ghost_timer: float = 0.0
 
-# --- Loot Attributes ---
-enum DropType { ATTACK, HEAL }
-var assigned_drop: DropType
-@export var attack_boost_amount: int = 10
-@export var heal_amount: int = 50
+# --- Loot Attribute (Heal) ---
+@export var heal_amount: int = 5
 
 # --- State Control ---
 enum EnemyState { IDLE, DASHING, ATTACKING, RETREATING }
@@ -45,11 +44,16 @@ var knockback_velocity: Vector2 = Vector2.ZERO
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("Player")
 	animated_sprite.animation_finished.connect(_on_animation_finished)
+	item_drop.body_entered.connect(_on_item_drop_body_entered)
 	item_drop.visible = false
 	item_collision.disabled = true
 
 func _physics_process(delta: float) -> void:
-	if is_dying: return 
+	if is_dying: 
+		# Meticulous: Apply gravity while dying so the corpse falls
+		velocity += get_gravity() * delta
+		move_and_slide()
+		return 
 
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -60,16 +64,30 @@ func _physics_process(delta: float) -> void:
 
 	match current_state:
 		EnemyState.IDLE:
-			animated_sprite.play("idle")
-			move_velocity.x = 0
-			if player:
-				animated_sprite.flip_h = (player.global_position.x - global_position.x) > 0
+			if is_active and player:
+				var dist_x = player.global_position.x - global_position.x
+				
+				# METICULOUS: Chase Logic (similar to Enemy1)
+				if abs(dist_x) > stopping_distance:
+					move_velocity.x = sign(dist_x) * walk_speed
+					animated_sprite.play("run") # Assuming 'run' is your walking animation
+					
+					if not AudioManager.is_playing_omni("EnemyWalk"):
+						AudioManager.play_omni("EnemyWalk")
+				else:
+					move_velocity.x = 0
+					animated_sprite.play("idle")
+					AudioManager.stop_omni("EnemyWalk")
+				
+				# Always face the player while idling/walking
+				animated_sprite.flip_h = dist_x > 0
 				_handle_hitbox_flip(animated_sprite.flip_h)
+			else:
+				move_velocity.x = 0
+				animated_sprite.play("idle")
 				
 		EnemyState.DASHING:
 			animated_sprite.play("run")
-			
-			# METICULOUS: Dash Trail Logic
 			ghost_timer += delta
 			if ghost_timer >= ghost_interval:
 				spawn_ghost()
@@ -99,36 +117,20 @@ func _physics_process(delta: float) -> void:
 func spawn_ghost() -> void:
 	var ghost = Sprite2D.new()
 	get_tree().current_scene.add_child(ghost)
-	
-	# Snapshot current look
-	ghost.texture = animated_sprite.sprite_frames.get_frame_texture(
-		animated_sprite.animation, 
-		animated_sprite.frame
-	)
+	ghost.texture = animated_sprite.sprite_frames.get_frame_texture(animated_sprite.animation, animated_sprite.frame)
 	ghost.global_position = global_position
 	ghost.flip_h = animated_sprite.flip_h
 	ghost.scale = animated_sprite.scale
-	
-	# SUBTLE GLOW: Lowered from 15.0 to 1.2. Lowered Alpha to 0.4
 	ghost.modulate = Color(1.2, 1.2, 1.2, 0.4) 
 	
 	var tween = create_tween()
-	tween.set_parallel(true) # Fade and shrink at the same time
-	
-	# 1. Faster Fade (0.2s instead of 0.35s)
-	tween.tween_property(ghost, "modulate:a", 0.0, 0.2)\
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	
-	# 2. Shrink effect: This prevents the 'print' look when they stop
-	tween.tween_property(ghost, "scale", Vector2.ZERO, 0.2)\
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	
-	# 3. Meticulous Cleanup
+	tween.set_parallel(true)
+	tween.tween_property(ghost, "modulate:a", 0.0, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(ghost, "scale", Vector2.ZERO, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tween.chain().tween_callback(ghost.queue_free)
 
 func flash_hurt() -> void:
 	var tween = create_tween()
-	# Sudden high-contrast shift to indicate damage
 	animated_sprite.modulate = Color(0.153, 0.153, 0.153, 1.0) 
 	tween.tween_property(animated_sprite, "modulate", Color.WHITE, 0.15)
 
@@ -157,8 +159,11 @@ func spawn_hit_particles(pos: Vector2, color: Color = Color.WHITE) -> void:
 # --- Attack Pattern Sequence ---
 
 func _on_attack_timer_timeout() -> void:
+	# Only start a dash if the enemy has walked close enough to the player
 	if is_active and is_on_floor() and not is_dying and current_state == EnemyState.IDLE:
-		start_attack_sequence()
+		var dist_x = player.global_position.x - global_position.x
+		if abs(dist_x) <= stopping_distance + 50.0: # Meticulous: Allow a small buffer for the dash trigger
+			start_attack_sequence()
 
 func start_attack_sequence() -> void:
 	if player:
@@ -211,9 +216,9 @@ func die() -> void:
 	is_dying = true
 	is_active = false
 	animation_player.stop()
-	velocity = Vector2.ZERO 
+	velocity.x = 0 # Meticulous: Stop X movement but let gravity (updated in physics_process) take over
 	collision_layer = 0
-	collision_mask = 0
+	collision_mask = 1 # Keep mask 1 so it hits the floor while falling
 	attack_hitbox.monitoring = false
 	if has_node("Hurtbox"): $Hurtbox.queue_free()
 	AudioManager.play_omni("EnemyDeath")
@@ -223,11 +228,15 @@ func _on_animation_finished() -> void:
 	if animated_sprite.animation == "death":
 		_spawn_loot()
 
+# --- Loot Implementation ---
 func _spawn_loot() -> void:
-	assigned_drop = DropType.values().pick_random()
 	animated_sprite.visible = false
 	item_drop.visible = true
+	if item_drop.has_method("play_animation"):
+		item_drop.play_animation()
+
 	item_collision.set_deferred("disabled", false)
+	
 	var tween = create_tween()
 	item_drop.scale = Vector2.ZERO
 	tween.tween_property(item_drop, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK)
@@ -239,12 +248,7 @@ func _on_item_drop_body_entered(body: Node2D) -> void:
 		queue_free()
 
 func _apply_loot_bonus() -> void:
-	if assigned_drop == DropType.ATTACK:
-		PlayerManager.base_damage += attack_boost_amount
-		print(">>> LOOT: Attack +", attack_boost_amount)
-	else:
-		PlayerManager.add_health(heal_amount)
-		print(">>> LOOT: Healed +", heal_amount)
+	PlayerManager.add_health(heal_amount)
 
 # --- Helpers ---
 
@@ -256,5 +260,4 @@ func _on_visible_on_screen_notifier_screen_entered() -> void:
 	attack_timer.start()
 
 func _on_visible_on_screen_notifier_screen_exited() -> void:
-	is_active = false
 	attack_timer.stop()

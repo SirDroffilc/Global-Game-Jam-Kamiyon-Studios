@@ -3,15 +3,12 @@ extends CharacterBody2D
 # --- Attributes ---
 @export var base_health: int = 30
 @export var damage: int = 5
-@export var walk_speed: float = 50.0 
+@export var walk_speed: float = 60.0 
 @export var stopping_distance: float = 60.0 
 @onready var current_health: int = base_health
 
-# --- Loot Attributes ---
-enum DropType { ATTACK, HEAL }
-var assigned_drop: DropType
-@export var attack_boost_amount: int = 5
-@export var heal_amount: int = 25
+# --- Loot Attribute (Heal) ---
+@export var heal_amount: int = 5
 
 # --- Attack Attributes ---
 @export var tackle_force_x: float = 450.0 
@@ -33,15 +30,16 @@ var knockback_velocity: Vector2 = Vector2.ZERO
 # --- Node References ---
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var tackle_hitbox: Area2D = $TackleHitbox
-@onready var item_drop: Area2D = $ItemDrop
+@onready var item_drop: ItemDrop = $ItemDrop
 @onready var item_collision: CollisionShape2D = $ItemDrop/CollisionShape2D
+@onready var attack_timer: Timer = $AttackTimer
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("Player")
-	# Connect death animation signal
+	
 	animated_sprite.animation_finished.connect(_on_animation_finished)
 	
-	# Initial loot state: Hidden and physically disabled
+	item_drop.body_entered.connect(_on_item_drop_body_entered)
 	item_drop.visible = false
 	item_collision.disabled = true
 
@@ -120,9 +118,10 @@ func _on_tackle_hitbox_body_entered(body: Node2D) -> void:
 # --- Damage & Death ---
 func _on_visible_on_screen_notifier_screen_entered() -> void:
 	is_active = true
+	attack_timer.start()
 
 func _on_visible_on_screen_notifier_screen_exited() -> void:
-	is_active = false
+	attack_timer.stop()
 
 func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
 	if is_dying: return
@@ -153,6 +152,7 @@ func die() -> void:
 	# Meticulous: Clear physics layers so player can overlap with loot
 	collision_layer = 0
 	collision_mask = 0
+	$Hurtbox.queue_free()
 	tackle_hitbox.monitoring = false
 	
 	AudioManager.play_omni("EnemyDeath")
@@ -164,13 +164,11 @@ func _on_animation_finished() -> void:
 
 # --- Loot Implementation ---
 func _spawn_loot() -> void:
-	# 1. Randomize drop type
-	assigned_drop = DropType.values().pick_random()
-	
 	# 2. Swap Visibility: Hide enemy corpse, show item
 	animated_sprite.visible = false
 	item_drop.visible = true
-	
+	item_drop.play_animation()
+
 	# 3. Enable collision via set_deferred to avoid physics thread errors
 	item_collision.set_deferred("disabled", false)
 	
@@ -178,8 +176,7 @@ func _spawn_loot() -> void:
 	var tween = create_tween()
 	item_drop.scale = Vector2.ZERO
 	tween.tween_property(item_drop, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK)
-	
-	print(">>> LOOT DROPPED: ", DropType.keys()[assigned_drop])
+
 
 func _on_item_drop_body_entered(body: Node2D) -> void:
 	# This function handles the actual pickup
@@ -191,12 +188,8 @@ func _on_item_drop_body_entered(body: Node2D) -> void:
 		queue_free()
 
 func _apply_loot_bonus() -> void:
-	if assigned_drop == DropType.ATTACK:
-		PlayerManager.base_damage += attack_boost_amount
-		print(">>> LOOT COLLECTED: Attack +", attack_boost_amount)
-	else:
-		PlayerManager.add_health(heal_amount)
-		print(">>> LOOT COLLECTED: Healed +", heal_amount)
+	PlayerManager.add_health(heal_amount)
+	print(">>> LOOT COLLECTED: Healed +", heal_amount)
 		
 func spawn_hit_particles(pos: Vector2, color: Color = Color.WHITE) -> void:
 	# 1. Create the particle node

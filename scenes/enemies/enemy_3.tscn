@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cj4raused05nh" path="res://scenes/enemies/enemy_3.gd" id="1_28rdh"]
 [ext_resource type="Texture2D" uid="uid://c10faknkq6rb6" path="res://assets/spritesheets/vrute_attack_spritesheet.png" id="1_iqwa4"]
 [ext_resource type="Texture2D" uid="uid://dn7ix7vbypxhm" path="res://assets/spritesheets/vrute spritesheet.png" id="2_ofsh2"]
-[ext_resource type="Texture2D" uid="uid://bbjdwcqj7n1wu" path="res://assets/spritesheets/coin spritesheet.png" id="3_ofsh2"]
+[ext_resource type="PackedScene" uid="uid://dfvini2qe6hw2" path="res://scenes/enemies/item_drop.tscn" id="4_28rdh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_28rdh"]
 atlas = ExtResource("1_iqwa4")
@@ -363,45 +363,6 @@ size = Vector2(30, 34)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oio3m"]
 size = Vector2(28, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_n6ck4"]
-atlas = ExtResource("3_ofsh2")
-region = Rect2(0, 0, 10, 10)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f8vl8"]
-atlas = ExtResource("3_ofsh2")
-region = Rect2(10, 0, 10, 10)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0ptr5"]
-atlas = ExtResource("3_ofsh2")
-region = Rect2(20, 0, 10, 10)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jdaak"]
-atlas = ExtResource("3_ofsh2")
-region = Rect2(30, 0, 10, 10)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_p4ei7"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n6ck4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_f8vl8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0ptr5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jdaak")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_61p7s"]
-radius = 6.0
-
 [node name="Enemy3" type="CharacterBody2D" unique_id=689474609 groups=["Enemy"]]
 collision_layer = 64
 collision_mask = 28
@@ -443,22 +404,9 @@ debug_color = Color(0.9543254, 1.347661e-06, 0.5515211, 0.41960785)
 [node name="AttackTimer" type="Timer" parent="." unique_id=1940485624]
 wait_time = 1.2999999999999998
 
-[node name="ItemDrop" type="Area2D" parent="." unique_id=1104608700]
-visible = false
-collision_layer = 0
-collision_mask = 3
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ItemDrop" unique_id=1121558698]
-position = Vector2(0, -9)
-scale = Vector2(0.85, 0.85)
-sprite_frames = SubResource("SpriteFrames_p4ei7")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ItemDrop" unique_id=1294371144]
-position = Vector2(0, -9)
-shape = SubResource("CircleShape2D_61p7s")
+[node name="ItemDrop" parent="." unique_id=1504413500 instance=ExtResource("4_28rdh")]
 
 [connection signal="body_entered" from="AttackHitbox" to="." method="_on_attack_hitbox_body_entered"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier" to="." method="_on_visible_on_screen_notifier_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier" to="." method="_on_visible_on_screen_notifier_screen_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
-[connection signal="body_entered" from="ItemDrop" to="." method="_on_item_drop_body_entered"]

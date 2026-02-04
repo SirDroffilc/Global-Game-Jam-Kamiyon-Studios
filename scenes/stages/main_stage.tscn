@@ -7,6 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://c3emj4ho0t73a" path="res://scenes/players/player.tscn" id="4_1kogc"]
 [ext_resource type="PackedScene" uid="uid://dmh3uptk4uctc" path="res://scenes/stages/fall_zone.tscn" id="6_1kogc"]
 [ext_resource type="PackedScene" uid="uid://gaswrufkubp7" path="res://scenes/stages/checkpoint.tscn" id="7_1kogc"]
+[ext_resource type="PackedScene" uid="uid://c5mexbxxj3gw" path="res://scenes/enemies/enemy_4.tscn" id="8_yim3f"]
+[ext_resource type="Script" uid="uid://bd7lf8v6d8fm7" path="res://scripts/globals/hudcontroller.gd" id="9_yim3f"]
+[ext_resource type="Texture2D" uid="uid://dqtf4avr6746c" path="res://assets/User Interface/Game HUD (Masked).png" id="10_mheb4"]
+[ext_resource type="Texture2D" uid="uid://b0hdtfkmgh1l4" path="res://assets/spritesheets/Health - Polygon.png" id="11_kj377"]
+[ext_resource type="Texture2D" uid="uid://eshmj7gnx4hy" path="res://assets/User Interface/Memories.png" id="12_ddfno"]
+[ext_resource type="FontFile" uid="uid://bphsesp23w8gl" path="res://assets/Font/ferrum.otf" id="13_2ctka"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sp882"]
 texture = ExtResource("1_s2q2r")
@@ -493,6 +499,36 @@ physics_layer_0/collision_mask = 67
 sources/0 = SubResource("TileSetAtlasSource_mheb4")
 sources/2 = SubResource("TileSetAtlasSource_kj377")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vxyk8"]
+bg_color = Color(0.09620472, 0.09620475, 0.09620469, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.078431375, 0.078431375, 0.078431375, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mogcp"]
+bg_color = Color(0.973535, 0.9735351, 0.973535, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.078431375, 0.078431375, 0.078431375, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="LabelSettings" id="LabelSettings_coyrc"]
+font = ExtResource("13_2ctka")
+font_size = 32
+outline_size = 5
+outline_color = Color(0.033853278, 0.033853278, 0.033853274, 1)
+
 [node name="MainStage" type="Node2D" unique_id=648846227]
 script = ExtResource("1_djkgi")
 
@@ -501,7 +537,7 @@ script = ExtResource("1_djkgi")
 [node name="PlainWhiteBackground" type="ColorRect" parent="Backgrounds" unique_id=290175765]
 offset_left = -4597.0005
 offset_top = -4555.0005
-offset_right = 3298.9995
+offset_right = 3298.9985
 offset_bottom = -1555.0005
 scale = Vector2(5, 5)
 color = Color(0.86467505, 0.86467516, 0.864675, 1)
@@ -531,7 +567,7 @@ tile_set = SubResource("TileSet_ddfno")
 
 [node name="Player" parent="." unique_id=395045780 instance=ExtResource("4_1kogc")]
 unique_name_in_owner = true
-position = Vector2(6596.375, -230.23697)
+position = Vector2(13090.405, -561.72876)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=977550880]
 position = Vector2(0, -40)
@@ -549,3 +585,77 @@ position = Vector2(2088, -26)
 
 [node name="Checkpoint2" parent="Checkpoints" unique_id=1187380647 instance=ExtResource("7_1kogc")]
 position = Vector2(2761, 8)
+
+[node name="EnemiesContainer" type="Node2D" parent="." unique_id=395923699]
+
+[node name="Enemy4" parent="EnemiesContainer" unique_id=709967196 instance=ExtResource("8_yim3f")]
+position = Vector2(13013, -579)
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=2110781961]
+script = ExtResource("9_yim3f")
+
+[node name="HealthBar" type="ProgressBar" parent="HUD" unique_id=2084001114]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 262.0
+offset_top = -454.0
+offset_right = -1390.0
+offset_bottom = -434.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_vxyk8")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mogcp")
+value = 100.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="MaskHUD" type="TextureRect" parent="HUD" unique_id=575541097]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_mheb4")
+metadata/_edit_use_anchors_ = true
+
+[node name="HealthPolygon" type="TextureRect" parent="HUD" unique_id=849303579]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+texture = ExtResource("11_kj377")
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD" unique_id=60449439]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 240.0
+offset_top = -405.0
+offset_right = 292.0
+offset_bottom = -365.0
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="MemoryShards" type="TextureRect" parent="HUD/HBoxContainer" unique_id=277137855]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_ddfno")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="ShardsCount" type="Label" parent="HUD/HBoxContainer" unique_id=569995410]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "0"
+label_settings = SubResource("LabelSettings_coyrc")
+vertical_alignment = 1

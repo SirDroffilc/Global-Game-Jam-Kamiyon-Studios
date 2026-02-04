@@ -1,18 +1,15 @@
 extends CharacterBody2D
 
 # --- Attributes ---
-@export var base_health: int = 50
+@export var base_health: int = 30
 @export var damage: int = 10
-@export var fly_speed: float = 60.0 
+@export var fly_speed: float = 120.0 
 @export var stopping_distance_x: float = 200.0 # Renamed for clarity
 @export var stopping_distance_y: float = -100.0 # New vertical buffer
 @onready var current_health: int = base_health
 
-# --- Loot Attributes ---
-enum DropType { ATTACK, HEAL }
-var assigned_drop: DropType
-@export var attack_boost_amount: int = 5
-@export var heal_amount: int = 25
+# --- Loot Attribute (Heal) ---
+@export var heal_amount: int = 10
 
 # --- Attack Attributes ---
 @export var spit_scene: PackedScene = preload("res://scenes/enemies/enemy_spit.tscn")
@@ -32,21 +29,23 @@ var knockback_velocity: Vector2 = Vector2.ZERO
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_marker: Marker2D = $AttackMarker
 @onready var attack_timer: Timer = $AttackTimer
-@onready var item_drop: Area2D = $ItemDrop
+@onready var item_drop: ItemDrop = $ItemDrop
 @onready var item_collision: CollisionShape2D = $ItemDrop/CollisionShape2D
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("Player")
-	if player == null:
-		print(">>> ERROR: Enemy 2 could not find Player group!")
 		
 	animated_sprite.animation_finished.connect(_on_animation_finished)
 	
+	item_drop.body_entered.connect(_on_item_drop_body_entered)
 	item_drop.visible = false
 	item_collision.disabled = true
 
 func _physics_process(delta: float) -> void:
-	if is_dying: return 
+	if is_dying:
+		velocity += get_gravity() * delta
+		move_and_slide()
+		return 
 
 	time_passed += delta
 	var move_velocity = Vector2.ZERO
@@ -120,7 +119,6 @@ func _on_visible_on_screen_notifier_screen_entered() -> void:
 	attack_timer.start()
 
 func _on_visible_on_screen_notifier_screen_exited() -> void:
-	is_active = false
 	attack_timer.stop()
 
 func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
@@ -144,9 +142,13 @@ func die() -> void:
 	is_dying = true
 	is_active = false
 	attack_timer.stop()
-	velocity = Vector2.ZERO 
+	
+	velocity.x = 0
+	
 	collision_layer = 0
+	
 	$Hurtbox.queue_free()
+	
 	AudioManager.play_omni("EnemyDeath")
 	AudioManager.stop_omni("EnemyFlying")
 	animated_sprite.play("death")
@@ -157,11 +159,15 @@ func _on_animation_finished() -> void:
 
 # --- Loot Implementation ---
 func _spawn_loot() -> void:
-	assigned_drop = DropType.values().pick_random()
+	# 2. Swap Visibility: Hide enemy corpse, show item
 	animated_sprite.visible = false
 	item_drop.visible = true
+	item_drop.play_animation()
+
+	# 3. Enable collision via set_deferred to avoid physics thread errors
 	item_collision.set_deferred("disabled", false)
 	
+	# 4. Tween "Pop" for visual feedback
 	var tween = create_tween()
 	item_drop.scale = Vector2.ZERO
 	tween.tween_property(item_drop, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK)
@@ -173,12 +179,8 @@ func _on_item_drop_body_entered(body: Node2D) -> void:
 		queue_free()
 
 func _apply_loot_bonus() -> void:
-	if assigned_drop == DropType.ATTACK:
-		PlayerManager.base_damage += attack_boost_amount
-		print(">>> LOOT COLLECTED: Attack +", attack_boost_amount)
-	else:
-		PlayerManager.add_health(heal_amount)
-		print(">>> LOOT COLLECTED: Healed +", heal_amount)
+	PlayerManager.add_health(heal_amount)
+	print(">>> LOOT COLLECTED: Healed +", heal_amount)
 		
 func spawn_hit_particles(pos: Vector2, color: Color = Color.WHITE) -> void:
 	# 1. Create the particle node

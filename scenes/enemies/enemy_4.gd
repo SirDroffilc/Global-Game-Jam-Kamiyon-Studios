@@ -1,12 +1,12 @@
 extends CharacterBody2D
 
 # --- Attributes ---
-@export var base_health: int = 500
+@export var base_health: int = 1000
 @export var damage_basic: int = 10
-@export var damage_dash: int = 15
+@export var damage_dash: int = 20
 @export var move_speed: float = 150.0
 @export var dash_speed: float = -850.0
-@export var follow_distance: float = 60.0 
+@export var follow_distance: float = 50.0 
 @onready var current_health: int = base_health
 
 # --- Pattern State ---
@@ -37,8 +37,8 @@ var step_timer: float = 0.0
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var attack_timer: Timer = $AttackTimer
-@onready var attack1_hitbox: Area2D = $Attack1Hitbox
-@onready var attack2_hitbox: Area2D = $Attack2Hitbox
+@onready var attack1_hitbox: Area2D = $AnimatedSprite2D/Attack1Hitbox
+@onready var attack2_hitbox: Area2D = $AnimatedSprite2D/Attack2Hitbox
 
 # --- Lifecycle ---
 
@@ -66,7 +66,7 @@ func _physics_process(delta: float) -> void:
 			_face_player()
 			
 		EnemyState.MOVING:
-			if animated_sprite.animation != "run":
+			if animated_sprite.animation != "run" or not animated_sprite.is_playing():
 				animated_sprite.play("run")
 				
 			# Footsteps Logic
@@ -109,7 +109,6 @@ func _on_attack_timer_timeout() -> void:
 
 func execute_pattern_step() -> void:
 	_face_player()
-	
 	match attack_step:
 		0, 1: 
 			current_state = EnemyState.ATTACKING
@@ -123,25 +122,26 @@ func execute_pattern_step() -> void:
 			current_state = EnemyState.ATTACKING
 			#spawn_attack_indicator() # Ethereal "Tell" indicator
 			animated_sprite.stop()
-			AudioManager.play_omni("EnemySlash")
 			animation_player.play("attack2_sequence")
 			attack_step = 0 
-			attack_timer.start(2.0)
+			attack_timer.start(4.0)
 
 # --- Animation Call Methods (From AnimationPlayer) ---
 
 func start_dash_attack() -> void:
-	AudioManager.play_omni("EnemyDash")
+	#AudioManager.play_omni("EnemyDash")
 	current_state = EnemyState.DASHING
 	ghost_timer = 0
 
 func end_dash_attack() -> void:
 	current_state = EnemyState.IDLE
-	$Attack2Hitbox/CollisionShape2D.disabled = true
+	animated_sprite.play("idle")
+	#$Attack2Hitbox/CollisionShape2D.disabled = true
 	
 func finish_attack() -> void:
 	current_state = EnemyState.MOVING
-	$Attack2Hitbox/CollisionShape2D.disabled = true
+	animated_sprite.play("run")
+	#$Attack2Hitbox/CollisionShape2D.disabled = true
 
 # --- Visual Effects Functions ---
 
@@ -230,6 +230,8 @@ func _face_player() -> void:
 		animated_sprite.flip_h = side
 		attack1_hitbox.scale.x = 1 if not side else -1
 		attack2_hitbox.scale.x = 1 if not side else -1
+		$CollisionShape2D.position.x = 48.0 if not side else -48.0
+		$Hurtbox.position.x = 48.0 if not side else -48.0
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	if not is_active:
@@ -239,5 +241,6 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	attack_timer.start()
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	is_active = false
-	attack_timer.stop()
+	#attack_timer.stop()
+	pass
+	

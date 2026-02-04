@@ -312,8 +312,14 @@ animations = [{
 "speed": 7.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0uqpx"]
+size = Vector2(60, 51.5)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qysx5"]
-size = Vector2(132, 105)
+size = Vector2(92, 107.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ccm5a"]
+size = Vector2(92, 108)
 
 [sub_resource type="Animation" id="Animation_o3t5y"]
 length = 0.001
@@ -344,7 +350,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Attack1Hitbox/CollisionShape2D:disabled")
+tracks/2/path = NodePath("AnimatedSprite2D/Attack1Hitbox/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -356,7 +362,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Attack2Hitbox/CollisionShape2D:disabled")
+tracks/3/path = NodePath("AnimatedSprite2D/Attack2Hitbox/CollisionPolygon2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -368,7 +374,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id="Animation_a5fj6"]
 resource_name = "attack1_sequence"
-length = 1.1
+length = 0.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -388,7 +394,7 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.6, 0.7, 0.7999999, 0.90000004, 0.99999994, 1.0999999),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.29999995, 0.39999986, 0.50000006, 0.59999996, 0.69999987),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
@@ -396,11 +402,11 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Attack1Hitbox/CollisionShape2D:disabled")
+tracks/2/path = NodePath("AnimatedSprite2D/Attack1Hitbox/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.7, 0.9),
+"times": PackedFloat32Array(0, 0.3, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -412,7 +418,7 @@ tracks/3/path = NodePath(".")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(1.1),
+"times": PackedFloat32Array(0.7),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -470,7 +476,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Attack2Hitbox/CollisionShape2D:disabled")
+tracks/3/path = NodePath("AnimatedSprite2D/Attack2Hitbox/CollisionPolygon2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -487,68 +493,58 @@ _data = {
 &"attack2_sequence": SubResource("Animation_sltgn")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ccm5a"]
-size = Vector2(68, 90)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0uqpx"]
-size = Vector2(129, 103)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_o3t5y"]
-size = Vector2(149, 87)
-
 [node name="Enemy4" type="CharacterBody2D" unique_id=709967196 groups=["Enemy"]]
 collision_layer = 64
 collision_mask = 28
 script = ExtResource("1_o3t5y")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1126055618]
-position = Vector2(-50, -64)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_jq61r")
 animation = &"attack1"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1213472423]
-position = Vector2(-13, -52.5)
-shape = SubResource("RectangleShape2D_qysx5")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=38296206]
-libraries/ = SubResource("AnimationLibrary_gyqao")
-
-[node name="Hurtbox" type="Area2D" parent="." unique_id=1962236743 groups=["Enemy"]]
-collision_layer = 32
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=575627259]
-position = Vector2(-2, -45)
-shape = SubResource("RectangleShape2D_ccm5a")
-
-[node name="Attack1Hitbox" type="Area2D" parent="." unique_id=1110052576]
+[node name="Attack1Hitbox" type="Area2D" parent="AnimatedSprite2D" unique_id=1110052576]
 collision_layer = 0
 collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack1Hitbox" unique_id=297609040]
-position = Vector2(-52.5, -51.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Attack1Hitbox" unique_id=297609040]
+position = Vector2(-16, 6.25)
 shape = SubResource("RectangleShape2D_0uqpx")
 disabled = true
 debug_color = Color(0.8384407, 0.37773708, 0.21245998, 0.41960785)
 
-[node name="Attack2Hitbox" type="Area2D" parent="." unique_id=715424367]
+[node name="Attack2Hitbox" type="Area2D" parent="AnimatedSprite2D" unique_id=715424367]
+collision_layer = 0
+collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack2Hitbox" unique_id=392330226]
-position = Vector2(-42.5, -44.5)
-shape = SubResource("RectangleShape2D_o3t5y")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AnimatedSprite2D/Attack2Hitbox" unique_id=1059505608]
+polygon = PackedVector2Array(-5, -11.5, -47.5, -1.5, -48, 19, -21.5, 32.5, 9.5, 32, 8, -14)
 disabled = true
-debug_color = Color(0.69989383, 0.4625615, 0.4662298, 0.41960785)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1213472423]
+position = Vector2(48, 9.75)
+shape = SubResource("RectangleShape2D_qysx5")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1962236743 groups=["Enemy"]]
+position = Vector2(48, 9)
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=575627259]
+shape = SubResource("RectangleShape2D_ccm5a")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=756189761]
-position = Vector2(0, -9)
-rect = Rect2(-32, -41, 64, 51)
+position = Vector2(3, -27)
+rect = Rect2(-89, -5, 173, 100)
 
 [node name="AttackTimer" type="Timer" parent="." unique_id=1504082857]
-wait_time = 2.0
+wait_time = 4.0
 
-[connection signal="body_entered" from="Attack1Hitbox" to="." method="_on_attack_1_hitbox_body_entered"]
-[connection signal="body_entered" from="Attack2Hitbox" to="." method="_on_attack_2_hitbox_body_entered"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=38296206]
+libraries/ = SubResource("AnimationLibrary_gyqao")
+
+[connection signal="body_entered" from="AnimatedSprite2D/Attack1Hitbox" to="." method="_on_attack_1_hitbox_body_entered"]
+[connection signal="body_entered" from="AnimatedSprite2D/Attack2Hitbox" to="." method="_on_attack_2_hitbox_body_entered"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
