@@ -19,6 +19,7 @@ config/description="Eclipse: High-speed 2D movement-platformer focused on dual-s
 config/version="1.0.0"
 run/main_scene="uid://cbrqg3p4k3s3n"
 config/features=PackedStringArray("4.6", "Forward Plus")
+run/max_fps=120
 boot_splash/show_image=false
 boot_splash/use_filter=false
 config/icon="uid://mkc71tt8wq1x"
@@ -72,11 +73,6 @@ attack={
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(108, 22),"global_position":Vector2(117, 70),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
-skill2={
-"deadzone": 0.2,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":70,"key_label":0,"unicode":102,"location":0,"echo":false,"script":null)
-]
-}
 dash={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":67,"key_label":0,"unicode":99,"location":0,"echo":false,"script":null)
@@ -94,8 +90,12 @@ dash={
 2d_physics/layer_6="Enemy Hurtbox"
 2d_physics/layer_7="Enemy"
 
+[physics]
+
+common/physics_ticks_per_second=120
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
 viewport/hdr_2d=true
-environment/defaults/default_clear_color=Color(0.12016112, 2.4498553e-05, 0.46735948, 1)
+environment/defaults/default_clear_color=Color(1, 1, 1, 1)

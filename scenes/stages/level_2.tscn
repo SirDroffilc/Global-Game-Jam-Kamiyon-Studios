@@ -46,7 +46,7 @@
 
 [sub_resource type="GDScript" id="GDScript_cssca"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_emlwg"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cssca"]
 texture = ExtResource("3_f0cuo")
 7:0/0 = 0
 7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -99,7 +99,7 @@ texture = ExtResource("3_f0cuo")
 4:7/0 = 0
 4:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pfres"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mjijm"]
 texture = ExtResource("4_f0cuo")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-2.6978817, -8, -8, 0.17985916, -8, 8, 8, 8, 8, -8, -1.2590103, -8)
@@ -220,10 +220,10 @@ texture = ExtResource("4_f0cuo")
 
 [sub_resource type="TileSet" id="TileSet_eda8h"]
 physics_layer_0/collision_layer = 4
-sources/0 = SubResource("TileSetAtlasSource_emlwg")
-sources/1 = SubResource("TileSetAtlasSource_pfres")
+sources/0 = SubResource("TileSetAtlasSource_cssca")
+sources/1 = SubResource("TileSetAtlasSource_mjijm")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mm8bn"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_37g55"]
 texture = ExtResource("3_f0cuo")
 7:0/0 = 0
 7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -276,7 +276,7 @@ texture = ExtResource("3_f0cuo")
 4:7/0 = 0
 4:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_85few"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vfitw"]
 texture = ExtResource("5_tdccu")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-1.7985878, -8, -8, 0.17985916, -8, 8, 6.834631, 8, 8, 6.834633, 8, -8)
@@ -400,10 +400,10 @@ texture = ExtResource("5_tdccu")
 [sub_resource type="TileSet" id="TileSet_f2dxg"]
 physics_layer_0/collision_layer = 8
 physics_layer_0/collision_mask = 2
-sources/0 = SubResource("TileSetAtlasSource_mm8bn")
-sources/1 = SubResource("TileSetAtlasSource_85few")
+sources/0 = SubResource("TileSetAtlasSource_37g55")
+sources/1 = SubResource("TileSetAtlasSource_vfitw")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qm7fq"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hvxgi"]
 texture = ExtResource("3_f0cuo")
 7:0/0 = 0
 7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -456,7 +456,7 @@ texture = ExtResource("3_f0cuo")
 4:7/0 = 0
 4:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f0cuo"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4qc3j"]
 texture = ExtResource("4_f0cuo")
 7:1/0 = 0
 8:1/0 = 0
@@ -527,8 +527,8 @@ texture = ExtResource("4_f0cuo")
 [sub_resource type="TileSet" id="TileSet_emlwg"]
 physics_layer_0/collision_layer = 16
 physics_layer_0/collision_mask = 3
-sources/0 = SubResource("TileSetAtlasSource_qm7fq")
-sources/2 = SubResource("TileSetAtlasSource_f0cuo")
+sources/0 = SubResource("TileSetAtlasSource_hvxgi")
+sources/2 = SubResource("TileSetAtlasSource_4qc3j")
 
 [sub_resource type="LabelSettings" id="LabelSettings_pq2ya"]
 font = ExtResource("12_jlg8c")

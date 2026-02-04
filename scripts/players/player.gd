@@ -17,11 +17,11 @@ var is_light: bool = false
 # --- Dash & Jump Logic ---
 @onready var dash_state: State = $StateMachine/DashState
 @export var dash_available: bool = true # Ground-reset charge
-@export_group("Dash Settings")
 @export var dash_cooldown: float = 1.0 
 var dash_cooldown_timer: float = 0.0
-
 @export var can_double_jump: bool = true # Track double jump charge
+@export var toggle_cooldown: float = 0.25 # Minimum time between toggles
+var toggle_cooldown_timer: float = 0.0
 
 # --- Camera Shake Settings ---
 @onready var camera: Camera2D = get_viewport().get_camera_2d() 
@@ -58,6 +58,8 @@ var dust_spawn_timer: float = 0.0
 
 func _ready() -> void:
 	state_machine.init(self)
+	is_light = false	
+	PlayerManager.is_light = is_light
 	update_physics_layers()
 	
 	if not hitbox.area_entered.is_connected(_on_melee_weapon_hitbox_area_entered):
@@ -65,7 +67,6 @@ func _ready() -> void:
 	
 	hitbox_shape.set_deferred("disabled", true)
 	PlayerManager.reset_health()
-	PlayerManager.is_light = is_light
 	
 	if PlayerManager.has_signal("player_died"):
 		PlayerManager.player_died.connect(_on_death)
@@ -82,6 +83,7 @@ func _physics_process(delta: float) -> void:
 	if ranged_cooldown_timer > 0: ranged_cooldown_timer -= delta
 	if jump_buffer_timer > 0: jump_buffer_timer -= delta
 	if dash_cooldown_timer > 0: dash_cooldown_timer -= delta
+	if toggle_cooldown_timer > 0: toggle_cooldown_timer -= delta
 	
 	recoil_physics_velocity = recoil_physics_velocity.move_toward(Vector2.ZERO, recoil_friction * delta)
 	
@@ -322,6 +324,71 @@ func update_physics_layers() -> void:
 		set_collision_layer_value(1, true) 
 		set_collision_mask_value(3, true) 
 		set_collision_mask_value(5, true)
+	
+	resolve_collision_overlap()
+
+func resolve_collision_overlap() -> void:
+	if not test_move(global_transform, Vector2.ZERO):
+		return
+
+	var original_pos = global_position
+	var max_search_range : int = 16*100
+	
+	# Bitmask for Layer 5 (Neutral Objects) is 16
+	var neutral_layer_mask : int = 16 
+
+	for distance in range(1, max_search_range + 1):
+		var directions = [
+			Vector2.UP * distance,
+			Vector2.DOWN * distance,
+			Vector2.LEFT * distance,
+			Vector2.RIGHT * distance
+		]
+		
+		for offset in directions:
+			var target_pos = original_pos + offset
+			
+			# 1. Check if the target spot is physically empty
+			global_position = target_pos
+			if not test_move(global_transform, Vector2.ZERO):
+				
+				# 2. VALIDATION: Check if we passed through a Neutral layer to get here
+				# We use a shape_collide or a simple line check back to the start
+				if not _is_neutral_blocking_path(original_pos, target_pos, neutral_layer_mask):
+					# SUCCESS: Spot is empty AND we didn't phase through Neutral ground
+					animate_collision_snap(original_pos - global_position)
+					return
+	
+	# If no legal spots found, revert
+	global_position = original_pos
+	print(">>> COLLISION ERROR: No legal escape found (Neutral layers blocked path).")
+
+func _is_neutral_blocking_path(start: Vector2, end: Vector2, mask: int) -> bool:
+	# Create a temporary raycast query 
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsRayQueryParameters2D.create(start, end, mask)
+	query.collide_with_areas = false # We only care about tilemap physics
+	
+	var result = space_state.intersect_ray(query)
+	
+	# If the result is NOT empty, we hit a Neutral wall/floor
+	return not result.is_empty()
+
+func animate_collision_snap(offset: Vector2) -> void:
+	# 1. Immediately offset the sprite so it looks like it stayed in the wall
+	animated_sprite.offset = offset
+	
+	# 2. Create a fast, punchy tween to slide the sprite back to center
+	var tween = create_tween()
+	tween.tween_property(animated_sprite, "offset", Vector2.ZERO, 0.5)\
+		.set_trans(Tween.TRANS_CUBIC)\
+		.set_ease(Tween.EASE_OUT)
+	
+	# 3. Optional: Add a small scale "squeeze" to make it feel like they popped out
+	animated_sprite.scale = Vector2(1.2, 0.8) # Squash
+	tween.parallel().tween_property(animated_sprite, "scale", Vector2.ONE, 0.5)\
+		.set_trans(Tween.TRANS_ELASTIC)\
+		.set_ease(Tween.EASE_OUT)
 
 func play_animation(anim_base_name: String) -> void:
 	var final_base_name = anim_base_name
@@ -380,7 +447,11 @@ func _on_death() -> void:
 	AudioManager.play_omni("PlayerDeath"); apply_shake(0.25)
 
 func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("skill1"): toggle_element_state()
+	if Input.is_action_just_pressed("skill1"): 
+		if toggle_cooldown_timer <= 0:
+			toggle_element_state()
+			toggle_cooldown_timer = toggle_cooldown
+			
 	state_machine.process_input(event)
 
 func get_speed() -> float: return PlayerManager.get_speed()

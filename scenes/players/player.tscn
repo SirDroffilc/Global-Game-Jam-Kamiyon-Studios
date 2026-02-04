@@ -858,6 +858,15 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wb5ey"]
 size = Vector2(35, 35)
 
+[sub_resource type="Gradient" id="Gradient_vjh8g"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_f1232"]
+gradient = SubResource("Gradient_vjh8g")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
 [sub_resource type="Animation" id="Animation_yl2j2"]
 length = 0.001
 tracks/0/type = "value"
@@ -1098,27 +1107,18 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yl2j2"]
 size = Vector2(13, 22)
 
-[sub_resource type="Gradient" id="Gradient_vjh8g"]
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_f1232"]
-gradient = SubResource("Gradient_vjh8g")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.5, 0)
-
 [node name="Player" type="CharacterBody2D" unique_id=395045780 groups=["Player"]]
-collision_layer = 2
-collision_mask = 24
+collision_mask = 20
 script = ExtResource("1_6wyko")
-dash_cooldown = 2.5
+dash_cooldown = 1.5
+toggle_cooldown = 0.1
 dust_interval = 1.0
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1496140655]
 self_modulate = Color(0.69099766, 0.69099766, 0.69099766, 1)
-position = Vector2(-1, -16)
+position = Vector2(-1, -5)
 sprite_frames = SubResource("SpriteFrames_m713k")
-animation = &"attack_light"
+animation = &"idle_dark"
 
 [node name="MeleeWeaponHitbox" type="Area2D" parent="AnimatedSprite" unique_id=872769681]
 collision_layer = 0
@@ -1128,16 +1128,22 @@ collision_mask = 32
 position = Vector2(3, 2.75)
 shape = SubResource("RectangleShape2D_wb5ey")
 disabled = true
-debug_color = Color(0.94861215, 0.14732769, 0.44364715, 0.41960785)
+debug_color = Color(0.9143835, 0.1259569, 0.4225813, 0.41960785)
 
 [node name="ArrowStartPosition" type="Marker2D" parent="AnimatedSprite" unique_id=131331387]
 position = Vector2(17, 1)
+
+[node name="PointLight2D" type="PointLight2D" parent="AnimatedSprite" unique_id=2100532177]
+position = Vector2(1, 5)
+energy = 2.13
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_f1232")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1362064814]
 libraries/ = SubResource("AnimationLibrary_fsrjl")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="." unique_id=1288298047]
-position = Vector2(-0.5, -11)
+position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_yl2j2")
 
 [node name="StateMachine" type="Node" parent="." unique_id=1167466857 node_paths=PackedStringArray("initial_state")]
@@ -1201,11 +1207,5 @@ animation_name = "shoot"
 
 [node name="DeathState" type="Node" parent="StateMachine" unique_id=482105472]
 script = ExtResource("16_f1232")
-
-[node name="PointLight2D" type="PointLight2D" parent="." unique_id=2100532177]
-position = Vector2(0, -8)
-energy = 2.13
-shadow_enabled = true
-texture = SubResource("GradientTexture2D_f1232")
 
 [connection signal="area_entered" from="AnimatedSprite/MeleeWeaponHitbox" to="." method="_on_melee_weapon_hitbox_area_entered"]
