@@ -84,7 +84,7 @@ func _on_player_respawn() -> void:
 func _move_player_to_checkpoint() -> void:
 	player._on_death() 
 	
-	await player.animated_sprite.animation_finished
+	await get_tree().create_timer(1.0).timeout
 	
 	PlayerManager.reset_health()
 	player.global_position = latest_checkpoint_pos

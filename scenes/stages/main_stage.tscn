@@ -637,7 +637,7 @@ tile_set = SubResource("TileSet_ddfno")
 
 [node name="Player" parent="." unique_id=395045780 instance=ExtResource("4_1kogc")]
 unique_name_in_owner = true
-position = Vector2(1990.9441, -70.03198)
+position = Vector2(14174, -634)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=977550880]
 position = Vector2(0, -40)
@@ -662,7 +662,7 @@ position = Vector2(2761, 8)
 [node name="Boss" type="Node2D" parent="EnemiesContainer" unique_id=367643303]
 
 [node name="Enemy4" parent="EnemiesContainer/Boss" unique_id=709967196 instance=ExtResource("8_yim3f")]
-position = Vector2(13013, -579)
+position = Vector2(14418, -628)
 
 [node name="Minions" type="Node2D" parent="EnemiesContainer" unique_id=387304641]
 

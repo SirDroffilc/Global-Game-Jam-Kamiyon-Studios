@@ -92,15 +92,12 @@ func _physics_process(delta: float) -> void:
 			light_timer = 0
 			print(">>> LIGHT EXHAUSTED: Forcing Dark State")
 			toggle_element_state() # Forcibly switch back
-		else:
-			print("Light Time Remaining: ", snapped(light_timer, 0.1))
 	else:
 		# Recharge logic while in Dark state
 		if light_timer < max_light_time:
 			light_timer += delta * recharge_rate
 			light_timer = min(light_timer, max_light_time)
-			print("Light Recharging: ", snapped(light_timer, 0.1))
-	
+			
 	# 1. Decay Timers
 	if ranged_cooldown_timer > 0: ranged_cooldown_timer -= delta
 	if jump_buffer_timer > 0: jump_buffer_timer -= delta
