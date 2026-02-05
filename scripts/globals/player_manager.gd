@@ -12,8 +12,7 @@ var current_health: int = 100:
 	set(value):
 		current_health = clamp(value, 0, base_health)
 		health_changed.emit(current_health)
-		if current_health <= 0:
-			player_died.emit()
+		
 
 var base_damage: int = 10
 var speed: float = 150.0
@@ -21,6 +20,7 @@ var jump_velocity: float = -300.0
 var consumption_timer_cooldown: float = 10.0
 var is_light := true
 var shards_count := 0
+var is_dying: bool = false
 
 # --- Getters ---
 func get_speed() -> float:
@@ -37,8 +37,15 @@ func get_health() -> int:
 
 # --- Setters & Logic ---
 func subtract_health(amount: int) -> void:
+	if is_dying:
+		return
+		
 	current_health -= amount
-
+	
+	if current_health <= 0:
+		player_died.emit()
+		is_dying = true
+	
 func add_health(amount: int) -> void:
 	current_health += amount
 
@@ -51,8 +58,8 @@ func set_jump_velocity(new_velocity: float) -> void:
 func set_is_light(state: bool) -> void:
 	is_light = state
 
-# Inside PlayerManager.gd
 func reset_health() -> void:
 	current_health = base_health
+	is_dying = false
 	print(">>> PlayerManager: Health reset to ", current_health)
 	

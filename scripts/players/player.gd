@@ -284,6 +284,10 @@ func _apply_recoil(direction: Vector2) -> void:
 	recoil_tween.tween_property(animated_sprite, "offset", Vector2.ZERO, recoil_duration).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 func take_damage(amount: int) -> void:
+	
+	if PlayerManager.current_health <= 0 or (state_machine.current_state and state_machine.current_state.name == "DeathState"):
+		return
+		
 	PlayerManager.subtract_health(amount)
 	AudioManager.play_omni("PlayerHurt")
 	flash_hurt()
@@ -475,6 +479,7 @@ func _on_death() -> void:
 	if state_machine.current_state and state_machine.current_state.name != "DeathState":
 		state_machine.change_state($StateMachine/DeathState)
 	AudioManager.play_omni("PlayerDeath"); apply_shake(0.25)
+	print("player died")
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("skill1"): 

@@ -176,6 +176,7 @@ func spawn_attack_indicator() -> void:
 func spawn_ghost() -> void:
 	var ghost = Sprite2D.new()
 	get_tree().current_scene.add_child(ghost)
+	ghost.add_to_group("Ghosts")
 	ghost.texture = animated_sprite.sprite_frames.get_frame_texture(animated_sprite.animation, animated_sprite.frame)
 	ghost.global_position = global_position
 	ghost.flip_h = animated_sprite.flip_h
@@ -271,6 +272,8 @@ func _phase_3_summon() -> void:
 func die() -> void:
 	is_dying = true
 	attack_timer.stop()
+	for ghost in get_tree().get_nodes_in_group("Ghosts"):
+		ghost.queue_free()
 	# Ensure AnimatedSprite is stopped so AnimationPlayer can play 'death' cleanly
 	animated_sprite.stop()
 	if animation_player.is_playing():
@@ -296,7 +299,7 @@ func _face_player() -> void:
 		attack2_hitbox.scale.x = 1 if not side else -1
 		$CollisionShape2D.position.x = 48.0 if not side else -48.0
 		$Hurtbox.position.x = 48.0 if not side else -48.0
-		enemy_health_bar.position.x = 0 if not side else -99.0
+		enemy_health_bar.position.x = 0.0 if not side else -99.0
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	if not is_active:

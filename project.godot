@@ -45,6 +45,7 @@ mouse_cursor/custom_image="uid://b6tpcim7j1s3c"
 Checkpoints=""
 Player=""
 Enemy=""
+Ghosts=""
 
 [input]
 
