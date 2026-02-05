@@ -1111,8 +1111,6 @@ size = Vector2(13, 22)
 [node name="Player" type="CharacterBody2D" unique_id=395045780 groups=["Player"]]
 collision_mask = 20
 script = ExtResource("1_6wyko")
-dash_cooldown = 1.5
-toggle_cooldown = 0.1
 dust_interval = 1.0
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1496140655]

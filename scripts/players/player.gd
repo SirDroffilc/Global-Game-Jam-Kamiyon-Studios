@@ -17,11 +17,17 @@ var is_light: bool = false
 # --- Dash & Jump Logic ---
 @onready var dash_state: State = $StateMachine/DashState
 @export var dash_available: bool = true # Ground-reset charge
-@export var dash_cooldown: float = 1.0 
+@export var dash_cooldown: float = 1.5 
 var dash_cooldown_timer: float = 0.0
 @export var can_double_jump: bool = true # Track double jump charge
-@export var toggle_cooldown: float = 0.25 # Minimum time between toggles
+@export var toggle_cooldown: float = 0.1 # Minimum time between toggles
 var toggle_cooldown_timer: float = 0.0
+
+# --- Light State Timer Settings ---
+@export var max_light_time: float = 5.0
+@export var min_light_time: float = max_light_time / 2.0
+@export var light_timer: float = 5.0
+@export var recharge_rate: float = 1.0
 
 # --- Camera Shake Settings ---
 @onready var camera: Camera2D = get_viewport().get_camera_2d() 
@@ -79,6 +85,22 @@ func _process(delta: float) -> void:
 		camera.offset = Vector2.ZERO
 
 func _physics_process(delta: float) -> void:
+	# --- Light State Timer Logic ---
+	if is_light:
+		light_timer -= delta
+		if light_timer <= 0:
+			light_timer = 0
+			print(">>> LIGHT EXHAUSTED: Forcing Dark State")
+			toggle_element_state() # Forcibly switch back
+		else:
+			print("Light Time Remaining: ", snapped(light_timer, 0.1))
+	else:
+		# Recharge logic while in Dark state
+		if light_timer < max_light_time:
+			light_timer += delta * recharge_rate
+			light_timer = min(light_timer, max_light_time)
+			print("Light Recharging: ", snapped(light_timer, 0.1))
+	
 	# 1. Decay Timers
 	if ranged_cooldown_timer > 0: ranged_cooldown_timer -= delta
 	if jump_buffer_timer > 0: jump_buffer_timer -= delta
@@ -484,6 +506,11 @@ func _on_death() -> void:
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("skill1"): 
 		if toggle_cooldown_timer <= 0:
+			# Check if we are trying to turn on Light but have no energy
+			if not is_light and light_timer <= min_light_time:
+				print(">>> Cannot switch: Light state not charged!")
+				return
+				
 			toggle_element_state()
 			toggle_cooldown_timer = toggle_cooldown
 			

@@ -531,6 +531,17 @@ font_size = 32
 outline_size = 5
 outline_color = Color(0.033853278, 0.033853278, 0.033853274, 1)
 
+[sub_resource type="Gradient" id="Gradient_kj377"]
+offsets = PackedFloat32Array(0, 0.60580915, 0.6120332, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ddfno"]
+gradient = SubResource("Gradient_kj377")
+width = 175
+height = 175
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ddfno"]
 texture = ExtResource("1_s2q2r")
 7:0/0 = 0
@@ -626,7 +637,7 @@ tile_set = SubResource("TileSet_ddfno")
 
 [node name="Player" parent="." unique_id=395045780 instance=ExtResource("4_1kogc")]
 unique_name_in_owner = true
-position = Vector2(9105.1875, -117.451355)
+position = Vector2(1990.9441, -70.03198)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=977550880]
 position = Vector2(0, -40)
@@ -728,13 +739,24 @@ text = "0"
 label_settings = SubResource("LabelSettings_coyrc")
 vertical_alignment = 1
 
+[node name="MaskedStateCooldown" type="TextureProgressBar" parent="HUD" unique_id=1399719279]
+texture_filter = 2
+offset_left = 41.0
+offset_top = 34.0
+offset_right = 241.0
+offset_bottom = 234.0
+step = 0.01
+value = 58.02
+fill_mode = 5
+texture_progress = SubResource("GradientTexture2D_ddfno")
+
 [node name="Spawners" type="Node2D" parent="." unique_id=533077149]
 
 [node name="AreaSpawner" type="Node2D" parent="Spawners" unique_id=27443440]
 script = ExtResource("14_kj377")
 
 [node name="SpawnPoint1" type="Marker2D" parent="Spawners/AreaSpawner" unique_id=44128389]
-position = Vector2(9210, -121)
+position = Vector2(9157, -65)
 
 [node name="Door" type="TileMapLayer" parent="Spawners/AreaSpawner" unique_id=1877729065]
 modulate = Color(0, 0, 0, 1)

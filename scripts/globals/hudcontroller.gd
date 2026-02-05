@@ -3,6 +3,8 @@ extends CanvasLayer
 # --- UI References ---
 @onready var mask_hud: TextureRect = $MaskHUD
 @onready var health_bar: ProgressBar = $HealthBar # Ensure this name matches your scene node
+@onready var masked_state_cooldown: TextureProgressBar = $MaskedStateCooldown
+@onready var player: Player = %Player
 var shards_count: Label
 
 # --- Textures ---
@@ -21,7 +23,6 @@ func _ready() -> void:
 		health_bar.value = PlayerManager.current_health
 	
 	# 2. Connect to the Player's state signals
-	var player = get_tree().get_first_node_in_group("Player")
 	if player:
 		# If the signal is already connected (re-loading), disconnect first to avoid duplicates
 		if player.element_toggled.is_connected(_on_player_element_toggled):
@@ -40,7 +41,23 @@ func _ready() -> void:
 		PlayerManager.shards_count_changed.disconnect(_on_shards_count_changed)
 	PlayerManager.shards_count_changed.connect(_on_shards_count_changed)
 	
+	if player and masked_state_cooldown:
+		masked_state_cooldown.max_value = player.max_light_time
+		masked_state_cooldown.value = player.light_timer
 
+func _process(_delta: float) -> void:
+	if not player or not masked_state_cooldown: return
+
+	if player.is_light:
+		masked_state_cooldown.modulate = Color(1.0, 1.0, 1.0, 0.2) 
+	else:
+		if player.light_timer < player.min_light_time:
+			masked_state_cooldown.modulate = Color(0.0, 0.0, 0.0, 0.5) 
+		else:
+			masked_state_cooldown.modulate = Color(0, 0, 0, 0.2)
+
+	masked_state_cooldown.value = player.light_timer
+		
 func _on_shards_count_changed():
 	if shards_count:
 		shards_count.text = str(PlayerManager.shards_count)
