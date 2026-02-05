@@ -953,7 +953,7 @@ tracks/2/path = NodePath("AnimatedSprite/MeleeWeaponHitbox/CollisionShape2D:disa
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.35),
+"times": PackedFloat32Array(0, 0.1, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -1022,7 +1022,7 @@ tracks/2/path = NodePath("AnimatedSprite/MeleeWeaponHitbox/CollisionShape2D:disa
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.35),
+"times": PackedFloat32Array(0, 0.1, 0.25),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
@@ -1079,7 +1079,7 @@ tracks/2/path = NodePath("AnimatedSprite/MeleeWeaponHitbox/CollisionShape2D:disa
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.35, 0.6),
+"times": PackedFloat32Array(0, 0.35, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]

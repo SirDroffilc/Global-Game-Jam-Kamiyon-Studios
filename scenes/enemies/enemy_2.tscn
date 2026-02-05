@@ -199,7 +199,7 @@ radius = 16.03122
 
 [node name="Enemy2" type="CharacterBody2D" unique_id=1993727070 groups=["Enemy"]]
 collision_layer = 64
-collision_mask = 28
+collision_mask = 16
 script = ExtResource("1_ngklj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1045226317]

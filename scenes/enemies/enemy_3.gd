@@ -54,7 +54,7 @@ func _ready() -> void:
 	enemy_health_bar.value = base_health
 	enemy_health_bar.visible = false
 	
-	retreat_speed = randf_range(50.0, 200.0)
+	retreat_speed = randf_range(50.0, 300.0)
 
 func _physics_process(delta: float) -> void:
 	if is_dying: 
