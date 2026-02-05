@@ -4,8 +4,8 @@ extends CharacterBody2D
 @export var base_health: int = 30
 @export var damage: int = 7
 @export var fly_speed: float = 120.0 
-@export var stopping_distance_x: float = 200.0 # Renamed for clarity
-@export var stopping_distance_y: float = -100.0 # New vertical buffer
+@export var stopping_distance_x: float = 200.0 
+@export var stopping_distance_y: float = -100.0 
 @onready var current_health: int = base_health
 
 # --- Loot Attribute (Heal) ---
@@ -45,6 +45,9 @@ func _ready() -> void:
 	enemy_health_bar.max_value = base_health
 	enemy_health_bar.value = base_health
 	enemy_health_bar.visible = false
+	
+	stopping_distance_x = randf_range(200.0, 300.0)
+	stopping_distance_y = randf_range(-100.0, -150.0)
 
 func _physics_process(delta: float) -> void:
 	if is_dying:

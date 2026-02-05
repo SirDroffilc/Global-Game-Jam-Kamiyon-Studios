@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://b0hdtfkmgh1l4" path="res://assets/spritesheets/Health - Polygon.png" id="11_kj377"]
 [ext_resource type="Texture2D" uid="uid://eshmj7gnx4hy" path="res://assets/User Interface/Memories.png" id="12_ddfno"]
 [ext_resource type="FontFile" uid="uid://bphsesp23w8gl" path="res://assets/Font/ferrum.otf" id="13_2ctka"]
+[ext_resource type="Script" uid="uid://bkfvtreajje7j" path="res://scenes/stages/area_spawner.gd" id="14_kj377"]
 [ext_resource type="Script" uid="uid://uefmyhr6uyu0" path="res://scenes/stages/enemy_4_spawner.gd" id="14_mheb4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sp882"]
@@ -530,6 +531,63 @@ font_size = 32
 outline_size = 5
 outline_color = Color(0.033853278, 0.033853278, 0.033853274, 1)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ddfno"]
+texture = ExtResource("1_s2q2r")
+7:0/0 = 0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:2/0 = 0
+7:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:3/0 = 0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:3/0 = 0
+5:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:3/0 = 0
+6:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:3/0 = 0
+7:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:4/0 = 0
+1:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:4/0 = 0
+2:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:4/0 = 0
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:5/0 = 0
+1:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:5/0 = 0
+2:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:5/0 = 0
+3:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:5/0 = 0
+4:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:6/0 = 0
+0:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:6/0 = 0
+1:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:6/0 = 0
+2:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:6/0 = 0
+3:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:6/0 = 0
+4:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:7/0 = 0
+0:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:7/0 = 0
+1:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:7/0 = 0
+3:7/0 = 0
+3:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:7/0 = 0
+4:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_2ctka"]
+physics_layer_0/collision_layer = 16
+physics_layer_0/collision_mask = 67
+sources/0 = SubResource("TileSetAtlasSource_ddfno")
+
 [node name="MainStage" type="Node2D" unique_id=648846227]
 script = ExtResource("1_djkgi")
 
@@ -568,7 +626,7 @@ tile_set = SubResource("TileSet_ddfno")
 
 [node name="Player" parent="." unique_id=395045780 instance=ExtResource("4_1kogc")]
 unique_name_in_owner = true
-position = Vector2(13234.475, -556.5571)
+position = Vector2(9105.1875, -117.451355)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=977550880]
 position = Vector2(0, -40)
@@ -596,6 +654,10 @@ position = Vector2(2761, 8)
 position = Vector2(13013, -579)
 
 [node name="Minions" type="Node2D" parent="EnemiesContainer" unique_id=387304641]
+
+[node name="WildEnemies" type="Node2D" parent="EnemiesContainer" unique_id=275716024]
+
+[node name="DangerAreaEnemies" type="Node2D" parent="EnemiesContainer" unique_id=890875692]
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=2110781961]
 script = ExtResource("9_yim3f")
@@ -669,6 +731,16 @@ vertical_alignment = 1
 [node name="Spawners" type="Node2D" parent="." unique_id=533077149]
 
 [node name="AreaSpawner" type="Node2D" parent="Spawners" unique_id=27443440]
+script = ExtResource("14_kj377")
+
+[node name="SpawnPoint1" type="Marker2D" parent="Spawners/AreaSpawner" unique_id=44128389]
+position = Vector2(9210, -121)
+
+[node name="Door" type="TileMapLayer" parent="Spawners/AreaSpawner" unique_id=1877729065]
+modulate = Color(0, 0, 0, 1)
+light_mask = 0
+tile_map_data = PackedByteArray("AABnAv//AAAHAAIAAABnAv7/AAAHAAIAAABnAv3/AAAHAAIAAABnAvz/AAAHAAIAAABoAv//AAAHAAIAADBoAv7/AAAHAAIAADBoAv3/AAAHAAIAADBoAvz/AAAHAAIAADA=")
+tile_set = SubResource("TileSet_2ctka")
 
 [node name="BossSpawner" type="Node2D" parent="Spawners" unique_id=244331134]
 script = ExtResource("14_mheb4")

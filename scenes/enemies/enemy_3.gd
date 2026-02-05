@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var walk_speed: float = 100.0 # Speed for the new chase behavior
 @export var dash_speed: float = 800.0 
 @export var retreat_speed: float = 100.0 
-@export var stopping_distance: float = 150.0 # Distance to stop walking and wait for dash
+@export var stopping_distance: float = 50.0 
 @export var dash_stop_distance: float = 10.0 
 @onready var current_health: int = base_health
 
@@ -53,6 +53,8 @@ func _ready() -> void:
 	enemy_health_bar.max_value = base_health
 	enemy_health_bar.value = base_health
 	enemy_health_bar.visible = false
+	
+	retreat_speed = randf_range(50.0, 200.0)
 
 func _physics_process(delta: float) -> void:
 	if is_dying: 

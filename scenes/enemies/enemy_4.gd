@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var base_health: int = 2000
 @export var damage_basic: int = 10
 @export var damage_dash: int = 20
-@export var move_speed: float = 175.0
+@export var move_speed: float = 150.0
 @export var dash_speed: float = -900.0
 @export var follow_distance: float = 50.0 
 @onready var current_health: int = base_health
@@ -267,6 +267,7 @@ func _phase_3_summon() -> void:
 	attack_pattern_interval = 2.5
 	damage_basic = 20
 	damage_dash = 40
+	move_speed = 200.0
 	print(">>> ENEMY4: Phase 3 Summon Triggered")
 
 func die() -> void:
