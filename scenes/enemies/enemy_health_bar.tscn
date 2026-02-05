@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://dl5dwesl1njvv"]
+
+[sub_resource type="Gradient" id="Gradient_56h7t"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.12955844, 0.12955847, 0.12955844, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0q50b"]
+gradient = SubResource("Gradient_56h7t")
+width = 22
+height = 4
+
+[sub_resource type="Gradient" id="Gradient_2vcb6"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_56h7t"]
+gradient = SubResource("Gradient_2vcb6")
+width = 22
+height = 4
+
+[node name="EnemyHealthBar" type="TextureProgressBar" unique_id=542253447]
+offset_left = -11.0
+offset_top = -2.0
+offset_right = 11.0
+offset_bottom = 2.0
+value = 50.0
+texture_under = SubResource("GradientTexture2D_0q50b")
+texture_progress = SubResource("GradientTexture2D_56h7t")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1939638936]
+layout_mode = 0
+offset_left = 22.0
+offset_right = 23.0
+offset_bottom = 4.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=409541357]
+layout_mode = 0
+offset_right = 22.0
+offset_bottom = 1.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="." unique_id=352267961]
+layout_mode = 0
+offset_top = 3.0
+offset_right = 22.0
+offset_bottom = 4.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="." unique_id=837369698]
+layout_mode = 0
+offset_left = -1.0
+offset_bottom = 4.0
+color = Color(0, 0, 0, 1)

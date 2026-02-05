@@ -16,7 +16,7 @@ extends CharacterBody2D
 var ghost_timer: float = 0.0
 
 # --- Loot Attribute (Heal) ---
-@export var heal_amount: int = 5
+@export var heal_amount: int = 15
 
 # --- State Control ---
 enum EnemyState { IDLE, DASHING, ATTACKING, RETREATING }
@@ -38,15 +38,21 @@ var knockback_velocity: Vector2 = Vector2.ZERO
 @onready var item_drop: Area2D = $ItemDrop
 @onready var item_collision: CollisionShape2D = $ItemDrop/CollisionShape2D
 @onready var attack_hitbox: Area2D = $AttackHitbox
+@onready var enemy_health_bar: TextureProgressBar = $EnemyHealthBar
 
 # --- Lifecycle ---
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("Player")
 	animated_sprite.animation_finished.connect(_on_animation_finished)
+	
 	item_drop.body_entered.connect(_on_item_drop_body_entered)
 	item_drop.visible = false
 	item_collision.disabled = true
+	
+	enemy_health_bar.max_value = base_health
+	enemy_health_bar.value = base_health
+	enemy_health_bar.visible = false
 
 func _physics_process(delta: float) -> void:
 	if is_dying: 
@@ -197,8 +203,15 @@ func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 			body.take_damage(damage)
 
 func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
-	if is_dying: return
+	if is_dying: 
+		return
+	
 	current_health -= amount
+	
+	if not enemy_health_bar.visible:
+		enemy_health_bar.visible = true
+	enemy_health_bar.value = current_health
+	
 	flash_hurt()
 	AudioManager.play_omni("EnemyHurt")
 	spawn_hit_particles(global_position, Color.DIM_GRAY)
@@ -215,12 +228,14 @@ func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
 func die() -> void:
 	is_dying = true
 	is_active = false
-	animation_player.stop()
-	velocity.x = 0 # Meticulous: Stop X movement but let gravity (updated in physics_process) take over
+	enemy_health_bar.visible = false
+	velocity = Vector2.ZERO 
+	
+	# Meticulous: Clear physics layers so player can overlap with loot
 	collision_layer = 0
-	collision_mask = 1 # Keep mask 1 so it hits the floor while falling
-	attack_hitbox.monitoring = false
-	if has_node("Hurtbox"): $Hurtbox.queue_free()
+	#collision_mask = 0
+	$Hurtbox.queue_free()
+	
 	AudioManager.play_omni("EnemyDeath")
 	animated_sprite.play("death")
 

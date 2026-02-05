@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://d1dt4aljs8y65" path="res://scenes/enemies/enemy_1.gd" id="1_lsxte"]
 [ext_resource type="Texture2D" uid="uid://dmy1qxnknm25a" path="res://assets/spritesheets/vloop_spritesheet.png" id="2_lsxte"]
 [ext_resource type="PackedScene" uid="uid://dfvini2qe6hw2" path="res://scenes/enemies/item_drop.tscn" id="3_jv4hc"]
+[ext_resource type="PackedScene" uid="uid://dl5dwesl1njvv" path="res://scenes/enemies/enemy_health_bar.tscn" id="4_j430y"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jv4hc"]
 atlas = ExtResource("2_lsxte")
@@ -302,6 +303,10 @@ shape = SubResource("RectangleShape2D_jv4hc")
 debug_color = Color(0.1734401, 0.64378947, 3.85046e-07, 0.41960785)
 
 [node name="ItemDrop" parent="." unique_id=1504413500 instance=ExtResource("3_jv4hc")]
+
+[node name="EnemyHealthBar" parent="." unique_id=542253447 instance=ExtResource("4_j430y")]
+offset_top = -20.0
+offset_bottom = -16.0
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier" to="." method="_on_visible_on_screen_notifier_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier" to="." method="_on_visible_on_screen_notifier_screen_exited"]

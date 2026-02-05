@@ -319,7 +319,7 @@ size = Vector2(60, 51.5)
 size = Vector2(92, 107.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ccm5a"]
-size = Vector2(92, 108)
+size = Vector2(123, 108)
 
 [sub_resource type="Animation" id="Animation_o3t5y"]
 length = 0.001
@@ -493,6 +493,24 @@ _data = {
 &"attack2_sequence": SubResource("Animation_sltgn")
 }
 
+[sub_resource type="Gradient" id="Gradient_o3t5y"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.12941177, 0.12941177, 0.12941177, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_a5fj6"]
+gradient = SubResource("Gradient_o3t5y")
+width = 99
+height = 6
+
+[sub_resource type="Gradient" id="Gradient_sltgn"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gyqao"]
+gradient = SubResource("Gradient_sltgn")
+width = 99
+height = 6
+
 [node name="Enemy4" type="CharacterBody2D" unique_id=709967196 groups=["Enemy"]]
 collision_layer = 64
 collision_mask = 28
@@ -532,16 +550,54 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=575627259]
 shape = SubResource("RectangleShape2D_ccm5a")
+debug_color = Color(0.75873655, 0.18444246, 0.99999994, 0.41960785)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=756189761]
-position = Vector2(3, -27)
-rect = Rect2(-89, -5, 173, 100)
+position = Vector2(0, -27)
+rect = Rect2(-104, -5, 204, 100)
 
 [node name="AttackTimer" type="Timer" parent="." unique_id=1504082857]
-wait_time = 4.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=38296206]
 libraries/ = SubResource("AnimationLibrary_gyqao")
+
+[node name="EnemyHealthBar" type="TextureProgressBar" parent="." unique_id=542253447]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = -40.0
+offset_right = 99.0
+offset_bottom = -34.0
+grow_horizontal = 2
+value = 50.0
+texture_under = SubResource("GradientTexture2D_a5fj6")
+texture_progress = SubResource("GradientTexture2D_gyqao")
+
+[node name="ColorRect" type="ColorRect" parent="EnemyHealthBar" unique_id=1939638936]
+layout_mode = 0
+offset_top = -1.0
+offset_right = 99.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="EnemyHealthBar" unique_id=409541357]
+layout_mode = 0
+offset_left = 98.0
+offset_right = 99.0
+offset_bottom = 6.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="EnemyHealthBar" unique_id=352267961]
+layout_mode = 0
+offset_top = 6.0
+offset_right = 99.0
+offset_bottom = 7.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="EnemyHealthBar" unique_id=837369698]
+layout_mode = 0
+offset_right = 1.0
+offset_bottom = 6.0
+color = Color(0, 0, 0, 1)
 
 [connection signal="body_entered" from="AnimatedSprite2D/Attack1Hitbox" to="." method="_on_attack_1_hitbox_body_entered"]
 [connection signal="body_entered" from="AnimatedSprite2D/Attack2Hitbox" to="." method="_on_attack_2_hitbox_body_entered"]

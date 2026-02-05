@@ -7,7 +7,6 @@ extends State
 func enter() -> void:
 	parent.play_animation("shoot")
 	parent.shoot_arrow()
-	print(">>> COMBAT: Shoot")
 	# REMOVED: Signal connections are gone. We handle this in physics now.
 
 func process_physics(delta: float) -> State:

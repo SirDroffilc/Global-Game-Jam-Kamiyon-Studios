@@ -1,11 +1,11 @@
 extends CharacterBody2D
 
 # --- Attributes ---
-@export var base_health: int = 1000
+@export var base_health: int = 2000
 @export var damage_basic: int = 10
 @export var damage_dash: int = 20
-@export var move_speed: float = 150.0
-@export var dash_speed: float = -850.0
+@export var move_speed: float = 175.0
+@export var dash_speed: float = -900.0
 @export var follow_distance: float = 50.0 
 @onready var current_health: int = base_health
 
@@ -14,6 +14,7 @@ var attack_step: int = 0
 var is_active: bool = false
 var is_dying: bool = false
 var player: CharacterBody2D = null
+var attack_pattern_interval: float = 4.0
 
 # --- State Control ---
 enum EnemyState { IDLE, MOVING, ATTACKING, DASHING }
@@ -39,14 +40,23 @@ var step_timer: float = 0.0
 @onready var attack_timer: Timer = $AttackTimer
 @onready var attack1_hitbox: Area2D = $AnimatedSprite2D/Attack1Hitbox
 @onready var attack2_hitbox: Area2D = $AnimatedSprite2D/Attack2Hitbox
+@onready var enemy_health_bar: TextureProgressBar = $EnemyHealthBar
+
+# --- Summon Logic ---
+signal summon(enemy_scene, enemy_count, interval, pos)
+@export var summon_enemy1_scene: PackedScene = preload("res://scenes/enemies/enemy_1.tscn")
+@export var summon_enemy2_scene: PackedScene = preload("res://scenes/enemies/enemy_2.tscn")
+@export var summon_enemy3_scene: PackedScene = preload("res://scenes/enemies/enemy_3.tscn")
+var _health_phases_reached: Array = [false, false, false] # Tracks 75%, 50%, 25%
 
 # --- Lifecycle ---
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("Player")
-	# Start with hitboxes disabled for safety
-	#attack1_hitbox.set_deferred("monitoring", false)
-	#attack2_hitbox.set_deferred("monitoring", false)
+	
+	enemy_health_bar.max_value = base_health
+	enemy_health_bar.value = base_health
+	enemy_health_bar.visible = false
 
 func _physics_process(delta: float) -> void:
 	if is_dying: return 
@@ -124,12 +134,12 @@ func execute_pattern_step() -> void:
 			animated_sprite.stop()
 			animation_player.play("attack2_sequence")
 			attack_step = 0 
-			attack_timer.start(4.0)
+			attack_timer.start(attack_pattern_interval)
 
 # --- Animation Call Methods (From AnimationPlayer) ---
 
 func start_dash_attack() -> void:
-	#AudioManager.play_omni("EnemyDash")
+	AudioManager.play_omni("EnemyDash")
 	current_state = EnemyState.DASHING
 	ghost_timer = 0
 
@@ -196,10 +206,19 @@ func _on_attack_2_hitbox_body_entered(body: Node2D) -> void:
 		print("dash damage")
 
 func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
-	if is_dying: return
+	if is_dying: 
+		return
+	
 	current_health -= amount
+	
+	if not enemy_health_bar.visible:
+		enemy_health_bar.visible = true
+	enemy_health_bar.value = current_health
+	
 	_flash_hurt()
 	AudioManager.play_omni("EnemyHurt")
+	
+	_check_health_phases()
 	
 	if attacker_pos != Vector2.ZERO:
 		var knockback_dir = (global_position - attacker_pos).normalized()
@@ -208,11 +227,56 @@ func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
 	if current_health <= 0:
 		die()
 
+func _check_health_phases() -> void:
+	var health_percent = (float(current_health) / float(base_health)) * 100.0
+	
+	if health_percent <= 75.0 and not _health_phases_reached[0]:
+		_phase_1_summon()
+	elif health_percent <= 50.0 and not _health_phases_reached[1]:
+		_phase_2_summon()
+	elif health_percent <= 25.0 and not _health_phases_reached[2]:
+		_phase_3_summon()
+
+func _get_spawn_pos() -> Vector2:
+	var direction = 1 if not animated_sprite.flip_h else -1
+	return global_position + Vector2(80 * direction, 0)
+
+func _phase_1_summon() -> void:
+	_health_phases_reached[0] = true
+	# Phase 1 specific logic here (e.g., camera shake, specific SFX)
+	summon.emit(summon_enemy1_scene, 5, 1.0, _get_spawn_pos())
+	print(">>> ENEMY4: Phase 1 Summon Triggered")
+
+func _phase_2_summon() -> void:
+	_health_phases_reached[1] = true
+	# Phase 2 specific logic here
+	summon.emit(summon_enemy1_scene, 3, 1.0, _get_spawn_pos())
+	summon.emit(summon_enemy2_scene, 5, 1.5, _get_spawn_pos())
+	attack_pattern_interval = 3.0
+	damage_basic = 15
+	damage_dash = 25
+	print(">>> ENEMY4: Phase 2 Summon Triggered")
+
+func _phase_3_summon() -> void:
+	_health_phases_reached[2] = true
+	# Phase 3 specific logic here
+	summon.emit(summon_enemy1_scene, 4, 1.0, _get_spawn_pos())
+	summon.emit(summon_enemy2_scene, 7, 1.5, _get_spawn_pos())
+	summon.emit(summon_enemy3_scene, 5, 2.0, _get_spawn_pos())
+	attack_pattern_interval = 2.5
+	damage_basic = 20
+	damage_dash = 40
+	print(">>> ENEMY4: Phase 3 Summon Triggered")
+
 func die() -> void:
 	is_dying = true
 	attack_timer.stop()
 	# Ensure AnimatedSprite is stopped so AnimationPlayer can play 'death' cleanly
 	animated_sprite.stop()
+	if animation_player.is_playing():
+		animation_player.stop()
+	
+	enemy_health_bar.visible = false
 	$Hurtbox.queue_free()
 	AudioManager.play_omni("EnemyDeath")
 	animated_sprite.play("death")
@@ -232,6 +296,7 @@ func _face_player() -> void:
 		attack2_hitbox.scale.x = 1 if not side else -1
 		$CollisionShape2D.position.x = 48.0 if not side else -48.0
 		$Hurtbox.position.x = 48.0 if not side else -48.0
+		enemy_health_bar.position.x = 0 if not side else -99.0
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	if not is_active:

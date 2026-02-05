@@ -8,11 +8,15 @@
 [ext_resource type="PackedScene" uid="uid://dmh3uptk4uctc" path="res://scenes/stages/fall_zone.tscn" id="6_1kogc"]
 [ext_resource type="PackedScene" uid="uid://gaswrufkubp7" path="res://scenes/stages/checkpoint.tscn" id="7_1kogc"]
 [ext_resource type="PackedScene" uid="uid://c5mexbxxj3gw" path="res://scenes/enemies/enemy_4.tscn" id="8_yim3f"]
+[ext_resource type="PackedScene" uid="uid://cc0fmgwllh68a" path="res://scenes/enemies/enemy_1.tscn" id="9_2ctka"]
 [ext_resource type="Script" uid="uid://bd7lf8v6d8fm7" path="res://scripts/globals/hudcontroller.gd" id="9_yim3f"]
 [ext_resource type="Texture2D" uid="uid://dqtf4avr6746c" path="res://assets/User Interface/Game HUD (Masked).png" id="10_mheb4"]
+[ext_resource type="PackedScene" uid="uid://vtnqa4okpo1m" path="res://scenes/enemies/enemy_2.tscn" id="10_vxyk8"]
 [ext_resource type="Texture2D" uid="uid://b0hdtfkmgh1l4" path="res://assets/spritesheets/Health - Polygon.png" id="11_kj377"]
+[ext_resource type="PackedScene" uid="uid://cspdnx2inlljt" path="res://scenes/enemies/enemy_3.tscn" id="11_mogcp"]
 [ext_resource type="Texture2D" uid="uid://eshmj7gnx4hy" path="res://assets/User Interface/Memories.png" id="12_ddfno"]
 [ext_resource type="FontFile" uid="uid://bphsesp23w8gl" path="res://assets/Font/ferrum.otf" id="13_2ctka"]
+[ext_resource type="Script" uid="uid://uefmyhr6uyu0" path="res://scenes/stages/enemy_4_spawner.gd" id="14_mheb4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sp882"]
 texture = ExtResource("1_s2q2r")
@@ -567,7 +571,7 @@ tile_set = SubResource("TileSet_ddfno")
 
 [node name="Player" parent="." unique_id=395045780 instance=ExtResource("4_1kogc")]
 unique_name_in_owner = true
-position = Vector2(13090.405, -561.72876)
+position = Vector2(13234.475, -556.5571)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=977550880]
 position = Vector2(0, -40)
@@ -577,6 +581,7 @@ position_smoothing_speed = 6.0
 
 [node name="FallZone" parent="." unique_id=963070562 instance=ExtResource("6_1kogc")]
 position = Vector2(7014, 714)
+collision_mask = 67
 
 [node name="Checkpoints" type="Node2D" parent="." unique_id=1964921481]
 
@@ -588,8 +593,21 @@ position = Vector2(2761, 8)
 
 [node name="EnemiesContainer" type="Node2D" parent="." unique_id=395923699]
 
-[node name="Enemy4" parent="EnemiesContainer" unique_id=709967196 instance=ExtResource("8_yim3f")]
+[node name="Boss" type="Node2D" parent="EnemiesContainer" unique_id=367643303]
+
+[node name="Enemy4" parent="EnemiesContainer/Boss" unique_id=709967196 instance=ExtResource("8_yim3f")]
 position = Vector2(13013, -579)
+
+[node name="Minions" type="Node2D" parent="EnemiesContainer" unique_id=387304641]
+
+[node name="Enemy1" parent="EnemiesContainer/Minions" unique_id=977171748 instance=ExtResource("9_2ctka")]
+position = Vector2(9030.454, -175.09084)
+
+[node name="Enemy2" parent="EnemiesContainer/Minions" unique_id=1993727070 instance=ExtResource("10_vxyk8")]
+position = Vector2(9151.363, -204.18175)
+
+[node name="Enemy3" parent="EnemiesContainer/Minions" unique_id=689474609 instance=ExtResource("11_mogcp")]
+position = Vector2(9076.817, -151.45447)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=2110781961]
 script = ExtResource("9_yim3f")
@@ -659,3 +677,10 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "0"
 label_settings = SubResource("LabelSettings_coyrc")
 vertical_alignment = 1
+
+[node name="Spawners" type="Node2D" parent="." unique_id=533077149]
+
+[node name="AreaSpawner" type="Node2D" parent="Spawners" unique_id=27443440]
+
+[node name="BossSpawner" type="Node2D" parent="Spawners" unique_id=244331134]
+script = ExtResource("14_mheb4")

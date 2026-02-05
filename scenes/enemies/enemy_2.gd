@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 # --- Attributes ---
 @export var base_health: int = 30
-@export var damage: int = 10
+@export var damage: int = 7
 @export var fly_speed: float = 120.0 
 @export var stopping_distance_x: float = 200.0 # Renamed for clarity
 @export var stopping_distance_y: float = -100.0 # New vertical buffer
@@ -31,6 +31,7 @@ var knockback_velocity: Vector2 = Vector2.ZERO
 @onready var attack_timer: Timer = $AttackTimer
 @onready var item_drop: ItemDrop = $ItemDrop
 @onready var item_collision: CollisionShape2D = $ItemDrop/CollisionShape2D
+@onready var enemy_health_bar: TextureProgressBar = $EnemyHealthBar
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("Player")
@@ -40,6 +41,10 @@ func _ready() -> void:
 	item_drop.body_entered.connect(_on_item_drop_body_entered)
 	item_drop.visible = false
 	item_collision.disabled = true
+	
+	enemy_health_bar.max_value = base_health
+	enemy_health_bar.value = base_health
+	enemy_health_bar.visible = false
 
 func _physics_process(delta: float) -> void:
 	if is_dying:
@@ -122,8 +127,15 @@ func _on_visible_on_screen_notifier_screen_exited() -> void:
 	attack_timer.stop()
 
 func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
-	if is_dying: return
+	if is_dying: 
+		return
+	
 	current_health -= amount
+
+	if not enemy_health_bar.visible:
+		enemy_health_bar.visible = true
+	enemy_health_bar.value = current_health
+	
 	AudioManager.play_omni("EnemyHurt")
 	flash_hurt()
 	spawn_hit_particles(global_position, Color.DIM_GRAY)
@@ -142,6 +154,7 @@ func die() -> void:
 	is_dying = true
 	is_active = false
 	attack_timer.stop()
+	enemy_health_bar.visible = false
 	
 	velocity.x = 0
 	

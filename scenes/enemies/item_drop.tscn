@@ -43,7 +43,7 @@ animations = [{
 radius = 6.0
 
 [node name="ItemDrop" type="Area2D" unique_id=1504413500]
-collision_layer = 16
+collision_layer = 0
 collision_mask = 3
 script = ExtResource("1_28sr1")
 

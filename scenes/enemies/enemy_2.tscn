@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cyfiumgu2ejwt" path="res://assets/spritesheets/vorp spritesheet.png" id="1_n1waf"]
 [ext_resource type="Script" uid="uid://cqojyquqleapi" path="res://scenes/enemies/enemy_2.gd" id="1_ngklj"]
 [ext_resource type="PackedScene" uid="uid://dfvini2qe6hw2" path="res://scenes/enemies/item_drop.tscn" id="3_ngklj"]
+[ext_resource type="PackedScene" uid="uid://dl5dwesl1njvv" path="res://scenes/enemies/enemy_health_bar.tscn" id="4_4m1wf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8pesh"]
 atlas = ExtResource("1_n1waf")
@@ -231,6 +232,10 @@ position = Vector2(-11, 8)
 
 [node name="ItemDrop" parent="." unique_id=1504413500 instance=ExtResource("3_ngklj")]
 position = Vector2(0, 9)
+
+[node name="EnemyHealthBar" parent="." unique_id=542253447 instance=ExtResource("4_4m1wf")]
+offset_top = -21.0
+offset_bottom = -17.0
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier" to="." method="_on_visible_on_screen_notifier_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier" to="." method="_on_visible_on_screen_notifier_screen_exited"]

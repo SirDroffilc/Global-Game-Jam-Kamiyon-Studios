@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c10faknkq6rb6" path="res://assets/spritesheets/vrute_attack_spritesheet.png" id="1_iqwa4"]
 [ext_resource type="Texture2D" uid="uid://dn7ix7vbypxhm" path="res://assets/spritesheets/vrute spritesheet.png" id="2_ofsh2"]
 [ext_resource type="PackedScene" uid="uid://dfvini2qe6hw2" path="res://scenes/enemies/item_drop.tscn" id="4_28rdh"]
+[ext_resource type="PackedScene" uid="uid://dl5dwesl1njvv" path="res://scenes/enemies/enemy_health_bar.tscn" id="5_4i8vg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_28rdh"]
 atlas = ExtResource("1_iqwa4")
@@ -405,6 +406,10 @@ debug_color = Color(0.9543254, 1.347661e-06, 0.5515211, 0.41960785)
 wait_time = 1.2999999999999998
 
 [node name="ItemDrop" parent="." unique_id=1504413500 instance=ExtResource("4_28rdh")]
+
+[node name="EnemyHealthBar" parent="." unique_id=542253447 instance=ExtResource("5_4i8vg")]
+offset_top = -36.0
+offset_bottom = -32.0
 
 [connection signal="body_entered" from="AttackHitbox" to="." method="_on_attack_hitbox_body_entered"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier" to="." method="_on_visible_on_screen_notifier_screen_entered"]

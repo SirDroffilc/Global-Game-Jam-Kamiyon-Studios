@@ -33,6 +33,7 @@ var knockback_velocity: Vector2 = Vector2.ZERO
 @onready var item_drop: ItemDrop = $ItemDrop
 @onready var item_collision: CollisionShape2D = $ItemDrop/CollisionShape2D
 @onready var attack_timer: Timer = $AttackTimer
+@onready var enemy_health_bar: TextureProgressBar = $EnemyHealthBar
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("Player")
@@ -42,6 +43,10 @@ func _ready() -> void:
 	item_drop.body_entered.connect(_on_item_drop_body_entered)
 	item_drop.visible = false
 	item_collision.disabled = true
+	
+	enemy_health_bar.max_value = base_health
+	enemy_health_bar.value = base_health
+	enemy_health_bar.visible = false
 
 func _physics_process(delta: float) -> void:
 	if is_dying: return 
@@ -127,6 +132,11 @@ func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
 	if is_dying: return
 	
 	current_health -= amount
+	
+	if not enemy_health_bar.visible:
+		enemy_health_bar.visible = true
+	enemy_health_bar.value = current_health
+	
 	AudioManager.play_omni("EnemyHurt")
 	flash_hurt()
 	spawn_hit_particles(global_position, Color.DIM_GRAY)
@@ -147,6 +157,7 @@ func flash_hurt() -> void:
 func die() -> void:
 	is_dying = true
 	is_active = false
+	enemy_health_bar.visible = false
 	velocity = Vector2.ZERO 
 	
 	# Meticulous: Clear physics layers so player can overlap with loot

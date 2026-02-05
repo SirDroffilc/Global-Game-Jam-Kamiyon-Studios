@@ -25,6 +25,7 @@ func _on_animation_finished() -> void:
 		animated_sprite.play("looping")
 
 func _on_area_entered(area: Area2D) -> void:
+	print("Light Arrow Area Entered: ", area)
 	if area.is_in_group("Enemy") or area.get_parent().is_in_group("Enemy"):
 		if area.get_parent().has_method("take_damage"):
 			area.get_parent().take_damage(PlayerManager.get_damage(), global_position)
