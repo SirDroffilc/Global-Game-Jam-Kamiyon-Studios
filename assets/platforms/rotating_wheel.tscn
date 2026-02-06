@@ -63,7 +63,8 @@ _data = {
 [node name="rotating_wheel" type="Node2D" unique_id=1585717802]
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="." unique_id=866261348]
-collision_layer = 4
+collision_layer = 16
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D" unique_id=161869568]
 texture = ExtResource("1_l0li7")
