@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # --- Attributes ---
-@export var base_health: int = 2000
+@export var base_health: int = 1500
 @export var damage_basic: int = 10
 @export var damage_dash: int = 20
 @export var move_speed: float = 150.0
@@ -189,7 +189,7 @@ func execute_pattern3_step() -> void:
 				attack_step = 0
 				attack_timer.start(attack_pattern_interval) # End of full pattern
 			else:
-				attack_timer.start(1.5) # Rapid follow-up dash
+				attack_timer.start(2.0) # Rapid follow-up dash
 
 # --- Animation Call Methods (From AnimationPlayer) ---
 
@@ -310,28 +310,28 @@ func _phase_1_summon() -> void:
 func _phase_2_summon() -> void:
 	_health_phases_reached[1] = true
 	# Phase 2 specific logic here
-	summon.emit(summon_enemy1_scene, 4, 1.0, _get_spawn_pos())
-	summon.emit(summon_enemy2_scene, 5, 1.5, _get_spawn_pos())
+	summon.emit(summon_enemy1_scene, 5, 1.0, _get_spawn_pos())
+	summon.emit(summon_enemy2_scene, 4, 1.5, _get_spawn_pos())
 	summon.emit(summon_enemy3_scene, 1, 2.0, _get_spawn_pos())
 	
 	attack_step = 0
-	attack_pattern_interval = 3.5
-	damage_basic = 15
-	damage_dash = 25
+	attack_pattern_interval = 3.75
+	damage_basic = 12
+	damage_dash = 22
 	print(">>> ENEMY4: Phase 2 Summon Triggered")
 
 func _phase_3_summon() -> void:
 	_health_phases_reached[2] = true
 	# Phase 3 specific logic here
 	summon.emit(summon_enemy1_scene, 5, 1.0, _get_spawn_pos())
-	summon.emit(summon_enemy2_scene, 6, 1.5, _get_spawn_pos())
-	summon.emit(summon_enemy3_scene, 3, 2.0, _get_spawn_pos())
+	summon.emit(summon_enemy2_scene, 5, 1.5, _get_spawn_pos())
+	summon.emit(summon_enemy3_scene, 3, 3.0, _get_spawn_pos())
 	
 	attack_step = 0
-	attack_pattern_interval = 3.0
-	damage_basic = 20
-	damage_dash = 30
-	move_speed = 175.0
+	attack_pattern_interval = 3.5
+	damage_basic = 15
+	damage_dash = 25
+	move_speed = 170.0
 	print(">>> ENEMY4: Phase 3 Summon Triggered")
 
 func die() -> void:
