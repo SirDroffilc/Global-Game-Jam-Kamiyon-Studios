@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbgw0rjys1uu0"
-path="res://.godot/imported/[Tutorial - 5] Attack.png-9140735777d50ef872f1341fd41eb01a.ctex"
+uid="uid://gytl1kq0gu2v"
+path="res://.godot/imported/Checkpoint Icon.png-f6fa2f4b24e5244e533f422f845adaaf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/User Interface/[Tutorial - 5] Attack.png"
-dest_files=["res://.godot/imported/[Tutorial - 5] Attack.png-9140735777d50ef872f1341fd41eb01a.ctex"]
+source_file="res://assets/statics/Checkpoint Icon.png"
+dest_files=["res://.godot/imported/Checkpoint Icon.png-f6fa2f4b24e5244e533f422f845adaaf.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwnixghf5jq6p"
-path="res://.godot/imported/[Tutorial - 4] Mask.png-b12037b09ec2ebbbbd68050d06e7c85a.ctex"
+uid="uid://r7uupi5viln2"
+path="res://.godot/imported/[Tutorial - 5] Attack.png-01ab0db8ec10dff48ffa78d5b6de11f8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/User Interface/[Tutorial - 4] Mask.png"
-dest_files=["res://.godot/imported/[Tutorial - 4] Mask.png-b12037b09ec2ebbbbd68050d06e7c85a.ctex"]
+source_file="res://assets/statics/[Tutorial - 5] Attack.png"
+dest_files=["res://.godot/imported/[Tutorial - 5] Attack.png-01ab0db8ec10dff48ffa78d5b6de11f8.ctex"]
 
 [params]
 

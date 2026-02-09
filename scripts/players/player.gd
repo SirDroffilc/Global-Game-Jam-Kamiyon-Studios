@@ -25,7 +25,7 @@ var toggle_cooldown_timer: float = 0.0
 
 # --- Light State Timer Settings ---
 @export var max_light_time: float = 5.0
-@export var min_light_time: float = max_light_time / 2.0
+@export var min_light_time: float = max_light_time / 4.0
 @export var light_timer: float = 5.0
 @export var recharge_rate: float = 1.0
 

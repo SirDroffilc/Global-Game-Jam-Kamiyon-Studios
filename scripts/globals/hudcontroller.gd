@@ -48,15 +48,32 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if not player or not masked_state_cooldown: return
 
-	if player.is_light:
-		masked_state_cooldown.modulate = Color(1.0, 1.0, 1.0, 0.2) 
-	else:
-		if player.light_timer < player.min_light_time:
-			masked_state_cooldown.modulate = Color(0.0, 0.0, 0.0, 0.5) 
-		else:
-			masked_state_cooldown.modulate = Color(0, 0, 0, 0.2)
-
+	# 1. Update the bar value first for smoothness
 	masked_state_cooldown.value = player.light_timer
+
+	if player.is_light:
+		# --- Blinking Logic ---
+		if player.light_timer <= 2.5:
+			# Calculate blink speed: increases as time gets lower
+			# Use a sine wave: (sin(time * speed) + 1) / 2 maps -1,1 to 0,1
+			var speed = 15.0 # Higher is faster
+			var blink = (sin(Time.get_ticks_msec() * 0.001 * speed) + 1.0) / 2.0
+			
+			# Modulate between faint (0.2) and bright (1.0)
+			var alpha = lerp(0.2, 0.8, blink)
+			masked_state_cooldown.modulate = Color(1.0, 1.0, 1.0, alpha)
+		else:
+			# Steady state when plenty of time remains
+			masked_state_cooldown.modulate = Color(1.0, 1.0, 1.0, 0.2)
+			
+	else:
+		# --- Dark State Logic ---
+		if player.light_timer < player.min_light_time:
+			# Dimmed Red or Black to indicate "Not ready yet"
+			masked_state_cooldown.modulate = Color(0.0, 0.0, 0.0, 0.8) 
+		else:
+			# Default Dark state
+			masked_state_cooldown.modulate = Color(0.0, 0.0, 0.0, 0.3)
 		
 func _on_shards_count_changed():
 	if shards_count:
@@ -83,5 +100,3 @@ func _on_player_health_changed(new_health: int) -> void:
 	health_tween.tween_property(health_bar, "value", new_health, 0.4)\
 		.set_trans(Tween.TRANS_SINE)\
 		.set_ease(Tween.EASE_OUT)
-	
-	print(">>> HUD: Health animated to: ", new_health)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://da3kawk1pdbx5"
-path="res://.godot/imported/[Tutorial - 3] Dash.png-bd15f436371d600db4a8168580e4f76e.ctex"
+uid="uid://b8k0bo6ptifty"
+path="res://.godot/imported/[Tutorial - 2] Double Jump.png-d5150000082651074300efb4e72ff291.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/User Interface/[Tutorial - 3] Dash.png"
-dest_files=["res://.godot/imported/[Tutorial - 3] Dash.png-bd15f436371d600db4a8168580e4f76e.ctex"]
+source_file="res://assets/statics/[Tutorial - 2] Double Jump.png"
+dest_files=["res://.godot/imported/[Tutorial - 2] Double Jump.png-d5150000082651074300efb4e72ff291.ctex"]
 
 [params]
 

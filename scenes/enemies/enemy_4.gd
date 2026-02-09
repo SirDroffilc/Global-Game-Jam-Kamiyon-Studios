@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 # --- Attributes ---
+signal boss_health_changed
+signal boss_visible_on_screen
 @export var base_health: int = 1500
 @export var damage_basic: int = 10
 @export var damage_dash: int = 20
@@ -40,7 +42,6 @@ var step_timer: float = 0.0
 @onready var attack_timer: Timer = $AttackTimer
 @onready var attack1_hitbox: Area2D = $AnimatedSprite2D/Attack1Hitbox
 @onready var attack2_hitbox: Area2D = $AnimatedSprite2D/Attack2Hitbox
-@onready var enemy_health_bar: TextureProgressBar = $EnemyHealthBar
 
 # --- Summon Logic ---
 signal summon(enemy_scene, enemy_count, interval, pos)
@@ -53,10 +54,6 @@ var _health_phases_reached: Array = [false, false, false] # Tracks 75%, 50%, 25%
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("Player")
-	
-	enemy_health_bar.max_value = base_health
-	enemy_health_bar.value = base_health
-	enemy_health_bar.visible = false
 
 func _physics_process(delta: float) -> void:
 	if is_dying: return 
@@ -266,10 +263,7 @@ func take_damage(amount: int, attacker_pos: Vector2 = Vector2.ZERO) -> void:
 		return
 	
 	current_health -= amount
-	
-	if not enemy_health_bar.visible:
-		enemy_health_bar.visible = true
-	enemy_health_bar.value = current_health
+	boss_health_changed.emit(current_health)
 	
 	_flash_hurt()
 	AudioManager.play_omni("EnemyHurt")
@@ -344,7 +338,6 @@ func die() -> void:
 	if animation_player.is_playing():
 		animation_player.stop()
 	
-	enemy_health_bar.visible = false
 	$Hurtbox.queue_free()
 	AudioManager.play_omni("EnemyDeath")
 	animated_sprite.play("death")
@@ -364,12 +357,12 @@ func _face_player() -> void:
 		attack2_hitbox.scale.x = 1 if not side else -1
 		$CollisionShape2D.position.x = 48.0 if not side else -48.0
 		$Hurtbox.position.x = 48.0 if not side else -48.0
-		enemy_health_bar.position.x = 0.0 if not side else -99.0
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	if not is_active:
 		AudioManager.play_omni("BossGrowl") # Play aggro sound once
 	is_active = true
+	boss_visible_on_screen.emit()
 	current_state = EnemyState.MOVING
 	attack_timer.start()
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://4oiubpf7jgug"
-path="res://.godot/imported/[Tutorial - 2] Double Jump.png-aa72a67cd882caa5c56b1c50f6184282.ctex"
+uid="uid://t4hk1mdu02n6"
+path="res://.godot/imported/[Tutorial - 8] Masked Attack.png-089865d24ecf0d1bc3066060d9c68284.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/User Interface/[Tutorial - 2] Double Jump.png"
-dest_files=["res://.godot/imported/[Tutorial - 2] Double Jump.png-aa72a67cd882caa5c56b1c50f6184282.ctex"]
+source_file="res://assets/statics/[Tutorial - 8] Masked Attack.png"
+dest_files=["res://.godot/imported/[Tutorial - 8] Masked Attack.png-089865d24ecf0d1bc3066060d9c68284.ctex"]
 
 [params]
 
