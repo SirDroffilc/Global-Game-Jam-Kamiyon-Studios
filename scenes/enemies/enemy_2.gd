@@ -9,7 +9,7 @@ extends CharacterBody2D
 @onready var current_health: int = base_health
 
 # --- Loot Attribute (Heal) ---
-@export var heal_amount: int = 10
+@export var heal_amount: int = 15
 
 # --- Attack Attributes ---
 @export var spit_scene: PackedScene = preload("res://scenes/enemies/enemy_spit.tscn")

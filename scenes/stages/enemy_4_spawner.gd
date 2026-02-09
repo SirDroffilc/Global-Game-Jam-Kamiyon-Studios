@@ -9,10 +9,13 @@ extends Node2D
 var current_boss: CharacterBody2D
 var initial_boss_pos: Vector2
 
+var player: Player = null
+
 var is_resetting: bool = false
 
 func _ready() -> void:
 	# Initial assignment based on the path provided
+	player = get_tree().get_first_node_in_group("Player")
 	current_boss = get_node_or_null("../../EnemiesContainer/Boss/Enemy4")
 	if current_boss:
 		initial_boss_pos = current_boss.global_position
@@ -80,7 +83,10 @@ func _on_boss_summon(enemy_scene: PackedScene, count: int, interval: float, pos:
 			return
 		var new_enemy = enemy_scene.instantiate()
 		target_parent.add_child(new_enemy)
-		new_enemy.global_position = pos
+		if player:
+			new_enemy.global_position = player.global_position - Vector2(0.0, 100.0)
+		else:
+			new_enemy.global_position = pos
 		new_enemy.global_position.x += randf_range(-30, 30)
 		
 		if interval > 0:

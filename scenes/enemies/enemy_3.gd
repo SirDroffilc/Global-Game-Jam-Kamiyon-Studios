@@ -3,7 +3,7 @@ extends CharacterBody2D
 # --- Attributes ---
 @export var base_health: int = 100
 @export var damage: int = 15
-@export var walk_speed: float = 100.0 # Speed for the new chase behavior
+@export var walk_speed: float = 100.0 
 @export var dash_speed: float = 800.0 
 @export var retreat_speed: float = 100.0 
 @export var stopping_distance: float = 50.0 
@@ -16,7 +16,7 @@ extends CharacterBody2D
 var ghost_timer: float = 0.0
 
 # --- Loot Attribute (Heal) ---
-@export var heal_amount: int = 15
+@export var heal_amount: int = 20
 
 # --- State Control ---
 enum EnemyState { IDLE, DASHING, ATTACKING, RETREATING }

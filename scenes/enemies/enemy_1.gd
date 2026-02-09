@@ -8,7 +8,7 @@ extends CharacterBody2D
 @onready var current_health: int = base_health
 
 # --- Loot Attribute (Heal) ---
-@export var heal_amount: int = 5
+@export var heal_amount: int = 10
 
 # --- Attack Attributes ---
 @export var tackle_force_x: float = 450.0 

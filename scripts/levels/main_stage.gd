@@ -53,8 +53,6 @@ func _update_tilemap_visibility() -> void:
 	# Dark Layer: Visible only if is_light is false
 	tile_map_layer_dark.visible = !PlayerManager.is_light
 	
-	print(">>> WORLD: Swapped. Light is ", "ON" if PlayerManager.is_light else "OFF")
-
 # --- Transition Functions ---
 
 func _fade_from_black() -> void:

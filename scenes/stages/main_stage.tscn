@@ -1270,7 +1270,7 @@ speed_scale = 10.0
 
 [node name="Player" parent="." unique_id=395045780 instance=ExtResource("4_1kogc")]
 unique_name_in_owner = true
-position = Vector2(604.7976, -44.217834)
+position = Vector2(13994.678, -491)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=977550880]
 position = Vector2(0, -40)

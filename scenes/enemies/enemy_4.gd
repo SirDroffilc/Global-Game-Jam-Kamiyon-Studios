@@ -115,9 +115,14 @@ func _physics_process(delta: float) -> void:
 
 func _on_attack_timer_timeout() -> void:
 	if is_active and not is_dying and current_state != EnemyState.ATTACKING:
-		execute_pattern_step()
+		if _health_phases_reached[2]:
+			execute_pattern3_step()
+		elif _health_phases_reached[1]:
+			execute_pattern2_step()
+		else:
+			execute_pattern1_step()
 
-func execute_pattern_step() -> void:
+func execute_pattern1_step() -> void:
 	_face_player()
 	match attack_step:
 		0, 1: 
@@ -135,6 +140,56 @@ func execute_pattern_step() -> void:
 			animation_player.play("attack2_sequence")
 			attack_step = 0 
 			attack_timer.start(attack_pattern_interval)
+			
+func execute_pattern2_step() -> void:
+	_face_player()
+	match attack_step:
+		0, 1: # The "Attack 1" Duo
+			current_state = EnemyState.ATTACKING
+			animated_sprite.stop()
+			AudioManager.play_omni("EnemySlash")
+			animation_player.play("attack1_sequence")
+			
+			attack_step += 1
+			# Rapid fire between the two slashes, then a pause before the dash
+			attack_timer.start(0.3 if attack_step == 1 else 2.0)
+			
+			
+		2, 3: # The "Attack 2" (Dash) Duo
+			current_state = EnemyState.ATTACKING
+			animated_sprite.stop()
+			animation_player.play("attack2_sequence")
+			
+			attack_step += 1
+			if attack_step > 3:
+				attack_step = 0
+				attack_timer.start(attack_pattern_interval) # End of full pattern
+			else:
+				attack_timer.start(2.0) # Rapid follow-up dash
+				
+func execute_pattern3_step() -> void:
+	_face_player()
+	match attack_step:
+		0: 
+			current_state = EnemyState.ATTACKING
+			animated_sprite.stop()
+			AudioManager.play_omni("EnemySlash")
+			animation_player.play("attack1_sequence")
+			
+			attack_step += 1
+			attack_timer.start(2.0)
+			
+		1, 2, 3:
+			current_state = EnemyState.ATTACKING
+			animated_sprite.stop()
+			animation_player.play("attack2_sequence")
+			
+			attack_step += 1
+			if attack_step > 3:
+				attack_step = 0
+				attack_timer.start(attack_pattern_interval) # End of full pattern
+			else:
+				attack_timer.start(1.5) # Rapid follow-up dash
 
 # --- Animation Call Methods (From AnimationPlayer) ---
 
@@ -239,21 +294,28 @@ func _check_health_phases() -> void:
 		_phase_3_summon()
 
 func _get_spawn_pos() -> Vector2:
-	var direction = 1 if not animated_sprite.flip_h else -1
-	return global_position + Vector2(80 * direction, 0)
+	if player:
+		print("get spawn pos: player position")
+		return player.global_position - Vector2(0.0, 100.0)
+	else:
+		return global_position - Vector2(0.0 , 100.0)
 
 func _phase_1_summon() -> void:
 	_health_phases_reached[0] = true
 	# Phase 1 specific logic here (e.g., camera shake, specific SFX)
 	summon.emit(summon_enemy1_scene, 5, 1.0, _get_spawn_pos())
+	summon.emit(summon_enemy2_scene, 3, 1.5, _get_spawn_pos())
 	print(">>> ENEMY4: Phase 1 Summon Triggered")
 
 func _phase_2_summon() -> void:
 	_health_phases_reached[1] = true
 	# Phase 2 specific logic here
-	summon.emit(summon_enemy1_scene, 3, 1.0, _get_spawn_pos())
+	summon.emit(summon_enemy1_scene, 4, 1.0, _get_spawn_pos())
 	summon.emit(summon_enemy2_scene, 5, 1.5, _get_spawn_pos())
-	attack_pattern_interval = 3.0
+	summon.emit(summon_enemy3_scene, 1, 2.0, _get_spawn_pos())
+	
+	attack_step = 0
+	attack_pattern_interval = 3.5
 	damage_basic = 15
 	damage_dash = 25
 	print(">>> ENEMY4: Phase 2 Summon Triggered")
@@ -261,13 +323,15 @@ func _phase_2_summon() -> void:
 func _phase_3_summon() -> void:
 	_health_phases_reached[2] = true
 	# Phase 3 specific logic here
-	summon.emit(summon_enemy1_scene, 4, 1.0, _get_spawn_pos())
-	summon.emit(summon_enemy2_scene, 7, 1.5, _get_spawn_pos())
-	summon.emit(summon_enemy3_scene, 5, 2.0, _get_spawn_pos())
-	attack_pattern_interval = 2.5
+	summon.emit(summon_enemy1_scene, 5, 1.0, _get_spawn_pos())
+	summon.emit(summon_enemy2_scene, 6, 1.5, _get_spawn_pos())
+	summon.emit(summon_enemy3_scene, 3, 2.0, _get_spawn_pos())
+	
+	attack_step = 0
+	attack_pattern_interval = 3.0
 	damage_basic = 20
-	damage_dash = 40
-	move_speed = 200.0
+	damage_dash = 30
+	move_speed = 175.0
 	print(">>> ENEMY4: Phase 3 Summon Triggered")
 
 func die() -> void:
